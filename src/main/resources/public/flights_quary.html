@@ -147,6 +147,7 @@
                 value[i]= decodeURI(strs[i].split("=")[1]);
                 console.log(key[i]+"="+value[i]);
             }
+            console.log(value[1]+ "----->"+value[2])
             getFlight(value[1], value[2])
         }
     }
@@ -169,7 +170,6 @@
                     flightstr+="</tr>";
                 }
                 $("#flight").html(flightstr);
-
             }
         });
     }
