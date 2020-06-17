@@ -15,7 +15,26 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="keywords" content="Flight Ticket Booking  Widget Responsive, Login Form Web Template, Flat Pricing Tables, Flat Drop-Downs, Sign-Up Web Templates, Flat Web Templates, Login Sign-up Responsive Web Template, Smartphone Compatible Web Template, Free Web Designs for Nokia, Samsung, LG, Sony Ericsson, Motorola Web Design" />
-	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<script type="application/x-javascript">
+		//单程传参
+		function oneway() {
+			console.log("hello world")
+			//Instanciate the widget
+			var departDate = $("#datepicker2").val()
+			var [month, day, year] = departDate.split('/')
+			var departureCityName = $(".oneway").find(".city1").val()
+			var arriveCityName = $(".oneway").find(".city2").val()
+			//Access to widget's functions
+			date = year + '-' + month + '-' + day
+			var frm = window.event.srcElement
+
+			var str = "../flights_quary.html?date="+encodeURI(date)+"&departureCityName="+encodeURI(""+departureCityName)+"&arriveCityName="+encodeURI(""+arriveCityName)+";"
+
+			window.location.replace(str)
+			return false
+		}
+
+	addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 		
 </head>
 <body>
@@ -97,7 +116,7 @@
 						</form>						
 					</div>		
 					<div class="tab-1 resp-tab-content oneway">
-						<form action="../flights_quary.html" method="post">
+						<form  method="get" onsubmit="return oneway()">
 							<div class="from">
 								<h3>From</h3>
 								<input type="text" name="city" class="city1" placeholder="Type Departure City" required="">
@@ -152,7 +171,8 @@
 							</div>
 							<div class="clear"></div>
 							<input type="submit" value="Search Flights" id="submitDataOneway">
-						</form>	
+<!--							<button onclick="oneway()">Search Flights</button>-->
+						</form>
 								
 					</div>
 					<div class="tab-1 resp-tab-content multicity">
@@ -273,89 +293,80 @@
 		<!-- Calendar -->
 		<link rel="stylesheet" href="css/jquery-ui.css" />
 		<script src="js/jquery-ui.js"></script>
-		<script>
-			  $(function() {
-				$( "#datepicker,#datepicker1,#datepicker2,#datepicker3" ).datepicker(
-				)
+	<script>
+		$(function () {
+			$("#datepicker,#datepicker1,#datepicker2,#datepicker3").datepicker()
+		}),
 
-				  $('#submitDataOneway').click(function(argument){
-					  console.log("hello world")
-					  //Instanciate the widget
-					  var departDate=$("#datepicker2").val()
-					  var [month,day,year]=departDate.split('/')
-					  var departureCityName=$(".oneway").find(".city1").val()
-					  var arriveCityName=$(".oneway").find(".city2").val()
-					  //Access to widget's functions
-					  console.log(year+'-'+month+'-'+day)
-					  console.log(departureCityName+'---->'+arriveCityName)
-					  getFlight(departureCityName, arriveCityName)
-				  })
+		// function oneway() = {
 
-				  function getFlight(departureCityName,arrivalCityName){
-					  $.ajax({
-						  type: "GET",
-						  url: "flights/getFlights?departureCityName='"+departureCityName+"'&arrivalCityName='"+arrivalCityName+"'",
-						  contentType:"application/x-www-form-urlencoded;charset=UTF-8",
-						  success: function(data){
-							  var outStr = eval('('+data+')');
-							  var flightstr="";
-							  for (var i=0;i<outStr.length;i++){
-								  flightstr+="<tr>";
-								  flightstr+="<td>"+outStr[i].flightNumber+"</td>";
-								  flightstr+="<td>"+outStr[i].departure_time+"</td>";
-								  flightstr+="<td>"+outStr[i].stop_cityname+"</td>";
-								  flightstr+="<td>"+outStr[i].departure_terminal+"</td>";
-								  flightstr+="<td>"+outStr[i].price+"</td>";
-								  flightstr+="</tr>";
-							  }
-							  console.log(flightstr)
-						  }
-					  });
-				  }
-			  });
+
+
+
+
+		function getFlight(departureCityName, arrivalCityName) {
+			$.ajax({
+				type: "GET",
+				url: "flights/getFlights?departureCityName='" + departureCityName + "'&arrivalCityName='" + arrivalCityName + "'",
+				contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+				success: function (data) {
+					var outStr = eval('(' + data + ')');
+					var flightstr = "";
+					for (var i = 0; i < outStr.length; i++) {
+						flightstr += "<tr>";
+						flightstr += "<td>" + outStr[i].flightNumber + "</td>";
+						flightstr += "<td>" + outStr[i].departure_time + "</td>";
+						flightstr += "<td>" + outStr[i].stop_cityname + "</td>";
+						flightstr += "<td>" + outStr[i].departure_terminal + "</td>";
+						flightstr += "<td>" + outStr[i].price + "</td>";
+						flightstr += "</tr>";
+					}
+					console.log(flightstr)
+				}
+			});
+		},
 
 		<!-- Calendar -->
 		<!--quantity-->
 
-			$('.value-plus').on('click', function(){
-				var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)+1;
-				divUpd.text(newVal);
-			});
+		$('.value-plus').on('click', function () {
+			var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10) + 1;
+			divUpd.text(newVal);
+		}),
 
-			$('.value-minus').on('click', function(){
-				var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)-1;
-				if(newVal>=1) divUpd.text(newVal);
-			});
+		$('.value-minus').on('click', function () {
+			var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10) - 1;
+			if (newVal >= 1) divUpd.text(newVal);
+		}),
 
 		<!--quantity-->
 		<!--load more-->
 
-			$(document).ready(function () {
-				size_li = $("#myList li").size();
-				x=1;
-				$('#myList li:lt('+x+')').show();
-				$('#loadMore').click(function () {
-					x= (x+1 <= size_li) ? x+1 : size_li;
-					$('#myList li:lt('+x+')').show();
-				});
-				$('#showLess').click(function () {
-					x=(x-1<0) ? 1 : x-1;
-					$('#myList li').not(':lt('+x+')').hide();
-				});
+		$(document).ready(function () {
+			size_li = $("#myList li").size();
+			x = 1;
+			$('#myList li:lt(' + x + ')').show();
+			$('#loadMore').click(function () {
+				x = (x + 1 <= size_li) ? x + 1 : size_li;
+				$('#myList li:lt(' + x + ')').show();
 			});
+			$('#showLess').click(function () {
+				x = (x - 1 < 0) ? 1 : x - 1;
+				$('#myList li').not(':lt(' + x + ')').hide();
+			});
+		})
 
-<!-- load-more -->
-<!-- search for tickets -->
+		<!-- load-more -->
+		<!-- search for tickets -->
 
-			// $('#submitDataOneway').click(function(argument){
-			// 	console.log("hello world")
-			// 	//Instanciate the widget
-			// 	//Access to widget's functions
-			// 	var dateDepart=$(".datepicker2").getDate()
-			// 	console.log("dateDepart:"+ dateDepart)
-			// })
-		</script>
-
+		// $('#submitDataOneway').click(function(argument){
+		// 	console.log("hello world")
+		// 	//Instanciate the widget
+		// 	//Access to widget's functions
+		// 	var dateDepart=$(".datepicker2").getDate()
+		// 	console.log("dateDepart:"+ dateDepart)
+		// })
+	</script>
 
 
 </body>
