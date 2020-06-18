@@ -5,5 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 public interface FlightsService {
+    //查询航程信息
     List<Map<String, Object>> getFlights(String departureCityName, String arrivalCityName);
+    //飞去哪
+    List<Map<String, Object>> flyWhere(String departureCityName, String departure_time);
+    //航程比价,提供直飞的航程信息
+    List<Map<String, Object>> ComparePrice(String departureCityName, String arrivalCityName);
+
 }
