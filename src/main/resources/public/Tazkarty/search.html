@@ -26,6 +26,13 @@
 	<link rel="apple-touch-icon" sizes="72x72" href="images/general-elements/favicon/apple-touch-icon-72x72.png">
 	<link rel="apple-touch-icon" sizes="114x114" href="images/general-elements/favicon/apple-touch-icon-114x114.png">
 
+	<!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
 	<!-- Title
 	============================================= -->
 	<title>Tazkarty</title>
@@ -278,7 +285,7 @@
 														</ul><!-- .list-dropdown-passengers end -->
 													</div><!-- .form-group end -->
 													<div class="form-group">
-														<button type="submit" class="form-control icon"><i class="fas fa-search"></i></button>
+														<button type="submit" class="form-control icon" onclick="roundTrip()"><i class="fas fa-search"></i></button>
 													</div><!-- .form-group end -->
 												</form><!-- .form-banner-reservation end -->
 											</li>
@@ -376,7 +383,7 @@
 														</ul><!-- .list-dropdown-passengers end -->
 													</div><!-- .form-group end -->
 													<div class="form-group">
-														<button type="submit" class="form-control icon"><i class="fas fa-search"></i></button>
+														<button type="submit" class="form-control icon" onclick="oneWay()"><i class="fas fa-search"></i></button>
 													</div><!-- .form-group end -->
 												</form><!-- .form-banner-reservation end -->
 											</li>
@@ -479,7 +486,7 @@
 															</div><!-- .fields-row end -->
 														</div><!-- .form-group end -->
 														<div class="form-group">
-															<button type="submit" class="form-control icon"><i class="fas fa-search"></i></button>
+															<button type="submit" class="form-control icon" onclick="multi()"><i class="fas fa-search"></i></button>
 														</div><!-- .form-group end -->
 													</form><!-- .form-banner-reservation end -->
 													<a class="btn-multiple-destinations btn x-small colorful hover-dark" href="javascript:;">
@@ -571,6 +578,7 @@
 															</ul><!-- .list-stip-sorter end -->
 														</div><!-- .trip-sorter end -->
 													</div><!-- .block-content-2 end -->
+													<div id="true-content">
 													<div class="block-content-2">
 														<div class="box-result">
 															<ul class="list-search-result">
@@ -625,182 +633,192 @@
 																	<span class="description">Price for 1 Person(s)</span>
 																</div><!-- .price end -->
 																<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>
+																<a class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample">点击查看详情</a>
 															</div><!-- .result-price end -->
 														</div><!-- .box-result end -->
+														<div class="collapse" id="collapseExample">
+															<div class="card card-body">
+																where can I find the details
+															</div>
+														</div>
 													</div><!-- .block-content-2 end -->
-													<div class="block-content-2">
-														<div class="box-result">
-															<ul class="list-search-result">
-																<li>
-																	<ul class="result-single">
-																		<li>
-																			<img src="images/files/logo-companies/img-1.png" alt="">
-																			EgyptAir
-																		</li>
-																		<li>
-																			Cairo
-																			<span class="date">22:30</span>
-																		</li>
-																		<li>
-																			<span class="shape-distance"></span>
-																		</li>
-																		<li>
-																			Sharm El Sheik
-																			<span class="date">23:30</span>
-																		</li>
-																		<li>
-																			<span class="duration">01h 00m <span> | Direct</span></span>
-																		</li>
-																	</ul><!-- .result-single end -->
-																</li>
-																<li>
-																	<ul class="result-single">
-																		<li>
-																			<img src="images/files/logo-companies/img-1.png" alt="">
-																			EgyptAir
-																		</li>
-																		<li>
-																			Cairo
-																			<span class="date">22:30</span>
-																		</li>
-																		<li>
-																			<span class="shape-distance"></span>
-																		</li>
-																		<li>
-																			Sharm El Sheik
-																			<span class="date">23:30</span>
-																		</li>
-																		<li>
-																			<span class="duration">01h 00m <span> | Direct</span></span>
-																		</li>
-																	</ul><!-- .result-single end -->
-																</li>
-															</ul><!-- .list-search-result end -->
-															<div class="result-price">
-																<div class="price">
-																	EGP <span class="value">4218.96</span>
-																	<span class="description">Price for 1 Person(s)</span>
-																</div><!-- .price end -->
-																<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>
-															</div><!-- .result-price end -->
-														</div><!-- .box-result end -->
-													</div><!-- .block-content-2 end -->
-													<div class="block-content-2">
-														<div class="box-result">
-															<ul class="list-search-result">
-																<li>
-																	<ul class="result-single">
-																		<li>
-																			<img src="images/files/logo-companies/img-1.png" alt="">
-																			EgyptAir
-																		</li>
-																		<li>
-																			Cairo
-																			<span class="date">22:30</span>
-																		</li>
-																		<li>
-																			<span class="shape-distance"></span>
-																		</li>
-																		<li>
-																			Sharm El Sheik
-																			<span class="date">23:30</span>
-																		</li>
-																		<li>
-																			<span class="duration">01h 00m <span> | Direct</span></span>
-																		</li>
-																	</ul><!-- .result-single end -->
-																</li>
-																<li>
-																	<ul class="result-single">
-																		<li>
-																			<img src="images/files/logo-companies/img-1.png" alt="">
-																			EgyptAir
-																		</li>
-																		<li>
-																			Cairo
-																			<span class="date">22:30</span>
-																		</li>
-																		<li>
-																			<span class="shape-distance"></span>
-																		</li>
-																		<li>
-																			Sharm El Sheik
-																			<span class="date">23:30</span>
-																		</li>
-																		<li>
-																			<span class="duration">01h 00m <span> | Direct</span></span>
-																		</li>
-																	</ul><!-- .result-single end -->
-																</li>
-															</ul><!-- .list-search-result end -->
-															<div class="result-price">
-																<div class="price">
-																	EGP <span class="value">4218.96</span>
-																	<span class="description">Price for 1 Person(s)</span>
-																</div><!-- .price end -->
-																<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>
-															</div><!-- .result-price end -->
-														</div><!-- .box-result end -->
-													</div><!-- .block-content-2 end -->
-													<div class="block-content-2">
-														<div class="box-result">
-															<ul class="list-search-result">
-																<li>
-																	<ul class="result-single">
-																		<li>
-																			<img src="images/files/logo-companies/img-1.png" alt="">
-																			EgyptAir
-																		</li>
-																		<li>
-																			Cairo
-																			<span class="date">22:30</span>
-																		</li>
-																		<li>
-																			<span class="shape-distance"></span>
-																		</li>
-																		<li>
-																			Sharm El Sheik
-																			<span class="date">23:30</span>
-																		</li>
-																		<li>
-																			<span class="duration">01h 00m <span> | Direct</span></span>
-																		</li>
-																	</ul><!-- .result-single end -->
-																</li>
-																<li>
-																	<ul class="result-single">
-																		<li>
-																			<img src="images/files/logo-companies/img-1.png" alt="">
-																			EgyptAir
-																		</li>
-																		<li>
-																			Cairo
-																			<span class="date">22:30</span>
-																		</li>
-																		<li>
-																			<span class="shape-distance"></span>
-																		</li>
-																		<li>
-																			Sharm El Sheik
-																			<span class="date">23:30</span>
-																		</li>
-																		<li>
-																			<span class="duration">01h 00m <span> | Direct</span></span>
-																		</li>
-																	</ul><!-- .result-single end -->
-																</li>
-															</ul><!-- .list-search-result end -->
-															<div class="result-price">
-																<div class="price">
-																	EGP <span class="value">4218.96</span>
-																	<span class="description">Price for 1 Person(s)</span>
-																</div><!-- .price end -->
-																<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>
-															</div><!-- .result-price end -->
-														</div><!-- .box-result end -->
-													</div><!-- .block-content-2 end -->
-												</div><!-- .content-main end -->
-										
+
+
+
+<!--													<div class="block-content-2">-->
+<!--														<div class="box-result">-->
+<!--															<ul class="list-search-result">-->
+<!--																<li>-->
+<!--																	<ul class="result-single">-->
+<!--																		<li>-->
+<!--																			<img src="images/files/logo-companies/img-1.png" alt="">-->
+<!--																			EgyptAir-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			Cairo-->
+<!--																			<span class="date">22:30</span>-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			<span class="shape-distance"></span>-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			Sharm El Sheik-->
+<!--																			<span class="date">23:30</span>-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			<span class="duration">01h 00m <span> | Direct</span></span>-->
+<!--																		</li>-->
+<!--																	</ul>&lt;!&ndash; .result-single end &ndash;&gt;-->
+<!--																</li>-->
+<!--																<li>-->
+<!--																	<ul class="result-single">-->
+<!--																		<li>-->
+<!--																			<img src="images/files/logo-companies/img-1.png" alt="">-->
+<!--																			EgyptAir-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			Cairo-->
+<!--																			<span class="date">22:30</span>-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			<span class="shape-distance"></span>-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			Sharm El Sheik-->
+<!--																			<span class="date">23:30</span>-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			<span class="duration">01h 00m <span> | Direct</span></span>-->
+<!--																		</li>-->
+<!--																	</ul>&lt;!&ndash; .result-single end &ndash;&gt;-->
+<!--																</li>-->
+<!--															</ul>&lt;!&ndash; .list-search-result end &ndash;&gt;-->
+<!--															<div class="result-price">-->
+<!--																<div class="price">-->
+<!--																	EGP <span class="value">4218.96</span>-->
+<!--																	<span class="description">Price for 1 Person(s)</span>-->
+<!--																</div>&lt;!&ndash; .price end &ndash;&gt;-->
+<!--																<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>-->
+<!--															</div>&lt;!&ndash; .result-price end &ndash;&gt;-->
+<!--														</div>&lt;!&ndash; .box-result end &ndash;&gt;-->
+<!--													</div>&lt;!&ndash; .block-content-2 end &ndash;&gt;-->
+<!--													<div class="block-content-2">-->
+<!--														<div class="box-result">-->
+<!--															<ul class="list-search-result">-->
+<!--																<li>-->
+<!--																	<ul class="result-single">-->
+<!--																		<li>-->
+<!--																			<img src="images/files/logo-companies/img-1.png" alt="">-->
+<!--																			EgyptAir-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			Cairo-->
+<!--																			<span class="date">22:30</span>-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			<span class="shape-distance"></span>-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			Sharm El Sheik-->
+<!--																			<span class="date">23:30</span>-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			<span class="duration">01h 00m <span> | Direct</span></span>-->
+<!--																		</li>-->
+<!--																	</ul>&lt;!&ndash; .result-single end &ndash;&gt;-->
+<!--																</li>-->
+<!--																<li>-->
+<!--																	<ul class="result-single">-->
+<!--																		<li>-->
+<!--																			<img src="images/files/logo-companies/img-1.png" alt="">-->
+<!--																			EgyptAir-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			Cairo-->
+<!--																			<span class="date">22:30</span>-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			<span class="shape-distance"></span>-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			Sharm El Sheik-->
+<!--																			<span class="date">23:30</span>-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			<span class="duration">01h 00m <span> | Direct</span></span>-->
+<!--																		</li>-->
+<!--																	</ul>&lt;!&ndash; .result-single end &ndash;&gt;-->
+<!--																</li>-->
+<!--															</ul>&lt;!&ndash; .list-search-result end &ndash;&gt;-->
+<!--															<div class="result-price">-->
+<!--																<div class="price">-->
+<!--																	EGP <span class="value">4218.96</span>-->
+<!--																	<span class="description">Price for 1 Person(s)</span>-->
+<!--																</div>&lt;!&ndash; .price end &ndash;&gt;-->
+<!--																<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>-->
+<!--															</div>&lt;!&ndash; .result-price end &ndash;&gt;-->
+<!--														</div>&lt;!&ndash; .box-result end &ndash;&gt;-->
+<!--													</div>&lt;!&ndash; .block-content-2 end &ndash;&gt;-->
+<!--													<div class="block-content-2">-->
+<!--														<div class="box-result">-->
+<!--															<ul class="list-search-result">-->
+<!--																<li>-->
+<!--																	<ul class="result-single">-->
+<!--																		<li>-->
+<!--																			<img src="images/files/logo-companies/img-1.png" alt="">-->
+<!--																			EgyptAir-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			Cairo-->
+<!--																			<span class="date">22:30</span>-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			<span class="shape-distance"></span>-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			Sharm El Sheik-->
+<!--																			<span class="date">23:30</span>-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			<span class="duration">01h 00m <span> | Direct</span></span>-->
+<!--																		</li>-->
+<!--																	</ul>&lt;!&ndash; .result-single end &ndash;&gt;-->
+<!--																</li>-->
+<!--																<li>-->
+<!--																	<ul class="result-single">-->
+<!--																		<li>-->
+<!--																			<img src="images/files/logo-companies/img-1.png" alt="">-->
+<!--																			EgyptAir-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			Cairo-->
+<!--																			<span class="date">22:30</span>-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			<span class="shape-distance"></span>-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			Sharm El Sheik-->
+<!--																			<span class="date">23:30</span>-->
+<!--																		</li>-->
+<!--																		<li>-->
+<!--																			<span class="duration">01h 00m <span> | Direct</span></span>-->
+<!--																		</li>-->
+<!--																	</ul>&lt;!&ndash; .result-single end &ndash;&gt;-->
+<!--																</li>-->
+<!--															</ul>&lt;!&ndash; .list-search-result end &ndash;&gt;-->
+<!--															<div class="result-price">-->
+<!--																<div class="price">-->
+<!--																	EGP <span class="value">4218.96</span>-->
+<!--																	<span class="description">Price for 1 Person(s)</span>-->
+<!--																</div>&lt;!&ndash; .price end &ndash;&gt;-->
+<!--																<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>-->
+<!--															</div>&lt;!&ndash; .result-price end &ndash;&gt;-->
+<!--														</div>&lt;!&ndash; .box-result end &ndash;&gt;-->
+<!--													</div>&lt;!&ndash; .block-content-2 end &ndash;&gt;-->
+													</div>
+													</div><!-- .content-main end -->
+
 											</div><!-- .col-lg-8 end -->
 											<div class="col-lg-4 col-md-12 col-lg-pull-8">
 										
@@ -1298,6 +1316,113 @@
 	<script src="js/select2.min.js"></script>
 	<script src="js/countrySelect.min.js"></script>
 	<script src='js/functions.js'></script>
+
+	<script>
+		function roundTrip(){
+			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
+			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
+			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
+			var departDate = $("li.active").find('[name=\'brTimeEnd\']').val().replace(/\//g,'-')
+			alert(departureCityName)
+			alert(arriveCityName)
+			alert(departDate)
+			alert(returnDate)
+		}
+		function oneWay() {
+			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
+			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
+			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
+
+
+
+			alert(departureCityName)
+			alert(arriveCityName)
+			alert(departDate)
+			alert('helloWorld')
+		}
+		function multi() {
+			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
+			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
+			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
+			alert(departureCityName)
+			alert(arriveCityName)
+			alert(departDate)
+		}
+		function getResults() {
+			var results
+			for (var i=0;i<=2;i++) {
+				console.log(i.toString())
+				results += '<div class="block-content-2">'
+						+'<div class="box-result">'
+						+'<ul class="list-search-result">'
+						+'<li>'
+						+'<ul class="result-single">'
+						+'<li>'
+						+'<img src="images/files/logo-companies/img-1.png" alt="">'
+						+'EgyptAir'
+						+'</li>'
+						+'<li>'
+						+'Cairo'
+						+'<span class="date">22:30</span>'
+						+'</li>'
+						+'<li>'
+						+'<span class="shape-distance"></span>'
+						+'</li>'
+						+'<li>'
+						+'Sharm El Sheik'
+						+'<span class="date">23:30</span>'
+						+'</li>'
+						+'<li>'
+						+'<span class="duration">01h 00m <span> | Direct</span></span>'
+						+'</li>'
+						+'</ul><!-- .result-single end -->'
+						+'</li>'
+						+'<li>'
+						+'<ul class="result-single">'
+						+'<li>'
+						+'<img src="images/files/logo-companies/img-1.png" alt="">'
+						+'EgyptAir'
+						+'</li>'
+						+'<li>'
+						+'Cairo'
+						+'<span class="date">22:30</span>'
+						+'</li>'
+						+'<li>'
+						+'<span class="shape-distance"></span>'
+						+'</li>'
+						+'<li>'
+						+'Sharm El Sheik'
+						+'<span class="date">23:30</span>'
+						+'</li>'
+						+'<li>'
+						+'<span class="duration">01h 00m <span> | Direct</span></span>'
+						+'</li>'
+						+'</ul><!-- .result-single end -->'
+						+'</li>'
+						+'</ul><!-- .list-search-result end -->'
+						+'<div class="result-price">'
+						+'<div class="price">'
+						+'EGP <span class="value">4218.96</span>'
+						+'<span class="description">Price for 1 Person(s)</span>'
+						+'</div><!-- .price end -->'
+						+'<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>'
+						+'<a class="btn btn-primary" data-toggle="collapse" data-target=\"#collapseExample'+i.toString()+'\"'+'>点击查看详情</a>'
+						+'</div><!-- .result-price end -->'
+						+'</div><!-- .box-result end -->'
+						+'<div class="collapse" id=\"collapseExample'+i.toString()+'\"'+'>'
+						+'<div class="card card-body">'
+						+'where can I find the details'
+						+'</div>'
+						+'</div>'
+						+'</div><!-- .block-content-2 end -->'
+			}
+			$("#true-content").html(results)
+		}
+
+		$(function () {
+			getResults()
+		})
+	</script>
 
 </body>
 </html>
