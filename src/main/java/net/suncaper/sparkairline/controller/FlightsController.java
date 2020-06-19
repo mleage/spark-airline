@@ -140,4 +140,14 @@ public class FlightsController {
         String FlightsStr= JSON.toJSONString(Flights);
         return FlightsStr;
     }
+
+    @RequestMapping("flyToWhere")
+    @ResponseBody
+    public  String flyToWhere(HttpServletRequest request){
+        String departureCityName=request.getParameter("departureCityName");
+        String departureTime=request.getParameter("departureTime");
+        List<Map<String,Object>> Places=FlightsService.flyToWhere(departureTime,departureCityName);
+        String PlacesStr=JSON.toJSONString(Places);
+        return PlacesStr;
+    }
 }
