@@ -15,12 +15,24 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Jia,Dian
+ * @version 1.0
+ */
 @Controller
 @RequestMapping("/flights")
 public class FlightsController {
     @Autowired
     private FlightsServiceImpl FlightsService;
 
+    /**
+     *
+     * @param request
+     * @return
+     * ajax访问/flights/getFlightsOneWayByPrice传递出发城市，到达城市，出发时间三个参数
+     * 返回单程按价格排序航班列表，
+     * 具体实现见serviceImpl
+     */
     @RequestMapping("/getFlightsOneWayByPrice")
     @ResponseBody
     public String getFlightsOneWayByPrice(HttpServletRequest request){
@@ -32,7 +44,14 @@ public class FlightsController {
         String FlightsStr= JSON.toJSONString(Flights);
         return FlightsStr;
     }
-
+    /**
+     *
+     * @param request
+     * @return
+     * ajax访问/flights/getFlightsOneWayByDuringTime传递出发城市，到达城市，出发时间三个参数
+     * 返回单程按持续时间排序航班列表，
+     * 具体实现见serviceImpl
+     */
     @RequestMapping("/getFlightsOneWayByDuringTime")
     @ResponseBody
     public String getFlightsOneWayByDuringTime(HttpServletRequest request){
@@ -44,7 +63,14 @@ public class FlightsController {
         String FlightsStr= JSON.toJSONString(Flights);
         return FlightsStr;
     }
-
+    /**
+     *
+     * @param request
+     * @return
+     * ajax访问/flights/getFlightsOneWayByDepartureTime传递出发城市，到达城市，出发时间三个参数
+     * 返回单程按出发时间排序航班列表，
+     * 具体实现见serviceImpl
+     */
     @RequestMapping("/getFlightsOneWayByDepartureTime")
     @ResponseBody
     public String getFlightsOneWayByDepartureTime(HttpServletRequest request) {
@@ -56,7 +82,14 @@ public class FlightsController {
         String FlightsStr = JSON.toJSONString(Flights);
         return FlightsStr;
     }
-
+    /**
+     *
+     * @param request
+     * @return
+     * ajax访问/flights/getFlightsOneWayByArrivalTime传递出发城市，到达城市，出发时间三个参数
+     * 返回单程按到达时间排序航班列表，
+     * 具体实现见serviceImpl
+     */
     @RequestMapping("/getFlightsOneWayByArrivalTime")
     @ResponseBody
     public String getFlightsOneWayByArrivalTime(HttpServletRequest request){
@@ -68,7 +101,14 @@ public class FlightsController {
         String FlightsStr= JSON.toJSONString(Flights);
         return FlightsStr;
     }
-
+    /**
+     *
+     * @param request
+     * @return
+     * ajax访问/flights/whenToFlightViewYear传递出发城市，到达城市，年份三个参数
+     * 返回当年最低价格排布，
+     * 具体实现见serviceImpl
+     */
     @RequestMapping("/whenToFlightViewYear")
     @ResponseBody
     public String whenToFlightViewYear(HttpServletRequest request){
@@ -80,7 +120,14 @@ public class FlightsController {
         String FlightsStr= JSON.toJSONString(Flights);
         return FlightsStr;
     }
-
+    /**
+     *
+     * @param request
+     * @return
+     * ajax访问/flights/whenToFlightViewYear传递出发城市，到达城市，年份，月份四个参数
+     * 返回当月最低价格排布，
+     * 具体实现见serviceImpl
+     */
     @RequestMapping("/whenToFlightViewMonth")
     @ResponseBody
     public String whenToFlightViewMonth(HttpServletRequest request){
