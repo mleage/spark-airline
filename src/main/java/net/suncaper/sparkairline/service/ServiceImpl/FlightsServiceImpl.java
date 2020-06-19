@@ -120,4 +120,22 @@ public class FlightsServiceImpl implements FlightsService {
         return flights;
     }
 
+    @Override
+    public List<Map<String, Object>> flyToWhere(String departureTime, String departureCityName) {
+        String sql="select * from d20200616 where flightnumber in("+
+                "select max(flightnumber) from d20200616 where departure_cityname="+departureCityName+
+                "and departure_time="+departureTime+
+                "group by arrival_cityname"+
+                "having min(price)"+
+                ")";
+        System.out.println("sql=" + sql);
+        System.out.println("开始查询");
+        List<Map<String, Object>> places = jdbcTemplate.queryForList(sql);
+        System.out.println(places);
+        for (int i = 0; i < places.size(); i++) {
+            System.out.println(places.get(i));
+        }
+        return places;
+    }
+
 }
