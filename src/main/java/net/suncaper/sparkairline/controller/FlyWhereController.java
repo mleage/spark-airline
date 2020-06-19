@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 @Controller
-@RequestMapping("/flytowhere")
+@RequestMapping("/flyWhere")
 public class FlyWhereController {
     @Autowired
     private FlightsServiceImpl FlightsService;
