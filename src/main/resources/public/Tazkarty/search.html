@@ -197,7 +197,7 @@
 														<i class="fas fa-plane"></i>
 													</div><!-- .form-group end -->
 													<div class="form-group">
-														<input type="text" name="brTimeStart" class="form-control" id="datepicker-time-start"
+														<input type="text" name="brTimeStart" class="form-control datepicker-2-time-start"
 															placeholder="2019/09/30">
 														<i class="far fa-calendar"></i>
 													</div><!-- .form-group end -->
@@ -285,7 +285,7 @@
 														</ul><!-- .list-dropdown-passengers end -->
 													</div><!-- .form-group end -->
 													<div class="form-group">
-														<button type="submit" class="form-control icon" onclick="roundTrip()"><i class="fas fa-search"></i></button>
+														<button type="button" class="form-control icon" onclick="roundTrip()"><i class="fas fa-search"></i></button>
 													</div><!-- .form-group end -->
 												</form><!-- .form-banner-reservation end -->
 											</li>
@@ -383,7 +383,7 @@
 														</ul><!-- .list-dropdown-passengers end -->
 													</div><!-- .form-group end -->
 													<div class="form-group">
-														<button type="submit" class="form-control icon" onclick="oneWay()"><i class="fas fa-search"></i></button>
+														<button type="button" class="form-control icon" onclick="oneWay()"><i class="fas fa-search"></i></button>
 													</div><!-- .form-group end -->
 												</form><!-- .form-banner-reservation end -->
 											</li>
@@ -486,7 +486,7 @@
 															</div><!-- .fields-row end -->
 														</div><!-- .form-group end -->
 														<div class="form-group">
-															<button type="submit" class="form-control icon" onclick="multi()"><i class="fas fa-search"></i></button>
+															<button type="button" class="form-control icon" onclick="multi()"><i class="fas fa-search"></i></button>
 														</div><!-- .form-group end -->
 													</form><!-- .form-banner-reservation end -->
 													<a class="btn-multiple-destinations btn x-small colorful hover-dark" href="javascript:;">
@@ -1318,40 +1318,69 @@
 	<script src='js/functions.js'></script>
 
 	<script>
-		function roundTrip(){
-			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
-			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
-			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
-			var departDate = $("li.active").find('[name=\'brTimeEnd\']').val().replace(/\//g,'-')
-			alert(departureCityName)
-			alert(arriveCityName)
-			alert(departDate)
-			alert(returnDate)
+		/** 根据时间、地点获取单程航班信息 */
+		function getFlightOneWay(departureCityName,arrivalCityName,departureTime){
+			$.ajax({
+				type: "GET",
+				url: "../flights/getFlightsOneWayByPrice?departureCityName="	+departureCityName
+						+"&arrivalCityName="	+ 	arrivalCityName
+						+"&departureTime="	+ 	departureTime,
+				contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+				success: function(data){
+					var outStr = eval('('+data+')');
+					var flightstr="";
+					getResultsOneWay(outStr)
+				}
+			});
 		}
+		/** 往返模式下的查询结果 */
+		function getFlightRoundWay(departureCityName,arrivalCityName,departureTime, arrivalTime) {
+			var outStr1, outStr2
+			// $.when(
+				$.ajax({
+					type: "GET",
+					url: "../flights/getFlightsOneWayByPrice?departureCityName="	+departureCityName
+							+"&arrivalCityName="	+ 	arrivalCityName
+							+"&departureTime="	+ 	departureTime,
+					contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+					success: function(data){
+						outStr1 = eval('('+data+')');
+					}
+				}),
+				$.ajax({
+					type: "GET",
+					url: "../flights/getFlightsOneWayByPrice?departureCityName="	+arrivalCityName
+							+"&arrivalCityName="	+ 	departureCityName
+							+"&departureTime="	+ 	arrivalTime,
+					contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+					success: function(data){
+						outStr2 = eval('('+data+')');
+					}
+				})
+			// ).done((outStr1,outStr2) => {return [outStr1,outStr2]})
+			alert(outStr1)
+			alert(outStr2)
+			return  outStr1, outStr2
+		}
+		/** 在单程模式下的点击查询 */
 		function oneWay() {
 			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
 			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
 			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
 
-
-
-			alert(departureCityName)
-			alert(arriveCityName)
-			alert(departDate)
-			alert('helloWorld')
+			getFlightOneWay(departureCityName,arriveCityName,departDate)
 		}
-		function multi() {
-			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
-			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
-			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
-			alert(departureCityName)
-			alert(arriveCityName)
-			alert(departDate)
-		}
-		function getResults() {
-			var results
-			for (var i=0;i<=2;i++) {
+		/** 将单程查询获得的数据渲染到页面上 */
+		function getResultsOneWay(outStr) {
+			var results = ""
+			for (var i=0;i<outStr.length;i++) {
 				console.log(i.toString())
+				var departTime = new Date(outStr[i].departure_time)
+				var arriveTime = new Date(outStr[i].arrival_time)
+				var lastingTime = (arriveTime.getTime()-departTime.getTime())/1000
+				var diffDays = parseInt(lastingTime/86400)
+				var diffHours = parseInt(lastingTime/3600)-24*diffDays
+				var diffMinutes = parseInt(lastingTime%3600/60)
 				results += '<div class="block-content-2">'
 						+'<div class="box-result">'
 						+'<ul class="list-search-result">'
@@ -1359,50 +1388,51 @@
 						+'<ul class="result-single">'
 						+'<li>'
 						+'<img src="images/files/logo-companies/img-1.png" alt="">'
-						+'EgyptAir'
+						+ outStr[i].airlineName
 						+'</li>'
 						+'<li>'
-						+'Cairo'
-						+'<span class="date">22:30</span>'
-						+'</li>'
-						+'<li>'
-						+'<span class="shape-distance"></span>'
-						+'</li>'
-						+'<li>'
-						+'Sharm El Sheik'
-						+'<span class="date">23:30</span>'
-						+'</li>'
-						+'<li>'
-						+'<span class="duration">01h 00m <span> | Direct</span></span>'
-						+'</li>'
-						+'</ul><!-- .result-single end -->'
-						+'</li>'
-						+'<li>'
-						+'<ul class="result-single">'
-						+'<li>'
-						+'<img src="images/files/logo-companies/img-1.png" alt="">'
-						+'EgyptAir'
-						+'</li>'
-						+'<li>'
-						+'Cairo'
-						+'<span class="date">22:30</span>'
+						+ outStr[i].departure_airportname
+						+'<span class="date">'+departTime.getHours()+":"+(departTime.getMinutes()<10?'0'+departTime.getMinutes():departTime.getMinutes())+'</span>'
 						+'</li>'
 						+'<li>'
 						+'<span class="shape-distance"></span>'
 						+'</li>'
 						+'<li>'
-						+'Sharm El Sheik'
-						+'<span class="date">23:30</span>'
+						+ outStr[i].arrival_airportname
+						+'<span class="date">'+arriveTime.getHours()+":"+(arriveTime.getMinutes()<10?'0'+arriveTime.getMinutes():arriveTime.getMinutes())+'</span>'
 						+'</li>'
 						+'<li>'
-						+'<span class="duration">01h 00m <span> | Direct</span></span>'
+						+'<span class="duration">'+diffHours+'h '+diffMinutes+'m <span> | '+(outStr[i].stop_cityname=="无"?"Direct":"non-direct")+'</span></span>'
 						+'</li>'
 						+'</ul><!-- .result-single end -->'
 						+'</li>'
+						//以下为往返结果
+						// +'<li>'
+						// +'<ul class="result-single">'
+						// +'<li>'
+						// +'<img src="images/files/logo-companies/img-1.png" alt="">'
+						// +'EgyptAir'
+						// +'</li>'
+						// +'<li>'
+						// +'Cairo'
+						// +'<span class="date">22:30</span>'
+						// +'</li>'
+						// +'<li>'
+						// +'<span class="shape-distance"></span>'
+						// +'</li>'
+						// +'<li>'
+						// +'Sharm El Sheik'
+						// +'<span class="date">23:30</span>'
+						// +'</li>'
+						// +'<li>'
+						// +'<span class="duration">01h 00m <span> | Direct</span></span>'
+						// +'</li>'
+						// +'</ul><!-- .result-single end -->'
+						// +'</li>'
 						+'</ul><!-- .list-search-result end -->'
 						+'<div class="result-price">'
 						+'<div class="price">'
-						+'EGP <span class="value">4218.96</span>'
+						+'RMB <span class="value">'+outStr[i].price+'</span>'
 						+'<span class="description">Price for 1 Person(s)</span>'
 						+'</div><!-- .price end -->'
 						+'<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>'
@@ -1418,10 +1448,66 @@
 			}
 			$("#true-content").html(results)
 		}
+		function roundTrip(){
+			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
+			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
+			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
+			var returnDate = $("li.active").find('[name=\'brTimeEnd\']').val().replace(/\//g,'-')
+
+			alert(departDate)
+			alert(departureCityName)
+			alert(returnDate)
+			alert(arriveCityName)
+			// var outStr1, outStr2
+			// [outStr1,outStr2] = getFlightRoundWay(departureCityName,arriveCityName,departDate,returnDate)
+			// alert(outStr1)
+			// alert(outStr2)
+		}
+
+		function multi() {
+			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
+			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
+			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
+			alert(departureCityName)
+			alert(arriveCityName)
+			alert(departDate)
+		}
+
 
 		$(function () {
-			getResults()
+			// getParams()
 		})
+
+		/** 接受从index页面传过来的参数 */
+		function getParams() {
+			var url=window.location.search
+			var departureCityName, arrivalCityName, date
+			if(url.indexOf("?")!=-1){
+				var str = url.substr(1);
+				strs = str.split("&");
+				var key=new Array(strs.length);
+				var value=new Array(strs.length);
+				for(i=0;i<strs.length;i++){
+					key[i]=strs[i].split("=")[0]
+					value[i]= decodeURI(strs[i].split("=")[1]);
+					console.log(key[i]+"="+value[i]);
+				}
+				console.log(value[1]+ "----->"+value[2])
+				if (strs.length == 3) {
+
+					alert("Hello OneWay")
+				}
+				else if (strs.length == 4) {
+					alert("Hello RoundWay")
+				}
+				else if (strs.length) {
+					alert("Hello MultiRoute")
+				}
+				else {
+					alert("Hello motherfucker")
+				}
+			}
+		}
 	</script>
 
 </body>

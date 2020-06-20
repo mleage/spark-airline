@@ -483,7 +483,7 @@
 															</div><!-- .fields-row end -->
 														</div><!-- .form-group end -->
 														<div class="form-group">
-															<button type="submit" class="form-control icon"><i class="fas fa-search"></i></button>
+															<button type="button" class="form-control icon" onclick="multi()"><i class="fas fa-search"></i></button>
 														</div><!-- .form-group end -->
 													</form><!-- .form-banner-reservation end -->
 													<a class="btn-multiple-destinations btn x-small colorful hover-dark" href="javascript:;">
@@ -504,34 +504,44 @@
 
 		</section><!-- #banner end -->
 <script>
+	// 选定往返时传递的参数
 	function roundTrip(){
 		var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
 		var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
 		var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
-		var departDate = $("li.active").find('[name=\'brTimeEnd\']').val().replace(/\//g,'-')
-		alert(departureCityName)
-		alert(arriveCityName)
-		alert(departDate)
-		alert(returnDate)
+		var returnDate = $("li.active").find('[name=\'brTimeEnd\']').val().replace(/\//g,'-')
+
+		var str = "search.html?dd="+encodeURI(departDate)+"&rd="+encodeURI(returnDate)+"&dc="+encodeURI(departureCityName)+"&ac="+encodeURI(arriveCityName)
+		window.location.replace(str)
 	}
+	// 选定单程时传递的参数
 	function oneWay() {
 		var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
 		var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
 		var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
 
 
-		alert(departureCityName)
-		alert(arriveCityName)
-		alert(departDate)
-		alert('helloWorld')
+		var str = "search.html?d="+encodeURI(departDate)+"&dc="+encodeURI(departureCityName)+"&ac="+encodeURI(arriveCityName)
+		window.location.replace(str)
+
+		alert(str)
 	}
+	// 选定多程时（未完成）
 	function multi() {
-		var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
-		var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
-		var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
-		alert(departureCityName)
-		alert(arriveCityName)
-		alert(departDate)
+		var doms = $("li.active .fields-row.fields-4")
+		var domsPS = $("li.active").find('[name=\'brPlaceStart\']').val()
+		var domsPE = $("li.active").find('[name=\'brPlaceEnd\']').val()
+		var domsTS = $("li.active").find('[name=\'brTimeStart\']').val()
+		// var str = "search.html?d0="+encodeURI(domsTS[0].val())+"&dc0="+encodeURI(domsPS[0].val())+"&ac0="+encodeURI(domsPE[0].val())
+		len = doms.length
+		var departureCityName = []
+		var arriveCityName = []
+		var departDate = []
+		// console.log(doms)
+		alert(len)
+		for (var i=0; i<len; i++) {
+			alert(doms[i].find('[name=\'brPlaceStart\']').val())
+		}
 	}
 </script>
 		<!-- Content
