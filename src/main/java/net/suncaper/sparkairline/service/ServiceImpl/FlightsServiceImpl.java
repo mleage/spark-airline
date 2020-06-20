@@ -2,14 +2,20 @@ package net.suncaper.sparkairline.service.ServiceImpl;
 
 import net.suncaper.sparkairline.entity.Flights;
 import net.suncaper.sparkairline.service.FlightsService;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.mllib.recommendation.ALS;
+import org.apache.spark.mllib.recommendation.MatrixFactorizationModel;
+import org.apache.spark.mllib.recommendation.Rating;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * @author Jia,Dian
@@ -195,5 +201,57 @@ public class FlightsServiceImpl implements FlightsService {
         }
         return places;
     }
+
+    @Override
+    public List<Map<String, Object>> predictModelTraningYear(String departureCityName, String arrivalCityName, String year) throws IOException {
+        String sql = "select departure_cityid,arrival_cityid,month(departure_time) as month, price from d20200616";
+        System.out.println("sql=" + sql);
+        System.out.println("开始查询");
+        List<Map<String, Object>> flights = jdbcTemplate.queryForList(sql);
+        File file = new File("predictYear.data");
+        //如果没有文件就创建
+        if (!file.isFile()) {
+            file.createNewFile();
+        }
+        BufferedWriter writer = new BufferedWriter(new FileWriter("predictYear.data"));
+        for(Map<String,Object> map:flights){
+            String strItems="";
+            for (String key : map.keySet()) {
+                strItems = strItems+map.get(key)+"\t";
+            }
+            writer.write(strItems.trim());
+            writer.write("\n");
+        }
+        System.out.println("写入成功");
+        writer.close();
+
+        System.out.println(flights);
+        for (int i = 0; i < flights.size(); i++) {
+            System.out.println(flights.get(i));
+        }
+
+
+        return flights;
+    }
+
+    @Override
+    public List<Map<String, Object>> predictModelTraningMonth(String departureCityName, String arrivalCityName, String year, String month) {
+        String sql = "select day(departure_time) as day, min(price) as price from d20200616 where" +
+                " departure_cityname='" + departureCityName + "' and " +
+                "arrival_cityname='" + arrivalCityName +
+                "' and year(departure_time)= '"+year+
+                "' and month(departure_time)= '"+month+
+                "' group by day(departure_time)"+
+                " order by day(departure_time)";
+        System.out.println("sql=" + sql);
+        System.out.println("开始查询");
+        List<Map<String, Object>> flights = jdbcTemplate.queryForList(sql);
+        System.out.println(flights);
+        for (int i = 0; i < flights.size(); i++) {
+            System.out.println(flights.get(i));
+        }
+        return flights;
+    }
+
 
 }
