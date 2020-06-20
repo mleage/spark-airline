@@ -1420,8 +1420,39 @@
 		}
 
 		$(function () {
-			getResults()
+			getParams()
 		})
+
+		// 获取从index页面传过来的参数
+		function getParams() {
+			var url=window.location.search
+			var departureCityName, arrivalCityName, date
+			if(url.indexOf("?")!=-1){
+				var str = url.substr(1);
+				strs = str.split("&");
+				var key=new Array(strs.length);
+				var value=new Array(strs.length);
+				for(i=0;i<strs.length;i++){
+					key[i]=strs[i].split("=")[0]
+					value[i]= decodeURI(strs[i].split("=")[1]);
+					console.log(key[i]+"="+value[i]);
+				}
+				console.log(value[1]+ "----->"+value[2])
+				if (strs.length == 3) {
+
+					alert("Hello OneWay")
+				}
+				else if (strs.length == 4) {
+					alert("Hello RoundWay")
+				}
+				else if (strs.length) {
+					alert("Hello MultiRoute")
+				}
+				else {
+					alert("Hello motherfucker")
+				}
+			}
+		}
 	</script>
 
 </body>
