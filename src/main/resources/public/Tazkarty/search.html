@@ -197,7 +197,7 @@
 														<i class="fas fa-plane"></i>
 													</div><!-- .form-group end -->
 													<div class="form-group">
-														<input type="text" name="brTimeStart" class="form-control" id="datepicker-time-start"
+														<input type="text" name="brTimeStart" class="form-control datepicker-2-time-start"
 															placeholder="2019/09/30">
 														<i class="far fa-calendar"></i>
 													</div><!-- .form-group end -->
@@ -285,7 +285,7 @@
 														</ul><!-- .list-dropdown-passengers end -->
 													</div><!-- .form-group end -->
 													<div class="form-group">
-														<button type="submit" class="form-control icon" onclick="roundTrip()"><i class="fas fa-search"></i></button>
+														<button type="button" class="form-control icon" onclick="roundTrip()"><i class="fas fa-search"></i></button>
 													</div><!-- .form-group end -->
 												</form><!-- .form-banner-reservation end -->
 											</li>
@@ -1318,7 +1318,7 @@
 	<script src='js/functions.js'></script>
 
 	<script>
-		/** 根据时间、地点获取航班信息 */
+		/** 根据时间、地点获取单程航班信息 */
 		function getFlightOneWay(departureCityName,arrivalCityName,departureTime){
 			$.ajax({
 				type: "GET",
@@ -1333,37 +1333,44 @@
 				}
 			});
 		}
-		function roundTrip(){
-			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
-			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
-			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
-			var departDate = $("li.active").find('[name=\'brTimeEnd\']').val().replace(/\//g,'-')
-			alert(departureCityName)
-			alert(arriveCityName)
-			alert(departDate)
-			alert(returnDate)
+		/** 往返模式下的查询结果 */
+		function getFlightRoundWay(departureCityName,arrivalCityName,departureTime, arrivalTime) {
+			var outStr1, outStr2
+			// $.when(
+				$.ajax({
+					type: "GET",
+					url: "../flights/getFlightsOneWayByPrice?departureCityName="	+departureCityName
+							+"&arrivalCityName="	+ 	arrivalCityName
+							+"&departureTime="	+ 	departureTime,
+					contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+					success: function(data){
+						outStr1 = eval('('+data+')');
+					}
+				}),
+				$.ajax({
+					type: "GET",
+					url: "../flights/getFlightsOneWayByPrice?departureCityName="	+arrivalCityName
+							+"&arrivalCityName="	+ 	departureCityName
+							+"&departureTime="	+ 	arrivalTime,
+					contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+					success: function(data){
+						outStr2 = eval('('+data+')');
+					}
+				})
+			// ).done((outStr1,outStr2) => {return [outStr1,outStr2]})
+			alert(outStr1)
+			alert(outStr2)
+			return  outStr1, outStr2
 		}
+		/** 在单程模式下的点击查询 */
 		function oneWay() {
 			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
 			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
 			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
 
 			getFlightOneWay(departureCityName,arriveCityName,departDate)
-
-
-			alert(departureCityName)
-			alert(arriveCityName)
-			alert(departDate)
-			alert('helloWorld')
 		}
-		function multi() {
-			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
-			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
-			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
-			alert(departureCityName)
-			alert(arriveCityName)
-			alert(departDate)
-		}
+		/** 将单程查询获得的数据渲染到页面上 */
 		function getResultsOneWay(outStr) {
 			var results = ""
 			for (var i=0;i<outStr.length;i++) {
@@ -1441,6 +1448,31 @@
 			}
 			$("#true-content").html(results)
 		}
+		function roundTrip(){
+			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
+			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
+			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
+			var returnDate = $("li.active").find('[name=\'brTimeEnd\']').val().replace(/\//g,'-')
+
+			alert(departDate)
+			alert(departureCityName)
+			alert(returnDate)
+			alert(arriveCityName)
+			// var outStr1, outStr2
+			// [outStr1,outStr2] = getFlightRoundWay(departureCityName,arriveCityName,departDate,returnDate)
+			// alert(outStr1)
+			// alert(outStr2)
+		}
+
+		function multi() {
+			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
+			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
+			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
+			alert(departureCityName)
+			alert(arriveCityName)
+			alert(departDate)
+		}
+
 
 		$(function () {
 			// getParams()
