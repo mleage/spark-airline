@@ -1318,6 +1318,21 @@
 	<script src='js/functions.js'></script>
 
 	<script>
+		/** 根据时间、地点获取航班信息 */
+		function getFlight(departureCityName,arrivalCityName,departureTime){
+			$.ajax({
+				type: "GET",
+				url: "../flights/getFlightsOneWayByPrice?departureCityName="	+ 	"'"+departureCityName+"'"
+						+"&arrivalCityName="	+ 	"'"+arrivalCityName+"'"
+						+"&departureTime="	+ 	"'"+departureTime+"'",
+				contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+				success: function(data){
+					var outStr = eval('('+data+')');
+					var flightstr="";
+					alert(outStr)
+				}
+			});
+		}
 		function roundTrip(){
 			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
 			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
@@ -1333,7 +1348,7 @@
 			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
 			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
 
-
+			getFlight(departureCityName,arriveCityName,departDate)
 
 			alert(departureCityName)
 			alert(arriveCityName)
@@ -1420,10 +1435,10 @@
 		}
 
 		$(function () {
-			getParams()
+			// getParams()
 		})
 
-		// 获取从index页面传过来的参数
+		/** 接受从index页面传过来的参数 */
 		function getParams() {
 			var url=window.location.search
 			var departureCityName, arrivalCityName, date
