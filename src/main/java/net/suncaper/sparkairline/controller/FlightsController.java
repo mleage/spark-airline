@@ -107,7 +107,7 @@ public class FlightsController {
      * @param request
      * @return
      * ajax访问/flights/whenToFlightViewYear传递出发城市，到达城市，年份三个参数
-     * 返回当年最低价格排布，
+     * 返回当年最低价格排布，没有预测功能！
      * 具体实现见serviceImpl
      */
     @RequestMapping("/whenToFlightViewYear")
@@ -126,7 +126,7 @@ public class FlightsController {
      * @param request
      * @return
      * ajax访问/flights/whenToFlightViewYear传递出发城市，到达城市，年份，月份四个参数
-     * 返回当月最低价格排布，
+     * 返回当月最低价格排布，没有预测功能！
      * 具体实现见serviceImpl
      */
     @RequestMapping("/whenToFlightViewMonth")
@@ -142,6 +142,12 @@ public class FlightsController {
         return FlightsStr;
     }
 
+    /**
+     *
+     * @param request
+     * @return
+     * 输入出发城市和出发时间，返回对各城市的最低价格排布。
+     */
     @RequestMapping("flyToWhere")
     @ResponseBody
     public  String flyToWhere(HttpServletRequest request){
@@ -152,16 +158,44 @@ public class FlightsController {
         return PlacesStr;
     }
 
-    @RequestMapping("/predictModelTraningYear")
+    /**
+     *
+     * @param request
+     * @throws IOException
+     * 传递出发城市，目的城市，以及年份，回传对一年各月份的机票价格预测,属性为月份和价格。
+     */
+    @RequestMapping("/predictModelTraningYearDataPredicting")
     @ResponseBody
-    public String predictModelTraningYear(HttpServletRequest request) throws IOException {
+    public String predictModelTraningYearDataPredicting(HttpServletRequest request) throws IOException {
+        String departureCityName=request.getParameter("departureCityName");
+        String arrivalCityName=request.getParameter("arrivalCityName");
+        String year=request.getParameter("year");
+        List<Map<String,Object>> yearPredicting=FlightsService.predictModelTraningYearDataPredicting(departureCityName,arrivalCityName,year);
+        String yearPredictingStr=JSON.toJSONString(yearPredicting);
+        return yearPredictingStr;
+    }
+
+    /**
+     * 训练数据写入接口，请勿使用！
+     */
+    @RequestMapping("/predictModelTraningYearDataWrite")
+    @ResponseBody
+    public String predictModelTraningYearDataWrite(HttpServletRequest request) throws IOException {
+        List<Map<String, Object>> Flights=FlightsService.predictModelTraningYearDataWrite();
+        String FlightsStr= JSON.toJSONString(Flights);
+        return FlightsStr;
+    }
+
+    /**
+     * 数据训练接口，请勿使用！
+     */
+    @RequestMapping("/predictModelTraningYearDataTraining")
+    @ResponseBody
+    public void predictModelTraningYearDataTraining(HttpServletRequest request) throws IOException {
         String departureCityName=request.getParameter("departureCityName");
         String arrivalCityName=request.getParameter("arrivalCityName");
         String year=request.getParameter("year");
         String month=request.getParameter("month");
-        List<Map<String, Object>> Flights=FlightsService.predictModelTraningYear("宁波", "厦门","2020");
-
-        String FlightsStr= JSON.toJSONString(Flights);
-        return FlightsStr;
+        FlightsService.predictModelTraningYearDataTraining();
     }
 }

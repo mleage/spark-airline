@@ -72,6 +72,12 @@
             <version>1.2.47</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
+            <version>3.0.8</version>
+        </dependency>
+
     </dependencies>
 
     <build>
