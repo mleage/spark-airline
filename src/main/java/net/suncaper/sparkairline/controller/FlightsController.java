@@ -146,7 +146,9 @@ public class FlightsController {
      *
      * @param request
      * @return
-     * 输入出发城市和出发时间，返回对各城市的最低价格排布。
+     * ajax访问/flights/flyToWhere传递出发城市，出发时间两个个参数
+     * 返回飞往各地城市最低价的航程信息，
+     * 具体实现见serviceImpl
      */
     @RequestMapping("flyToWhere")
     @ResponseBody

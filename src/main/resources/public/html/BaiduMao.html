@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+
+    </style>
+    <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=cW2duezODAdR8acPTt5IYuGvLEnFwxN1"></script>
+    <title>城市地图</title>
+</head>
+<body>
+    <div id="allmap"></div>
+
+</body>
+</html>
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap",{minZoom:2,maxZoom:11});    // 创建Map实例
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+
+    map.centerAndZoom(new BMap.Point(116.404, 39.915), 8);  // 初始化地图,设置中心点坐标和地图级别
+
+    //添加地图类型控件
+    map.addControl(new BMap.MapTypeControl({
+        mapTypes:[
+            BMAP_NORMAL_MAP,
+            BMAP_HYBRID_MAP
+        ]}));
+    map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
+    //转移到用户所在位置
+    var mk
+    {//该部分通过IP定位
+        var  local_city=new BMap.LocalCity();
+        local_city.get(function (local_cityResult) {
+            mk =new BMap.Marker(local_cityResult.center);
+            map.addOverlay(mk);
+            map.centerAndZoom(local_cityResult.center,11);
+            var info=new BMap.Label("您所在的位置：    "+local_cityResult.name,{offset:new BMap.Size(20,-10)});
+            mk.setLabel(info);
+            mk.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+        });
+    }
+
+    RightClick();
+
+    // 编写自定义函数,创建标注
+    function addMarker(point){
+        var marker = new BMap.Marker(point);
+        map.addOverlay(marker);
+    }
+    //根据坐标point解析城市名——逆地址解析
+    function getCityNameByPoint(pt) {
+        var geoc = new BMap.Geocoder();
+        var cityname;
+        geoc.getLocationp(pt, function(rs){
+            var addComp = rs.addressComponents;
+            cityname=addComp.city;
+        });
+        return cityname
+    }
+
+    //覆盖物右键菜单功能函数
+    //搜索周边机场
+    //删除标注
+    var removeMarker = function(e,ee,marker){
+        map.removeOverlay(marker);
+    }
+    //创建覆盖物右键菜单
+    var markerMenu=new BMap.ContextMenu();
+    //右键菜单添加以上函数
+    markerMenu.addItem(new MenuItem("删除",removeMarker.bind(marker)));
+
+    var marker1= new BMap.Marker(new BMap.Point(104.067923463,30.6799428454));
+    map.addOverlay(marker1);
+    marker1.addContextMenu(markerMenu);
+
+    //监听鼠标右键事件 这个是必不可少的,这个是右键获取数据的来源,所有的右键功能必须在这个的基础上做
+    map.addEventListener("rightclick", function(e){
+        rightclickPoint = {lng:e.point.lng,lat:e.point.lat};
+    });
+</script>
