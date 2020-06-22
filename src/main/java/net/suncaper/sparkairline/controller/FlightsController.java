@@ -141,6 +141,14 @@ public class FlightsController {
         return FlightsStr;
     }
 
+    /**
+     *
+     * @param request
+     * @return
+     * ajax访问/flights/flyToWhere传递出发城市，出发时间两个个参数
+     * 返回飞往各地城市最低价的航程信息，
+     * 具体实现见serviceImpl
+     */
     @RequestMapping("flyToWhere")
     @ResponseBody
     public  String flyToWhere(HttpServletRequest request){

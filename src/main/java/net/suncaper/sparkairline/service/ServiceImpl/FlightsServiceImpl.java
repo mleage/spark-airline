@@ -177,7 +177,14 @@ public class FlightsServiceImpl implements FlightsService {
         }
         return flights;
     }
-
+    /**
+     *
+     * @param departureCityName
+     * @param departureTime
+     * @return
+     * 输入出发地和出发时间，获取各城市最低价的航程信息
+     *
+     */
     @Override
     public List<Map<String, Object>> flyToWhere(String departureTime, String departureCityName) {
         String sql="select * from d20200616 where flightnumber in("+
