@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import net.suncaper.sparkairline.service.FlightsService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +40,7 @@ public class FlightsController {
         String departureCityName=request.getParameter("departureCityName");
         String arrivalCityName=request.getParameter("arrivalCityName");
         String departureTime=request.getParameter("departureTime");
-        List<Map<String, Object>> Flights=FlightsService.getFlightsOneWayByPrice("departureCityName", "arrivalCityName","departureTime");
+        List<Map<String, Object>> Flights=FlightsService.getFlightsOneWayByPrice(departureCityName, arrivalCityName,departureTime);
 
         String FlightsStr= JSON.toJSONString(Flights);
         return FlightsStr;
@@ -58,7 +59,7 @@ public class FlightsController {
         String departureCityName=request.getParameter("departureCityName");
         String arrivalCityName=request.getParameter("arrivalCityName");
         String departureTime=request.getParameter("departureTime");
-        List<Map<String, Object>> Flights=FlightsService.getFlightsOneWayByDuringTime("departureCityName", "arrivalCityName","departureTime");
+        List<Map<String, Object>> Flights=FlightsService.getFlightsOneWayByDuringTime(departureCityName, arrivalCityName,departureTime);
 
         String FlightsStr= JSON.toJSONString(Flights);
         return FlightsStr;
@@ -77,7 +78,7 @@ public class FlightsController {
         String departureCityName = request.getParameter("departureCityName");
         String arrivalCityName = request.getParameter("arrivalCityName");
         String departureTime = request.getParameter("departureTime");
-        List<Map<String, Object>> Flights = FlightsService.getFlightsOneWayByDepartureTime("成都", "宁波", "2020-06-16");
+        List<Map<String, Object>> Flights = FlightsService.getFlightsOneWayByDepartureTime(departureCityName, arrivalCityName, departureTime);
 
         String FlightsStr = JSON.toJSONString(Flights);
         return FlightsStr;
@@ -96,7 +97,7 @@ public class FlightsController {
         String departureCityName=request.getParameter("departureCityName");
         String arrivalCityName=request.getParameter("arrivalCityName");
         String departureTime=request.getParameter("departureTime");
-        List<Map<String, Object>> Flights=FlightsService.getFlightsOneWayByArrivalTime("宁波", "厦门","2020-06-16");
+        List<Map<String, Object>> Flights=FlightsService.getFlightsOneWayByArrivalTime(departureCityName, arrivalCityName,departureTime);
 
         String FlightsStr= JSON.toJSONString(Flights);
         return FlightsStr;
@@ -115,7 +116,7 @@ public class FlightsController {
         String departureCityName=request.getParameter("departureCityName");
         String arrivalCityName=request.getParameter("arrivalCityName");
         String year=request.getParameter("year");
-        List<Map<String, Object>> Flights=FlightsService.whenToFlightViewYear("宁波", "厦门","2020");
+        List<Map<String, Object>> Flights=FlightsService.whenToFlightViewYear(departureCityName, arrivalCityName,year);
 
         String FlightsStr= JSON.toJSONString(Flights);
         return FlightsStr;
@@ -135,7 +136,7 @@ public class FlightsController {
         String arrivalCityName=request.getParameter("arrivalCityName");
         String year=request.getParameter("year");
         String month=request.getParameter("month");
-        List<Map<String, Object>> Flights=FlightsService.whenToFlightViewMonth("宁波", "厦门","2020","6");
+        List<Map<String, Object>> Flights=FlightsService.whenToFlightViewMonth(departureCityName, arrivalCityName,year,month);
 
         String FlightsStr= JSON.toJSONString(Flights);
         return FlightsStr;
@@ -157,5 +158,18 @@ public class FlightsController {
         List<Map<String,Object>> Places=FlightsService.flyToWhere(departureTime,departureCityName);
         String PlacesStr=JSON.toJSONString(Places);
         return PlacesStr;
+    }
+
+    @RequestMapping("/predictModelTraningYear")
+    @ResponseBody
+    public String predictModelTraningYear(HttpServletRequest request) throws IOException {
+        String departureCityName=request.getParameter("departureCityName");
+        String arrivalCityName=request.getParameter("arrivalCityName");
+        String year=request.getParameter("year");
+        String month=request.getParameter("month");
+        List<Map<String, Object>> Flights=FlightsService.predictModelTraningYear("宁波", "厦门","2020");
+
+        String FlightsStr= JSON.toJSONString(Flights);
+        return FlightsStr;
     }
 }
