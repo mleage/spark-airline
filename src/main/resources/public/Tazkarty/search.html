@@ -1389,13 +1389,15 @@
 				var diffDays = parseInt(lastingTime/86400)  //消耗天数
 				var diffHours = parseInt(lastingTime/3600)-24*diffDays //消耗小时数
 				var diffMinutes = parseInt(lastingTime%3600/60) //消耗分钟数
+				//var url= "images/files/logo-companies/"+"img-1+".png"
+
 				results += '<div class="block-content-2">'
 						+'<div class="box-result">'
 						+'<ul class="list-search-result">'
 						+'<li>'
 						+'<ul class="result-single">'
 						+'<li>'
-						+'<img src="images/files/logo-companies/img-1.png" alt="">'
+						+'<img src='+ "images/files/logo-companies/"+outStr[i].flightNumber.substring(0,2)+".png"+' alt="">'
 						+ outStr[i].airlineName
 						+'</li>'
 						+'<li>'
@@ -1486,7 +1488,7 @@
 							+'<li>'
 							+'<ul class="result-single">'
 							+'<li>'
-							+'<img src="images/files/logo-companies/img-1.png" alt="">'
+							+'<img src='+ "images/files/logo-companies/"+outStr1[i].flightNumber.substring(0,2)+".png"+' alt="">'
 							+ outStr1[i].airlineName
 							+'</li>'
 							+'<li>'
@@ -1509,7 +1511,7 @@
 							+'<li>'
 							+'<ul class="result-single">'
 							+'<li>'
-							+'<img src="images/files/logo-companies/img-1.png" alt="">'
+							+'<img src='+ "images/files/logo-companies/"+outStr1[i].flightNumber.substring(0,2)+".png"+' alt="">'
 							+outStr2[j].airlineName
 							+'</li>'
 							+'<li>'
