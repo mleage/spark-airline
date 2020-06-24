@@ -33,10 +33,11 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
      * @return
      * 输入出发地点，目的地点，以及出发时间，返回按价格排序的单程航班的maplist
      * 往返和多程只需将地点调换多次调用即可
+     * 此处只返回了航线数据
      */
     @Override
     public List<Map<String, Object>> getFlightsOneWayByPrice(String departureCityName, String arrivalCityName,String departureTime) {
-        String sql="select airlineName,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from d20200616 where" +
+        String sql="select flid,airlineName,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from flights_line where" +
                 " departure_cityname='"+departureCityName+"' and "+
                 "arrival_cityname='"+arrivalCityName+
                 "' and departure_time like '"+departureTime+
@@ -61,7 +62,7 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
      */
     @Override
     public List<Map<String, Object>> getFlightsOneWayByDuringTime(String departureCityName, String arrivalCityName,String departureTime) {
-        String sql="select airlineName,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from d20200616 where" +
+        String sql="select flid,airlineName,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from flights_line where" +
                 " departure_cityname='"+departureCityName+"' and "+
                 "arrival_cityname='"+arrivalCityName+
                 "' and departure_time like '"+departureTime+
