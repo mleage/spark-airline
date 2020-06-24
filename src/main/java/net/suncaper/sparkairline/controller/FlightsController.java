@@ -102,6 +102,24 @@ public class FlightsController {
         String FlightsStr= JSON.toJSONString(Flights);
         return FlightsStr;
     }
+
+    /**
+     *
+     * @param request
+     * @return
+     * 添加了拼接功能返回的map里增加了一个segment字段，形式为list<map>
+     */
+    @RequestMapping("/getFlightsOneWayJointByPrice")
+    @ResponseBody
+    public String getFlightsOneWayJointByPrice(HttpServletRequest request){
+        String departureCityName=request.getParameter("departureCityName");
+        String arrivalCityName=request.getParameter("arrivalCityName");
+        String departureTime=request.getParameter("departureTime");
+        List<Map<String, Object>> Flights=FlightsService.getFlightsOneWayJointByPrice("北京", "广州","2020-06-19");
+
+        String FlightsStr= JSON.toJSONString(Flights);
+        return FlightsStr;
+    }
     /**
      *
      * @param request
@@ -176,6 +194,8 @@ public class FlightsController {
         String yearPredictingStr=JSON.toJSONString(yearPredicting);
         return yearPredictingStr;
     }
+
+
 
     /**
      * 训练数据写入接口，请勿使用！
