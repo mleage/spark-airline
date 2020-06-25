@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@4.8.0/dist/echarts.min.js"></script>
+    <script src="js/china.js"></script>
+    <style>
+        *{margin:0;padding:0}
+        html,body{
+            width:100%;
+            height:100%;
+        }
+        #main{
+            width:1280px;
+            height:600px;
+            margin: 20px auto;
+            border:1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+<div id="main">
+
+</div>
+<script type="text/javascript" src="js/CityPoint.js">
+    // 读入外部数据
+    function readTextFile(file,callback) {
+        var  rawFile=new XMLHttpRequest();
+        rawFile.overrideMimeType("application/json");
+        rawFile.open("GET",file,true);
+        rawFile.onreadystatechange=function () {
+            if (rawFile.readyState==4&&rawFile.status=="200"){
+                callback(rawFile.responseText);
+            }
+        }
+        rawFile.send(null);
+    }
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function (ev){
+        if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
+            var rep = JSON.parse(xmlHttp.responseText);
+            var cityName=[];//存放城市名字
+            var price=[];//存放飞往城市的价格
+            var data=[];//用于组合信息
+            // var flightNumber[];//用于显示详细信息
+            var index=0;//用于指示所有城市中最低价格城市的索引
+            for(var i=0;i<rep.length;i++){
+                cityName.push(rep[i].arrival_cityname);
+                price.push(rep[i].price);
+                var tmp={name:rep[i].arrival_cityname,value:rep[i].price};
+                data.push(tmp);
+                if(price[index]>=rep[i].price){
+                    //比较最低价
+                    index=i;
+                }
+            }
+            var myChart = echarts.init(document.getElementById('main'));
+            //将外部数据读入
+            var cityLocation;//存放城市坐标
+            readTextFile("js/CityPoint.js",function (text) {
+                cityLocation=JSON.parse(text);
+                console.log(cityLocation);
+            })
+
+            //todo:如何将数据传入markPointData,可能对比城市名有问题
+            var markPointData=[];//用于存放数据
+            //根据城市名，获取坐标，并将价格放入对应得点
+            for (var i=0;i<cityName.length;i++){
+                var flag=cityLocation[data[i].name];
+                if (flag)
+                {
+                    markPointData.push(
+                        {
+                            name:data[i].name,
+                            value:flag.concat(data[i].value)
+                            //todo:可能获取坐标有问题
+                            // coord:flag.concat()
+                        }
+                    )
+                }
+               /* else{
+                    console.log("-----------对比城市有问题--------")
+                }*/
+            }
+
+
+            var option={
+                backgroundColor: {
+                    type: 'linear',
+                    x: 0,
+                    y: 0,
+                    x2: 1,
+                    y2: 1,
+                    colorStops: [{
+                        //背景渐变颜色，由于灰色感觉效果更好，所以没有渐变
+                        offset: 0, color: 'grey' // 0% 处的颜色
+                    }, {
+                        offset: 1, color: 'grey' // 100% 处的颜色
+                    }],
+                    globalCoord: false // 缺省为 false
+                },
+                title: {
+                    top:20,
+                    text: '去哪呀',
+                    subtext: '',
+                    x: 'center',
+                    textStyle: {
+                        color: 'black'
+                    }
+                },
+                "tooltip": { //提示框组件。
+
+                    "trigger": 'item', //触发类型 散点图
+
+                    "enterable": true, //鼠标是否可进入提示框
+
+                    "transitionDuration": 1, //提示框移动动画过渡时间
+
+                    "formatter": function(params) {
+                        //todo:返回省内低价航程城市的个数，此处返回省份名
+
+                        return params.name //省级tooltip
+
+                    },
+
+                    "backgroundColor": '#fff',
+
+                    "borderWidth": '1px',
+
+                    "borderRadius": '1',
+
+                    "borderColor": 'rgba(255,150,128,1)',
+
+                    "textStyle": {
+
+                        "color": 'rgba(255,0,0,1)'
+
+                    },
+
+                    "padding": 20
+
+                },
+                "series":[{
+                    "type":"map",
+                    "mapType":"china",
+
+                    "label": {
+
+                        "normal": {
+
+                            "show": true,
+
+                        },
+
+                        "emphasis": {
+
+                            show: true,
+
+                        }
+
+                    },
+
+                    "itemStyle": {
+
+                        "normal": {
+
+                            "backgroundColor": 'rgba(255,150,128,1)'
+
+                        },
+
+                        "emphasis": {
+
+                            "backgroundColor": 'rgba(255,150,128,1)'
+
+                        }
+
+                    },
+                    //此处可加载地图数据，地图或省份级别数据
+                 /*   data:
+                    ,*/
+                    "zoom": 1.2, //当前视角的缩放比例。
+                    roam: true, //是否开启平游或缩放
+                    scaleLimit: { //滚轮缩放的极限控制
+
+                        min: 1,
+
+                        max: 10
+
+                    },
+                    "selectedMode": false,
+                    "layoutCenter": ['50%', '53%'],
+                    "layoutSize": "102%",
+                    "label": { //图形上的文本标签，可用于说明图形的一些数据信息，比如值，名称等
+
+                        "normal": {
+
+                            "show": true,
+
+                            "textStyle": {
+
+                                "color": "#000", //正常状态的样式
+
+                                "fontSize": "12"
+
+                            }
+
+                        },
+
+                        "emphasis": {
+
+                            "show": true,
+
+                            "textStyle": {
+
+                                "color": "#f00", //被选中的样式
+
+                                "fontSize": "12"
+
+                            }
+
+                        }
+
+                    },
+                    "markPoint": { //图表标注。
+
+                        "symbol": 'path://M512 39.384615l169.353846 295.384615 342.646154 63.015385-240.246154 248.123077L827.076923 984.615385l-315.076923-145.723077L196.923077 984.615385l43.323077-334.769231L0 401.723077l342.646154-63.015385L512 39.384615',
+
+                        "symbolSize": 14, //图形大小
+
+                        "label": {
+
+                            "normal": {
+
+                                "show": true,
+
+                            },
+
+                            "emphasis": {
+
+                                show: true,
+
+                            }
+
+                        },
+
+                        tooltip: { //标注点tooltip
+
+                            "formatter": function(params) {
+                                //todo:修改函数,返回城市名和价格,待检测
+                                return "城市："+params.name+"价格："+params.value;
+
+                            }
+
+                        },
+
+                        "itemStyle": {
+
+                            "normal": {
+
+                                "color": 'red'
+
+                            }
+
+                        },
+                        "data": markPointData
+
+                    }
+                }]
+            }
+            myChart.setOption(option);
+        }
+    }
+    //获取数据
+    xmlHttp.open('GET', '/flights/flytoWhere', true)
+    xmlHttp.send();
+    //根据窗口的大小变动图表 --- 重点
+    window.onresize = function(){
+        myChart.resize();
+        //myChart1.resize();    //若有多个图表变动，可多写
+
+    }
+    //点击，弹出提示框显示名字
+    myChart.on('click', function (params) {
+        alert(params.name);
+    });
+</script>
+</body>
+</html>
