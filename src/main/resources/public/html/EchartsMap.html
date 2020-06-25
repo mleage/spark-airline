@@ -34,27 +34,10 @@
     var myChart = echarts.init(document.getElementById('main'));
 
     //前端向后端传入数据
-   /* function query() {
-      var departureCity=document.getElementById("departureCity").value;
-      var  departureTime=document.getElementById("departureTime").value;
-      var tmp="departureCityName="+departureCity+"&departureTime="+departureTime;
-      alert(tmp);
-      return tmp;
-    };*/
     //outParm是前端向后端传入的字符串
 
     // 读入外部数据
-  /*  function readTextFile(file,callback) {
-        var  rawFile=new XMLHttpRequest();
-        rawFile.overrideMimeType("application/json");
-        rawFile.open("GET",file,true);
-        rawFile.onreadystatechange=function () {
-            if (rawFile.readyState==4&&rawFile.status=="200"){
-                callback(rawFile.responseText);
-            }
-        }
-        rawFile.send(null);
-    }*/
+
  /*   //前端传入后端数据,ajax封装
     function FromandWhen(departureCityName,departureTime) {
         $.ajax({
@@ -87,13 +70,6 @@
                 }
             }
 
-          /*  //将外部数据读入
-            var cityLocation;//存放城市坐标
-            readTextFile("js/CityPoint.js",function (text) {
-                cityLocation=JSON.parse(text);
-                console.log(cityLocation);
-                alert("运行到读取外部数据");
-            })*/
 
             //todo:如何将数据传入markPointData,可能对比城市名有问题
             var markPointData=[];//用于存放数据
