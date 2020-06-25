@@ -89,7 +89,7 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
      */
     @Override
     public List<Map<String, Object>> getFlightsOneWayByDepartureTime(String departureCityName, String arrivalCityName,String departureTime) {
-        String sql = "select airlineName,departure_cityname,arrival_cityname,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from d20200616 where" +
+        String sql = "select airlineName,departure_cityname,arrival_cityname,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from flights_line where" +
                 " departure_cityname='" + departureCityName + "' and " +
                 "arrival_cityname='" + arrivalCityName +
                 "' and departure_time like '" + departureTime +
@@ -114,7 +114,7 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
      */
     @Override
     public List<Map<String, Object>> getFlightsOneWayByArrivalTime(String departureCityName, String arrivalCityName,String departureTime) {
-        String sql = "select airlineName,departure_cityname,arrival_cityname,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from d20200616 where" +
+        String sql = "select airlineName,departure_cityname,arrival_cityname,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from flights_line where" +
                 " departure_cityname='" + departureCityName + "' and " +
                 "arrival_cityname='" + arrivalCityName +
                 "' and departure_time like '" + departureTime +
@@ -136,11 +136,11 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
                 "arrival_cityname='"+arrivalCityName+
                 "' and departure_time like '"+departureTime+
                 "%' order by price";
-        String segment1="select departure_cityname,arrival_cityname,airlineName,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from d20200616 where" +
+        String segment1="select departure_cityname,arrival_cityname,airlineName,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from flights_line where" +
                 " departure_cityname='"+departureCityName+
                 "' and departure_time like '"+departureTime+
                 "%' order by departure_time";
-        String segment2="select departure_cityname,arrival_cityname,airlineName,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from d20200616 where" +
+        String segment2="select departure_cityname,arrival_cityname,airlineName,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from flights_line where" +
                 " arrival_cityname='"+arrivalCityName+
                 "' order by departure_time";
         List<Map<String, Object>> flights_segment1 = jdbcTemplate.queryForList(segment1);
