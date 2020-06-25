@@ -25,9 +25,26 @@
 <div id="main">
 
 </div>
+<!--<form>
+    <input type="text" name="出发城市" id="departureCity" />
+    <input type="text" name="出发时间" id="departureTime" />
+    <input type="button" name="button" value="查询" onclick="query()" />
+</form>-->
 <script type="text/javascript" src="js/CityPoint.js">
+    var myChart = echarts.init(document.getElementById('main'));
+
+    //前端向后端传入数据
+   /* function query() {
+      var departureCity=document.getElementById("departureCity").value;
+      var  departureTime=document.getElementById("departureTime").value;
+      var tmp="departureCityName="+departureCity+"&departureTime="+departureTime;
+      alert(tmp);
+      return tmp;
+    };*/
+    //outParm是前端向后端传入的字符串
+
     // 读入外部数据
-    function readTextFile(file,callback) {
+  /*  function readTextFile(file,callback) {
         var  rawFile=new XMLHttpRequest();
         rawFile.overrideMimeType("application/json");
         rawFile.open("GET",file,true);
@@ -37,7 +54,20 @@
             }
         }
         rawFile.send(null);
-    }
+    }*/
+ /*   //前端传入后端数据,ajax封装
+    function FromandWhen(departureCityName,departureTime) {
+        $.ajax({
+            type:"GET",
+            url:"../flights/flyToWhere?departureCityName="	+departureCityName
+                +"&departureTime="	+ 	departureTime,
+            contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+            success:function (data) {
+                //这里该做什么？
+                console.log(data);
+            }
+        })
+    }*/
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function (ev){
         if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
@@ -45,7 +75,6 @@
             var cityName=[];//存放城市名字
             var price=[];//存放飞往城市的价格
             var data=[];//用于组合信息
-            // var flightNumber[];//用于显示详细信息
             var index=0;//用于指示所有城市中最低价格城市的索引
             for(var i=0;i<rep.length;i++){
                 cityName.push(rep[i].arrival_cityname);
@@ -57,35 +86,34 @@
                     index=i;
                 }
             }
-            var myChart = echarts.init(document.getElementById('main'));
-            //将外部数据读入
+
+          /*  //将外部数据读入
             var cityLocation;//存放城市坐标
             readTextFile("js/CityPoint.js",function (text) {
                 cityLocation=JSON.parse(text);
                 console.log(cityLocation);
-            })
+                alert("运行到读取外部数据");
+            })*/
 
             //todo:如何将数据传入markPointData,可能对比城市名有问题
             var markPointData=[];//用于存放数据
             //根据城市名，获取坐标，并将价格放入对应得点
             for (var i=0;i<cityName.length;i++){
-                var flag=cityLocation[data[i].name];
+                var flag=cityCoord[data[i].name];
                 if (flag)
                 {
                     markPointData.push(
                         {
+                            //城市名
                             name:data[i].name,
-                            value:flag.concat(data[i].value)
-                            //todo:可能获取坐标有问题
-                            // coord:flag.concat()
+                            //价格
+                            value:data[i].value,
+                            //坐标
+                            coord:[flag.concat()[0],flag.concat()[1]]
                         }
                     )
                 }
-               /* else{
-                    console.log("-----------对比城市有问题--------")
-                }*/
             }
-
 
             var option={
                 backgroundColor: {
@@ -274,7 +302,9 @@
         }
     }
     //获取数据
-    xmlHttp.open('GET', '/flights/flytoWhere', true)
+    var outParm="departureCityName=北京&departureTime=2020-06-19 08:00:00";
+    xmlHttp.open('GET', '/flights/flyToWhere?'+outParm, true)
+    console.log(outParm);
     xmlHttp.send();
     //根据窗口的大小变动图表 --- 重点
     window.onresize = function(){
