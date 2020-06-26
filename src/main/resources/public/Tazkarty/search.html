@@ -550,27 +550,21 @@
 																	</div><!-- .list-sorter-single end -->
 																</li>
 																<li>
-																	<div class="list-sorter-single">
-																		<select class="options-select2">
+																	<div class="list-sorter-single" id="select-duration">
+																		<select class="options-select2" onchange="if(this.selectedIndex==1) sortByDuration(-1); else if(this.selectedIndex==2) sortByDuration(1);">
 																			<option selected disabled hidden>Duration</option>
-																			<option>Option 1</option>
-																			<option>Option 2</option>
-																			<option>Option 3</option>
-																			<option>Option 4</option>
-																			<option>Option 5</option>
+																			<option value="-1">Descend</option>
+																			<option value="1">Ascend</option>
 																		</select>
 																		<i class="fa fa-sort"></i>
 																	</div><!-- .list-sorter-single end -->
 																</li>
 																<li>
-																	<div class="list-sorter-single">
-																		<select class="options-select2">
+																	<div class="list-sorter-single" id="select-price">
+																		<select class="options-select2" onchange="if(this.selectedIndex==1) sortByPrice(-1); else if(this.selectedIndex==2) sortByPrice(1);">
 																			<option selected disabled hidden>Price</option>
-																			<option>Option 1</option>
-																			<option>Option 2</option>
-																			<option>Option 3</option>
-																			<option>Option 4</option>
-																			<option>Option 5</option>
+																			<option value="-1">Descend</option>
+																			<option value="1">Ascend</option>
 																		</select>
 																		<i class="fa fa-sort"></i>
 																	</div><!-- .list-sorter-single end -->
@@ -579,6 +573,132 @@
 														</div><!-- .trip-sorter end -->
 													</div><!-- .block-content-2 end -->
 													<div id="true-content">
+													<div class="block-content-2">
+														<div class="box-result">
+															<ul class="list-search-result">
+																<li>
+																	<ul class="result-single">
+																		<li>
+																			<img src="images/files/logo-companies/img-1.png" alt="">
+																			EgyptAir
+																		</li>
+																		<li>
+																			Cairo
+																			<span class="date">22:30</span>
+																		</li>
+																		<li>
+																			<span class="shape-distance"></span>
+																		</li>
+																		<li>
+																			Sharm El Sheik
+																			<span class="date">23:30</span>
+																		</li>
+																		<li>
+																			<span class="duration">03h 00m <span> | Direct</span></span>
+																		</li>
+																	</ul><!-- .result-single end -->
+																</li>
+																<li>
+																	<ul class="result-single">
+																		<li>
+																			<img src="images/files/logo-companies/img-1.png" alt="">
+																			EgyptAir
+																		</li>
+																		<li>
+																			Cairo
+																			<span class="date">22:30</span>
+																		</li>
+																		<li>
+																			<span class="shape-distance"></span>
+																		</li>
+																		<li>
+																			Sharm El Sheik
+																			<span class="date">23:30</span>
+																		</li>
+																		<li>
+																			<span class="duration">01h 00m <span> | Direct</span></span>
+																		</li>
+																	</ul><!-- .result-single end -->
+																</li>
+															</ul><!-- .list-search-result end -->
+															<div class="result-price">
+																<div class="price">
+																	EGP <span class="value">5218.96</span>
+																	<span class="description">Price for 1 Person(s)</span>
+																</div><!-- .price end -->
+																<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>
+																<a class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample">点击查看详情</a>
+															</div><!-- .result-price end -->
+														</div><!-- .box-result end -->
+														<div class="collapse" id="collapseExample">
+															<div class="card card-body">
+																where can I find the details
+															</div>
+														</div>
+													</div><!-- .block-content-2 end -->
+
+
+
+													<div class="block-content-2">
+														<div class="box-result">
+															<ul class="list-search-result">
+																<li>
+																	<ul class="result-single">
+																		<li>
+																			<img src="images/files/logo-companies/img-1.png" alt="">
+																			EgyptAir
+																		</li>
+																		<li>
+																			Cairo
+																			<span class="date">22:30</span>
+																		</li>
+																		<li>
+																			<span class="shape-distance"></span>
+																		</li>
+																		<li>
+																			Sharm El Sheik
+																			<span class="date">23:30</span>
+																		</li>
+																		<li>
+																			<span class="duration">01h 00m <span> | Direct</span></span>
+																		</li>
+																	</ul><!-- .result-single end -->
+																</li>
+																<li>
+																	<ul class="result-single">
+																		<li>
+																			<img src="images/files/logo-companies/img-1.png" alt="">
+																			EgyptAir
+																		</li>
+																		<li>
+																			Cairo
+																			<span class="date">22:30</span>
+																		</li>
+																		<li>
+																			<span class="shape-distance"></span>
+																		</li>
+																		<li>
+																			Sharm El Sheik
+																			<span class="date">23:30</span>
+																		</li>
+																		<li>
+																			<span class="duration">02h 00m <span> | Direct</span></span>
+																		</li>
+																	</ul><!-- .result-single end -->
+																</li>
+															</ul><!-- .list-search-result end -->
+															<div class="result-price">
+																<div class="price">
+																	EGP <span class="value">4218.96</span>
+																	<span class="description">Price for 1 Person(s)</span>
+																</div><!-- .price end -->
+																<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>
+															</div><!-- .result-price end -->
+														</div><!-- .box-result end -->
+													</div><!-- .block-content-2 end -->
+
+
+
 													<div class="block-content-2">
 														<div class="box-result">
 															<ul class="list-search-result">
@@ -629,136 +749,15 @@
 															</ul><!-- .list-search-result end -->
 															<div class="result-price">
 																<div class="price">
-																	EGP <span class="value">4218.96</span>
+																	EGP <span class="value">3218.96</span>
 																	<span class="description">Price for 1 Person(s)</span>
 																</div><!-- .price end -->
 																<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>
-																<a class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample">点击查看详情</a>
 															</div><!-- .result-price end -->
 														</div><!-- .box-result end -->
-														<div class="collapse" id="collapseExample">
-															<div class="card card-body">
-																where can I find the details
-															</div>
-														</div>
 													</div><!-- .block-content-2 end -->
 
 
-
-<!--													<div class="block-content-2">-->
-<!--														<div class="box-result">-->
-<!--															<ul class="list-search-result">-->
-<!--																<li>-->
-<!--																	<ul class="result-single">-->
-<!--																		<li>-->
-<!--																			<img src="images/files/logo-companies/img-1.png" alt="">-->
-<!--																			EgyptAir-->
-<!--																		</li>-->
-<!--																		<li>-->
-<!--																			Cairo-->
-<!--																			<span class="date">22:30</span>-->
-<!--																		</li>-->
-<!--																		<li>-->
-<!--																			<span class="shape-distance"></span>-->
-<!--																		</li>-->
-<!--																		<li>-->
-<!--																			Sharm El Sheik-->
-<!--																			<span class="date">23:30</span>-->
-<!--																		</li>-->
-<!--																		<li>-->
-<!--																			<span class="duration">01h 00m <span> | Direct</span></span>-->
-<!--																		</li>-->
-<!--																	</ul>&lt;!&ndash; .result-single end &ndash;&gt;-->
-<!--																</li>-->
-<!--																<li>-->
-<!--																	<ul class="result-single">-->
-<!--																		<li>-->
-<!--																			<img src="images/files/logo-companies/img-1.png" alt="">-->
-<!--																			EgyptAir-->
-<!--																		</li>-->
-<!--																		<li>-->
-<!--																			Cairo-->
-<!--																			<span class="date">22:30</span>-->
-<!--																		</li>-->
-<!--																		<li>-->
-<!--																			<span class="shape-distance"></span>-->
-<!--																		</li>-->
-<!--																		<li>-->
-<!--																			Sharm El Sheik-->
-<!--																			<span class="date">23:30</span>-->
-<!--																		</li>-->
-<!--																		<li>-->
-<!--																			<span class="duration">01h 00m <span> | Direct</span></span>-->
-<!--																		</li>-->
-<!--																	</ul>&lt;!&ndash; .result-single end &ndash;&gt;-->
-<!--																</li>-->
-<!--															</ul>&lt;!&ndash; .list-search-result end &ndash;&gt;-->
-<!--															<div class="result-price">-->
-<!--																<div class="price">-->
-<!--																	EGP <span class="value">4218.96</span>-->
-<!--																	<span class="description">Price for 1 Person(s)</span>-->
-<!--																</div>&lt;!&ndash; .price end &ndash;&gt;-->
-<!--																<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>-->
-<!--															</div>&lt;!&ndash; .result-price end &ndash;&gt;-->
-<!--														</div>&lt;!&ndash; .box-result end &ndash;&gt;-->
-<!--													</div>&lt;!&ndash; .block-content-2 end &ndash;&gt;-->
-<!--													<div class="block-content-2">-->
-<!--														<div class="box-result">-->
-<!--															<ul class="list-search-result">-->
-<!--																<li>-->
-<!--																	<ul class="result-single">-->
-<!--																		<li>-->
-<!--																			<img src="images/files/logo-companies/img-1.png" alt="">-->
-<!--																			EgyptAir-->
-<!--																		</li>-->
-<!--																		<li>-->
-<!--																			Cairo-->
-<!--																			<span class="date">22:30</span>-->
-<!--																		</li>-->
-<!--																		<li>-->
-<!--																			<span class="shape-distance"></span>-->
-<!--																		</li>-->
-<!--																		<li>-->
-<!--																			Sharm El Sheik-->
-<!--																			<span class="date">23:30</span>-->
-<!--																		</li>-->
-<!--																		<li>-->
-<!--																			<span class="duration">01h 00m <span> | Direct</span></span>-->
-<!--																		</li>-->
-<!--																	</ul>&lt;!&ndash; .result-single end &ndash;&gt;-->
-<!--																</li>-->
-<!--																<li>-->
-<!--																	<ul class="result-single">-->
-<!--																		<li>-->
-<!--																			<img src="images/files/logo-companies/img-1.png" alt="">-->
-<!--																			EgyptAir-->
-<!--																		</li>-->
-<!--																		<li>-->
-<!--																			Cairo-->
-<!--																			<span class="date">22:30</span>-->
-<!--																		</li>-->
-<!--																		<li>-->
-<!--																			<span class="shape-distance"></span>-->
-<!--																		</li>-->
-<!--																		<li>-->
-<!--																			Sharm El Sheik-->
-<!--																			<span class="date">23:30</span>-->
-<!--																		</li>-->
-<!--																		<li>-->
-<!--																			<span class="duration">01h 00m <span> | Direct</span></span>-->
-<!--																		</li>-->
-<!--																	</ul>&lt;!&ndash; .result-single end &ndash;&gt;-->
-<!--																</li>-->
-<!--															</ul>&lt;!&ndash; .list-search-result end &ndash;&gt;-->
-<!--															<div class="result-price">-->
-<!--																<div class="price">-->
-<!--																	EGP <span class="value">4218.96</span>-->
-<!--																	<span class="description">Price for 1 Person(s)</span>-->
-<!--																</div>&lt;!&ndash; .price end &ndash;&gt;-->
-<!--																<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>-->
-<!--															</div>&lt;!&ndash; .result-price end &ndash;&gt;-->
-<!--														</div>&lt;!&ndash; .box-result end &ndash;&gt;-->
-<!--													</div>&lt;!&ndash; .block-content-2 end &ndash;&gt;-->
 <!--													<div class="block-content-2">-->
 <!--														<div class="box-result">-->
 <!--															<ul class="list-search-result">-->
@@ -1412,7 +1411,7 @@
 						+'<span class="date">'+arriveTime.getHours()+":"+(arriveTime.getMinutes()<10?'0'+arriveTime.getMinutes():arriveTime.getMinutes())+'</span>'
 						+'</li>'
 						+'<li>'
-						+'<span class="duration">'+diffHours+'h '+diffMinutes+'m <span> | '+(outStr[i].stop_cityname=="无"?"Direct":"non-direct")+'</span></span>'
+						+'<span class="duration"> <p> '+diffHours+'h '+diffMinutes+'m </p> <span> | '+(outStr[i].stop_cityname=="无"?"Direct":"non-direct")+'</span></span>'
 						+'</li>'
 						+'</ul><!-- .result-single end -->'
 						+'</li>'
@@ -1533,11 +1532,12 @@
 							+'</ul><!-- .list-search-result end -->'
 							+'<div class="result-price">'
 							+'<div class="price">'
-							+'RMB <span class="value">'+outStr1[i].price+outStr2[j].price+'</span>'
+							+'RMB <span class="value">'+(parseInt(outStr1[i].price)+parseInt(outStr2[j].price))+'</span>'
 							+'<span class="description">Price for 1 Person(s)</span>'
+							+'<span>Total Time:<p>'+(parseInt(diffHours1)+parseInt(diffHours2))+'h  '+(parseInt(diffMinutes1)+parseInt(diffMinutes2))+'m'+'</p></span>'
 							+'</div><!-- .price end -->'
 							+'<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>'
-							+'<a class="btn btn-primary" data-toggle="collapse" data-target=\"#collapseExample'+i.toString()+'\"'+'>点击查看详情</a>'
+							+'<a class="btn btn-primary" data-toggle="collapse" data-target=\"#collapseExample'+outStr1[i].flid+outStr2[j].flid+'\"'+'>点击查看详情</a>'
 							+'</div><!-- .result-price end -->'
 							+'</div><!-- .box-result end -->'
 							+'<div class="collapse" id=\"collapseExample'+i.toString()+'\"'+'>'
@@ -1546,6 +1546,11 @@
 							+'</div>'
 							+'</div>'
 							+'</div><!-- .block-content-2 end -->'
+					// console.log("=============>")
+					// console.log(outStr1[i].price)
+					// console.log(outStr2[j].price)
+					// console.log(parseInt(outStr1[i].price) + parseInt(outStr2[j].price))
+					// console.log("<=============")
 				}
 
 			}
@@ -1561,16 +1566,16 @@
 			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
 			var returnDate = $("li.active").find('[name=\'brTimeEnd\']').val().replace(/\//g,'-')
 
-			alert(departDate)
-			alert(departureCityName)
-			alert(returnDate)
-			alert(arriveCityName)
+			// alert(departDate)
+			// alert(departureCityName)
+			// alert(returnDate)
+			// alert(arriveCityName)
 			// var outStr1, outStr2
 			var [outStr1,outStr2] = getFlightRoundWay(departureCityName,arriveCityName,departDate,returnDate)
-			console.log("==========>")
-			console.log(outStr1)
-			console.log("<==========")
-			console.log(outStr2)
+			// console.log("==========>")
+			// console.log(outStr1)
+			// console.log("<==========")
+			// console.log(outStr2)
 			getResultsRoundTrip(outStr1, outStr2)
 		}
 
@@ -1617,6 +1622,83 @@
 					alert("Error!")
 				}
 			}
+		}
+
+		/**
+		 * 价格排序实现
+		 */
+		function sortByPrice(flag) {
+			//flag为1时，做升序排列
+			// alert("Begin Sort!")
+			if (flag == 1) {
+				alert("Ascend")
+				var domList = $('#true-content .block-content-2').get();
+				domList.sort(function(a,b){
+					var elOne = $(a).find('.price .value').html();
+					var elTwo = $(b).find('.price .value').html();
+					if (parseInt(elOne) > parseInt(elTwo)) return 1;
+					if (parseInt(elOne) < parseInt(elTwo)) return -1;
+					return 0
+				});
+				$('#true-content').append(domList)
+				// console.log(domList)
+			}
+			//flag为-1时，做降序排列
+			else if(flag == -1) {
+				alert("Descend")
+				var domList = $('#true-content .block-content-2').get();
+				domList.sort(function(a,b){
+					var elOne = $(a).find('.price .value').html();
+					var elTwo = $(b).find('.price .value').html();
+					if (parseInt(elOne) > parseInt(elTwo)) return -1;
+					if (parseInt(elOne) < parseInt(elTwo)) return 1;
+					return 0
+				});
+				$('#true-content').append(domList)
+				// console.log(domList)
+			}
+
+		}
+
+		/**
+		 * 实现时常排序
+		 */
+		function sortByDuration(flag) {
+			alert("Duration Sort")
+			//flag=1时升序排序
+			if (flag == 1) {
+				alert("Duration-Ascend")
+				var domList = $('#true-content .block-content-2').get();
+				domList.sort(function(a,b){
+					var elOne = $(a).find('p').html();
+					var elTwo = $(b).find('p').html();
+					if (elOne > elTwo) return 1;
+					if (elOne < elTwo) return -1;
+					// console.log("=======>")
+					// console.log("elOne="+elOne)
+					// // console.log("elTwo="+elTwo)
+					// // console.log(elOne>elTwo)
+					// console.log("<=======")
+					return 0
+				});
+				$('#true-content').append(domList)
+				console.log(domList)
+			}
+			//flag为-1时，做降序排列
+			else if(flag == -1) {
+				alert("Duration-Descend")
+				var domList = $('#true-content .block-content-2').get();
+				domList.sort(function(a,b){
+					var elOne = $(a).find('p').html();
+					var elTwo = $(b).find('p').html();
+					if (elOne > elTwo) return -1;
+					if (elOne < elTwo) return 1;
+					return 0
+				});
+				$('#true-content').append(domList)
+				console.log(domList)
+			}
+
 		}
 	</script>
 

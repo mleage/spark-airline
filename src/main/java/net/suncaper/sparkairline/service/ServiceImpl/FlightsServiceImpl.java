@@ -89,7 +89,7 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
      */
     @Override
     public List<Map<String, Object>> getFlightsOneWayByDepartureTime(String departureCityName, String arrivalCityName,String departureTime) {
-        String sql = "select airlineName,departure_cityname,arrival_cityname,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from flights_line where" +
+        String sql = "select airlineName,departure_cityname,arrival_cityname,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from d20200616 where" +
                 " departure_cityname='" + departureCityName + "' and " +
                 "arrival_cityname='" + arrivalCityName +
                 "' and departure_time like '" + departureTime +
@@ -114,7 +114,7 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
      */
     @Override
     public List<Map<String, Object>> getFlightsOneWayByArrivalTime(String departureCityName, String arrivalCityName,String departureTime) {
-        String sql = "select airlineName,departure_cityname,arrival_cityname,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from flights_line where" +
+        String sql = "select airlineName,departure_cityname,arrival_cityname,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from d20200616 where" +
                 " departure_cityname='" + departureCityName + "' and " +
                 "arrival_cityname='" + arrivalCityName +
                 "' and departure_time like '" + departureTime +
@@ -136,11 +136,11 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
                 "arrival_cityname='"+arrivalCityName+
                 "' and departure_time like '"+departureTime+
                 "%' order by price";
-        String segment1="select departure_cityname,arrival_cityname,airlineName,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from flights_line where" +
+        String segment1="select departure_cityname,arrival_cityname,airlineName,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from d20200616 where" +
                 " departure_cityname='"+departureCityName+
                 "' and departure_time like '"+departureTime+
                 "%' order by departure_time";
-        String segment2="select departure_cityname,arrival_cityname,airlineName,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from flights_line where" +
+        String segment2="select departure_cityname,arrival_cityname,airlineName,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from d20200616 where" +
                 " arrival_cityname='"+arrivalCityName+
                 "' order by departure_time";
         List<Map<String, Object>> flights_segment1 = jdbcTemplate.queryForList(segment1);
@@ -204,7 +204,7 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
      */
     @Override
     public List<Map<String, Object>> whenToFlightViewYear(String departureCityName, String arrivalCityName, String year) {
-        String sql = "select month(departure_time) as month, min(price) as price from flights_line where" +
+        String sql = "select month(departure_time) as month, min(price) as price from d20200616 where" +
                 " departure_cityname='" + departureCityName + "' and " +
                 "arrival_cityname='" + arrivalCityName +
                 "' and year(departure_time)= '"+year+
@@ -232,7 +232,7 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
      */
     @Override
     public List<Map<String, Object>> whenToFlightViewMonth(String departureCityName, String arrivalCityName, String year, String month) {
-        String sql = "select day(departure_time) as day, min(price) as price from flights_line where" +
+        String sql = "select day(departure_time) as day, min(price) as price from d20200616 where" +
                 " departure_cityname='" + departureCityName + "' and " +
                 "arrival_cityname='" + arrivalCityName +
                 "' and year(departure_time)= '"+year+
@@ -258,19 +258,19 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
      */
     @Override
     public List<Map<String, Object>> flyToWhere(String departureTime, String departureCityName) {
-        String sql="select * from d20200616 where flightnumber in("+
+        String sql="select * from flights_line where flightnumber in("+
                 "select max(flightnumber) from flights_line where departure_cityname="+departureCityName+
-                "and departure_time="+departureTime+
+                "and departure_time = "+departureTime+
                 "group by arrival_cityname"+
                 "having min(price)"+
                 ")";
         System.out.println("sql=" + sql);
         System.out.println("开始查询");
         List<Map<String, Object>> places = jdbcTemplate.queryForList(sql);
-        System.out.println(places);
+      /*  System.out.println(places);
         for (int i = 0; i < places.size(); i++) {
             System.out.println(places.get(i));
-        }
+        }*/
         return places;
     }
 
@@ -285,7 +285,7 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
      */
     @Override
     public List<Map<String, Object>> predictModelTraningYearDataPredicting(String departureCityName, String arrivalCityName, String year) throws IOException {
-        String sql = "select departure_cityid,arrival_cityid from flights_line where" +
+        String sql = "select departure_cityid,arrival_cityid from d20200616 where" +
                 " departure_cityname='" + departureCityName + "' and " +
                 "arrival_cityname='" + arrivalCityName+
                 "' group by departure_citynam,arrival_cityname";
@@ -321,7 +321,7 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
      */
     @Override
     public List<Map<String, Object>> predictModelTraningYearDataWrite() throws IOException {
-        String sql = "select departure_cityid,arrival_cityid,month(departure_time) as month, price from flights_line";
+        String sql = "select departure_cityid,arrival_cityid,month(departure_time) as month, price from d20200616";
         System.out.println("sql=" + sql);
         System.out.println("开始查询");
         List<Map<String, Object>> flights = jdbcTemplate.queryForList(sql);
@@ -370,7 +370,7 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
      */
     @Override
     public List<Map<String, Object>> predictModelTraningMonth(String departureCityName, String arrivalCityName, String year, String month) {
-        String sql = "select day(departure_time) as day, min(price) as price from flights_line where" +
+        String sql = "select day(departure_time) as day, min(price) as price from d20200616 where" +
                 " departure_cityname='" + departureCityName + "' and " +
                 "arrival_cityname='" + arrivalCityName +
                 "' and year(departure_time)= '"+year+
