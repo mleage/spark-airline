@@ -1409,7 +1409,7 @@
 						+'<span class="date">'+arriveTime.getHours()+":"+(arriveTime.getMinutes()<10?'0'+arriveTime.getMinutes():arriveTime.getMinutes())+'</span>'
 						+'</li>'
 						+'<li>'
-						+'<span class="duration">'+diffHours+'h '+diffMinutes+'m <span> | '+(outStr[i].stop_cityname=="无"?"Direct":"non-direct")+'</span></span>'
+						+'<span class="duration"> <p> '+diffHours+'h '+diffMinutes+'m </p> <span> | '+(outStr[i].stop_cityname=="无"?"Direct":"non-direct")+'</span></span>'
 						+'</li>'
 						+'</ul><!-- .result-single end -->'
 						+'</li>'
@@ -1530,8 +1530,9 @@
 							+'</ul><!-- .list-search-result end -->'
 							+'<div class="result-price">'
 							+'<div class="price">'
-							+'RMB <span class="value">'+outStr1[i].price+outStr2[j].price+'</span>'
+							+'RMB <span class="value">'+(parseInt(outStr1[i].price)+parseInt(outStr2[j].price))+'</span>'
 							+'<span class="description">Price for 1 Person(s)</span>'
+							+'<span>Total Time:<p>'+(parseInt(diffHours1)+parseInt(diffHours2))+'h  '+(parseInt(diffMinutes1)+parseInt(diffMinutes2))+'m'+'</p></span>'
 							+'</div><!-- .price end -->'
 							+'<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>'
 							+'<a class="btn btn-primary" data-toggle="collapse" data-target=\"#collapseExample'+outStr1[i].flid+outStr2[j].flid+'\"'+'>点击查看详情</a>'
@@ -1543,6 +1544,11 @@
 							+'</div>'
 							+'</div>'
 							+'</div><!-- .block-content-2 end -->'
+					// console.log("=============>")
+					// console.log(outStr1[i].price)
+					// console.log(outStr2[j].price)
+					// console.log(parseInt(outStr1[i].price) + parseInt(outStr2[j].price))
+					// console.log("<=============")
 				}
 
 			}
@@ -1558,16 +1564,16 @@
 			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
 			var returnDate = $("li.active").find('[name=\'brTimeEnd\']').val().replace(/\//g,'-')
 
-			alert(departDate)
-			alert(departureCityName)
-			alert(returnDate)
-			alert(arriveCityName)
+			// alert(departDate)
+			// alert(departureCityName)
+			// alert(returnDate)
+			// alert(arriveCityName)
 			// var outStr1, outStr2
 			var [outStr1,outStr2] = getFlightRoundWay(departureCityName,arriveCityName,departDate,returnDate)
-			console.log("==========>")
-			console.log(outStr1)
-			console.log("<==========")
-			console.log(outStr2)
+			// console.log("==========>")
+			// console.log(outStr1)
+			// console.log("<==========")
+			// console.log(outStr2)
 			getResultsRoundTrip(outStr1, outStr2)
 		}
 
@@ -1628,8 +1634,8 @@
 				domList.sort(function(a,b){
 					var elOne = $(a).find('.price .value').html();
 					var elTwo = $(b).find('.price .value').html();
-					if (elOne > elTwo) return 1;
-					if (elOne < elTwo) return -1;
+					if (parseInt(elOne) > parseInt(elTwo)) return 1;
+					if (parseInt(elOne) < parseInt(elTwo)) return -1;
 					return 0
 				});
 				$('#true-content').append(domList)
@@ -1642,8 +1648,8 @@
 				domList.sort(function(a,b){
 					var elOne = $(a).find('.price .value').html();
 					var elTwo = $(b).find('.price .value').html();
-					if (elOne > elTwo) return -1;
-					if (elOne < elTwo) return 1;
+					if (parseInt(elOne) > parseInt(elTwo)) return -1;
+					if (parseInt(elOne) < parseInt(elTwo)) return 1;
 					return 0
 				});
 				$('#true-content').append(domList)
@@ -1662,15 +1668,15 @@
 				alert("Duration-Ascend")
 				var domList = $('#true-content .block-content-2').get();
 				domList.sort(function(a,b){
-					var elOne = $(a).find('.duration').data()[0];
-					var elTwo = $(b).find('.duration').data()[0];
+					var elOne = $(a).find('p').html();
+					var elTwo = $(b).find('p').html();
 					if (elOne > elTwo) return 1;
 					if (elOne < elTwo) return -1;
-					console.log("=======>")
-					console.log("elOne="+elOne)
-					// console.log("elTwo="+elTwo)
-					// console.log(elOne>elTwo)
-					console.log("<=======")
+					// console.log("=======>")
+					// console.log("elOne="+elOne)
+					// // console.log("elTwo="+elTwo)
+					// // console.log(elOne>elTwo)
+					// console.log("<=======")
 					return 0
 				});
 				$('#true-content').append(domList)
@@ -1681,8 +1687,8 @@
 				alert("Duration-Descend")
 				var domList = $('#true-content .block-content-2').get();
 				domList.sort(function(a,b){
-					var elOne = $(a).find('.duration #text').html();
-					var elTwo = $(b).find('.duration #text').html();
+					var elOne = $(a).find('p').html();
+					var elTwo = $(b).find('p').html();
 					if (elOne > elTwo) return -1;
 					if (elOne < elTwo) return 1;
 					return 0
