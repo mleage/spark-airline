@@ -1329,6 +1329,9 @@
 				contentType:"application/x-www-form-urlencoded;charset=UTF-8",
 				success: function(data){
 					var outStr = eval('('+data+')');
+					console.log('<=====data=====>')
+					console.log(outStr)
+					console.log('<=====data=====>')
 					var flightstr="";
 					getResultsOneWay(outStr)
 				}
