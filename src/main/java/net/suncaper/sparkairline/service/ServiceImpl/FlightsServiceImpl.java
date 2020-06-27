@@ -129,6 +129,14 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
         return flights;
     }
 
+    /**
+     *
+     * @param departureCityName
+     * @param arrivalCityName
+     * @param departureTime
+     * @return
+     * 具有拼接功能，输入出发城市与目的城市以及出发时间返回一个带有segment的maplist，按价格排序
+     */
     @Override
     public List<Map<String, Object>> getFlightsOneWayJointByPrice(String departureCityName, String arrivalCityName,String departureTime) {
         String sql="select flid,departure_cityname,arrival_cityname,airlineName,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from flights_line where" +
@@ -150,7 +158,7 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
         List<Map<String, Object>> flightsline = jdbcTemplate.queryForList(sql);
         System.out.println(flightsline);
         for(Map<String, Object> f:flightsline) {
-            String sql_flights_segment = "select fsid,flid,airlineName,flightNumber,departure_time,arrival_time,duration,craft_type_kind_display_name,craft_type_name from flights_segment where" +
+            String sql_flights_segment = "select fsid,flid,departure_cityname,arrival_cityname,airlineName,flightNumber,departure_time,arrival_time,duration,craft_type_kind_display_name,craft_type_name from flights_segment where" +
                     " flid=" + f.get("flid") +
                     " order by departure_time";
             System.out.println("sql=" + sql_flights_segment);
