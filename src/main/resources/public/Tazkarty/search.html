@@ -634,7 +634,52 @@
 														</div><!-- .box-result end -->
 														<div class="collapse" id="collapseExample">
 															<div class="card card-body">
-																where can I find the details
+																<ul class="list-search-result">
+																	<li>
+																		<ul class="result-single">
+																			<li>
+																				<img src="images/files/logo-companies/img-1.png" alt="">
+																				EgyptAir
+																			</li>
+																			<li>
+																				Cairo
+																				<span class="date">22:30</span>
+																			</li>
+																			<li>
+																				<span class="shape-distance"></span>
+																			</li>
+																			<li>
+																				Sharm El Sheik
+																				<span class="date">23:30</span>
+																			</li>
+																			<li>
+																				<span class="duration">03h 00m <span> | Direct</span></span>
+																			</li>
+																		</ul><!-- .result-single end -->
+																	</li>
+																	<li>
+																		<ul class="result-single">
+																			<li>
+																				<img src="images/files/logo-companies/img-1.png" alt="">
+																				EgyptAir
+																			</li>
+																			<li>
+																				Cairo
+																				<span class="date">22:30</span>
+																			</li>
+																			<li>
+																				<span class="shape-distance"></span>
+																			</li>
+																			<li>
+																				Sharm El Sheik
+																				<span class="date">23:30</span>
+																			</li>
+																			<li>
+																				<span class="duration">01h 00m <span> | Direct</span></span>
+																			</li>
+																		</ul><!-- .result-single end -->
+																	</li>
+																</ul><!-- .list-search-result end -->
 															</div>
 														</div>
 													</div><!-- .block-content-2 end -->
@@ -1335,12 +1380,16 @@
             showLoading()
 			$.ajax({
 				type: "GET",
-				url: "../flights/getFlightsOneWayByPrice?departureCityName="	+departureCityName
+				url: "../flights/getFlightsOneWayJointByPrice?departureCityName="	+departureCityName
 						+"&arrivalCityName="	+ 	arrivalCityName
 						+"&departureTime="	+ 	departureTime,
 				contentType:"application/x-www-form-urlencoded;charset=UTF-8",
 				success: function(data){
 					var outStr = eval('('+data+')');
+
+					console.log('<=====data=====>')
+					console.log(outStr)
+					console.log('<=====data=====>')
 					var flightstr="";
 					getResultsOneWay(outStr)
                     completeLoading()
@@ -1355,7 +1404,7 @@
 			// $.when(
 				$.ajax({
 					type: "GET",
-					url: "../flights/getFlightsOneWayByPrice?departureCityName="	+departureCityName
+					url: "../flights/getFlightsOneWayJointByPrice?departureCityName="	+departureCityName
 							+"&arrivalCityName="	+ 	arrivalCityName
 							+"&departureTime="	+ 	departureTime,
 					contentType:"application/x-www-form-urlencoded;charset=UTF-8",
@@ -1366,7 +1415,7 @@
 				}),
 						$.ajax({
 							type: "GET",
-							url: "../flights/getFlightsOneWayByPrice?departureCityName="	+arrivalCityName
+							url: "../flights/getFlightsOneWayJointByPrice?departureCityName="	+arrivalCityName
 									+"&arrivalCityName="	+ 	departureCityName
 									+"&departureTime="	+ 	arrivalTime,
 							contentType:"application/x-www-form-urlencoded;charset=UTF-8",
@@ -1466,7 +1515,7 @@
 						+'</div><!-- .box-result end -->'
 						+'<div class="collapse" id=\"collapseExample'+i.toString()+'\"'+'>'
 						+'<div class="card card-body">'
-						+'where can I find the details'
+						+ getSegment(outStr[i].segment)
 						+'</div>'
 						+'</div>'
 						+'</div><!-- .block-content-2 end -->'
@@ -1557,12 +1606,13 @@
 							+'<span>Total Time:<p>'+(parseInt(diffHours1)+parseInt(diffHours2))+'h  '+(parseInt(diffMinutes1)+parseInt(diffMinutes2))+'m'+'</p></span>'
 							+'</div><!-- .price end -->'
 							+'<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>'
-							+'<a class="btn btn-primary" data-toggle="collapse" data-target=\"#collapseExample'+outStr1[i].flid+outStr2[j].flid+'\"'+'>点击查看详情</a>'
+							+'<a class="btn btn-primary" data-toggle="collapse" data-target=\"#collapseExample'+(parseInt(outStr1[i].flid)+parseInt(outStr2[j].flid))+'\"'+'>点击查看详情</a>'
 							+'</div><!-- .result-price end -->'
 							+'</div><!-- .box-result end -->'
-							+'<div class="collapse" id=\"collapseExample'+i.toString()+'\"'+'>'
+							+'<div class="collapse" id=\"collapseExample'+(parseInt(outStr1[i].flid)+parseInt(outStr2[j].flid))+'\"'+'>'
 							+'<div class="card card-body">'
-							+'where can I find the details'
+							+ getSegment(outStr1[i])
+							+ getSegment(outStr2[j])
 							+'</div>'
 							+'</div>'
 							+'</div><!-- .block-content-2 end -->'
@@ -1575,7 +1625,7 @@
 
 			}
 			$("#true-content").html(results)
-			console.log(results)
+			// console.log(results)
 		}
 		/**
 		 * 获取往返模式下的参数，获得返回结构，渲染
@@ -1610,6 +1660,39 @@
 			alert(departDate)
 		}
 
+		/**
+		 * 如有经停城市，则分段具体展示航程
+		 */
+		function getSegment(segment) {
+			var str = ""
+			for (var  i=0; i<segment.length; i++) {
+				var duration = new Date(segment[i].duration)
+				str += 	'<ul class="list-search-result">'
+						+'<li>'
+						+'<ul class="result-single">'
+						+'<li>'
+						+'<img src='+ "images/files/logo-companies/"+segment[i].flightNumber.substring(0,2)+".png"+' alt="">'
+						+segment[i].airlineName+segment[i].flightNumber
+						+'</li>'
+						+'<li>'
+						+segment[i].departure_cityname
+						+'<span class="date">'+segment[i].departure_time+'</span>'
+						+'</li>'
+						+"<li>"
+						+'<span class="shape-distance"></span>'
+						+'</li>'
+						+'<li>'
+						+ segment[i].arrival_cityname
+						+'<span class="date">'+segment[i].arrival_time+'</span>'
+						+'</li>'
+						+'<li>'
+						+'<span class="duration">'+duration+'<span></span></span>'
+						+'</li>'
+						+'</ul><!-- .result-single end -->'
+			}
+			if (str == "") return "该行程为直飞"
+			return str
+		}
 
 		$(function () {
 			// getParams()
