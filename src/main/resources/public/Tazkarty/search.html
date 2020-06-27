@@ -1611,8 +1611,8 @@
 							+'</div><!-- .box-result end -->'
 							+'<div class="collapse" id=\"collapseExample'+(parseInt(outStr1[i].flid)+parseInt(outStr2[j].flid))+'\"'+'>'
 							+'<div class="card card-body">'
-							+ getSegment(outStr1[i])
-							+ getSegment(outStr2[j])
+							+ getSegment(outStr1[i].segment)
+							+ getSegment(outStr2[j].segment)
 							+'</div>'
 							+'</div>'
 							+'</div><!-- .block-content-2 end -->'
@@ -1667,6 +1667,8 @@
 			var str = ""
 			for (var  i=0; i<segment.length; i++) {
 				var duration = new Date(segment[i].duration)
+				var departTime = new Date(segment[i].departure_time)
+				var arriveTime = new Date(segment[i].arrival_time)
 				str += 	'<ul class="list-search-result">'
 						+'<li>'
 						+'<ul class="result-single">'
@@ -1676,21 +1678,24 @@
 						+'</li>'
 						+'<li>'
 						+segment[i].departure_cityname
-						+'<span class="date">'+segment[i].departure_time+'</span>'
+						+'<span class="date">'+departTime+'</span>'
 						+'</li>'
 						+"<li>"
 						+'<span class="shape-distance"></span>'
 						+'</li>'
 						+'<li>'
 						+ segment[i].arrival_cityname
-						+'<span class="date">'+segment[i].arrival_time+'</span>'
+						+'<span class="date">'+arriveTime+'</span>'
 						+'</li>'
 						+'<li>'
-						+'<span class="duration">'+duration+'<span></span></span>'
+						+'<span class="duration">'+duration.getHours()+'    H '+duration.getMinutes()+'mm'+'<span></span></span>'
 						+'</li>'
 						+'</ul><!-- .result-single end -->'
 			}
-			if (str == "") return "该行程为直飞"
+			if (str == "") return '<li>'+"该行程为直飞"+'</li>'
+			str = 	'<li>'
+					+str
+					+'</li>'
 			return str
 		}
 
