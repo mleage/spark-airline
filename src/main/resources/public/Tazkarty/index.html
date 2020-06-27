@@ -510,8 +510,12 @@
 		var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
 		var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
 		var returnDate = $("li.active").find('[name=\'brTimeEnd\']').val().replace(/\//g,'-')
+		console.log(departureCityName)
+		console.log(arriveCityName)
+		console.log(departDate)
+		console.log(returnDate)
 
-		var str = "search.html?dd="+encodeURI(departDate)+"&rd="+encodeURI(returnDate)+"&dc="+encodeURI(departureCityName)+"&ac="+encodeURI(arriveCityName)
+		var str = "search.html?type=1&dd="+encodeURI(departDate)+"&dc="+encodeURI(departureCityName)+"&ac="+encodeURI(arriveCityName)+"&rd="+encodeURI(returnDate)
 		window.location.replace(str)
 	}
 	// 选定单程时传递的参数
@@ -521,7 +525,7 @@
 		var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
 
 
-		var str = "search.html?d="+encodeURI(departDate)+"&dc="+encodeURI(departureCityName)+"&ac="+encodeURI(arriveCityName)
+		var str = "search.html?type=2&dd="+encodeURI(departDate)+"&dc="+encodeURI(departureCityName)+"&ac="+encodeURI(arriveCityName)
 		window.location.replace(str)
 
 		alert(str)
@@ -547,113 +551,38 @@
 		<!-- Content
 		============================================= -->
 <!--以下注释，除js文件外，与航班搜索无关-->
-<!--		<section id="content">-->
+		<section id="content">
 
-<!--			<div id="content-wrap">-->
+			<div id="content-wrap">
 
-<!--				&lt;!&ndash; === Section About 1 =========== &ndash;&gt;-->
-<!--				<div id="section-about-1" class="section-flat">-->
+				<!-- === Section About 1 =========== -->
+				<div id="section-about-1" class="section-flat">
 
-<!--					<div class="section-content">-->
+					<div class="section-content">
 
-<!--						<div class="container">-->
-<!--							<div class="row">-->
-<!--								<div class="col-md-6">-->
+						<div class="container">
+							<div class="row">
+								<div class="col-md-6">
 
-<!--									<div class="section-title">-->
-<!--										<h2><strong>About</strong> Tazkarty</h2>-->
-<!--									</div>&lt;!&ndash; .section-title end &ndash;&gt;-->
+									<div class="section-title">
+										<h2><strong>About</strong> Tazkarty</h2>
+									</div><!-- .section-title end -->
 
-<!--								</div>&lt;!&ndash; .col-md-6 end &ndash;&gt;-->
-<!--								<div class="clearfix"></div>-->
-<!--								<div class="col-md-6">-->
 
-<!--									<div class="row">-->
-<!--										<div class="col-md-6">-->
 
-<!--											<div class="box-info box-about-1">-->
-<!--												<div class="box-content">-->
-<!--													<h4>-->
-<!--														<i class="far fa-heart"></i>-->
-<!--														Sed Magni-->
-<!--													</h4>-->
-<!--													<p>-->
-<!--														Doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi. architecto beatae vitae dicta.-->
-<!--													</p>-->
-<!--												</div>&lt;!&ndash; .box-content end &ndash;&gt;-->
-<!--											</div>&lt;!&ndash; .box-info box-about-1 end &ndash;&gt;-->
 
-<!--										</div>&lt;!&ndash; .col-md-6 end &ndash;&gt;-->
-<!--										<div class="col-md-6">-->
-<!--										-->
-<!--											<div class="box-info box-about-1 mt-md-40">-->
-<!--												<div class="box-content">-->
-<!--													<h4>-->
-<!--														<i class="far fa-compass"></i>-->
-<!--														Veritatis et Quasi-->
-<!--													</h4>-->
-<!--													<p>-->
-<!--														Doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi.-->
-<!--														architecto beatae vitae dicta.-->
-<!--													</p>-->
-<!--												</div>&lt;!&ndash; .box-content end &ndash;&gt;-->
-<!--											</div>&lt;!&ndash; .box-info box-about-1 end &ndash;&gt;-->
-<!--										-->
-<!--										</div>&lt;!&ndash; .col-md-6 end &ndash;&gt;-->
-<!--										<div class="col-md-6">-->
-<!--										-->
-<!--											<div class="box-info box-about-1 mt-40">-->
-<!--												<div class="box-content">-->
-<!--													<h4>-->
-<!--														<i class="far fa-flag"></i>-->
-<!--														Doloremque-->
-<!--													</h4>-->
-<!--													<p>-->
-<!--														Doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi.-->
-<!--														architecto beatae vitae dicta.-->
-<!--													</p>-->
-<!--												</div>&lt;!&ndash; .box-content end &ndash;&gt;-->
-<!--											</div>&lt;!&ndash; .box-info box-about-1 end &ndash;&gt;-->
-<!--										-->
-<!--										</div>&lt;!&ndash; .col-md-6 end &ndash;&gt;-->
-<!--										<div class="col-md-6">-->
-<!--										-->
-<!--											<div class="box-info box-about-1 mt-40">-->
-<!--												<div class="box-content">-->
-<!--													<h4>-->
-<!--														<i class="far fa-bell"></i>-->
-<!--														Sunt in Culpa-->
-<!--													</h4>-->
-<!--													<p>-->
-<!--														Doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi.-->
-<!--														architecto beatae vitae dicta.-->
-<!--													</p>-->
-<!--												</div>&lt;!&ndash; .box-content end &ndash;&gt;-->
-<!--											</div>&lt;!&ndash; .box-info box-about-1 end &ndash;&gt;-->
-<!--										-->
-<!--										</div>&lt;!&ndash; .col-md-6 end &ndash;&gt;-->
-<!--									</div>&lt;!&ndash; .row end &ndash;&gt;-->
-<!--									-->
-<!--								</div>&lt;!&ndash; .col-md-6 end &ndash;&gt;-->
-<!--								<div class="col-md-6">-->
-<!--									-->
-<!--									<div class="video-preview mt-md-60">-->
-<!--										<a class="img-bg lightbox-iframe" href="https://vimeo.com/45830194">-->
-<!--											<div class="overlay-colored color-bg-dark opacity-50"></div>&lt;!&ndash; .overlay-colored end &ndash;&gt;-->
-<!--											<img src="images/files/bg-video-preview/img-1.jpg" alt="">-->
-<!--										</a>&lt;!&ndash; .img-bg end &ndash;&gt;-->
-<!--										<a class="btn-video lightbox-iframe" href="https://vimeo.com/45830194">-->
-<!--											<i class="fa fa-play"></i>-->
-<!--										</a>&lt;!&ndash; .btn-video end &ndash;&gt;-->
-<!--									</div>&lt;!&ndash; .video-preview end &ndash;&gt;-->
-<!--									-->
-<!--								</div>&lt;!&ndash; .col-md-6 end &ndash;&gt;-->
-<!--							</div>&lt;!&ndash; .row end &ndash;&gt;-->
-<!--						</div>&lt;!&ndash; .container end &ndash;&gt;-->
 
-<!--					</div>&lt;!&ndash; .section-content end &ndash;&gt;-->
+										</div><!-- .col-md-6 end -->
+									</div><!-- .row end -->
 
-<!--				</div>&lt;!&ndash; .section-flat end &ndash;&gt;-->
+								</div><!-- .col-md-6 end -->
+
+							</div><!-- .row end -->
+						</div><!-- .container end -->
+
+					</div><!-- .section-content end -->
+
+				<!-- .section-flat end -->
 
 <!--				&lt;!&ndash; === Section Top Destinations =========== &ndash;&gt;-->
 <!--				<div id="section-top-destintations" class="section-flat">-->

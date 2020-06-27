@@ -1365,6 +1365,29 @@
 
 	<script>
 
+		window.onload=function() {
+			var url=window.location.search
+			arr = url.split('&')
+			type = arr[0].split('=')[1]
+			departureTime = arr[1].split('=')[1]
+			departureCityName = arr[2].split('=')[1]
+			arrivalCityName = arr[3].split('=')[1]
+			alert(type)
+			alert(departureTime)
+			alert(arrivalCityName)
+			alert(departureCityName)
+			if(type==1)
+			{
+				arrivalTime =  arr[4].split('=')[1]
+				getFlightRoundWay(departureCityName,arrivalCityName,departureTime, arrivalTime)
+			}
+			else if(type==2)
+			getFlightOneWay(departureCityName,arrivalCityName,departureTime)
+			else if(type==3)
+			{
+
+			}
+		}
         function completeLoading() {
             document.getElementById("loadingDiv").style.display="none";
         }
