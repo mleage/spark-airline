@@ -282,7 +282,7 @@
 														</ul><!-- .list-dropdown-passengers end -->
 													</div><!-- .form-group end -->
 													<div class="form-group">
-														<button type="submit" class="form-control icon" onclick="roundTrip()"><i class="fas fa-search"></i></button>
+														<button type="submit" class="form-control icon" onclick="return roundTrip()"><i class="fas fa-search"></i></button>
 													</div><!-- .form-group end -->
 												</form><!-- .form-banner-reservation end -->
 											</li>
@@ -516,7 +516,11 @@
 		console.log(returnDate)
 
 		var str = "search.html?type=1&dd="+encodeURI(departDate)+"&dc="+encodeURI(departureCityName)+"&ac="+encodeURI(arriveCityName)+"&rd="+encodeURI(returnDate)
-		window.location.replace(str)
+
+
+		window.location.href=str;
+		window.event.returnValue=false;
+
 	}
 	// 选定单程时传递的参数
 	function oneWay() {
@@ -526,9 +530,11 @@
 
 
 		var str = "search.html?type=2&dd="+encodeURI(departDate)+"&dc="+encodeURI(departureCityName)+"&ac="+encodeURI(arriveCityName)
-		window.location.replace(str)
-
-		alert(str)
+		//window.location.replace(str)
+		window.location.href=str;
+		window.event.returnValue=false;
+		//alert(str)
+		//console.log(str)
 	}
 	// 选定多程时（未完成）
 	function multi() {
