@@ -181,6 +181,9 @@
 											<li class="active"><a href="javascript:;">Round Trip</a></li>
 											<li><a href="javascript:;">One Way</a></li>
 											<li><a href="javascript:;">Multiple Destinations</a></li>
+											<li><a href="javascript:;">where to fly</a></li>
+											<li><a href="javascript:;">when to fly</a></li>
+
 										</ul><!-- .br-tabs end -->
 										<ul class="br-tabs-content">
 											<li class="active">
@@ -491,6 +494,193 @@
 														Add Another Flight
 													</a>
 												</div><!-- .multiple-destinations end -->
+											</li>
+											<li>
+												<form class="form-banner-reservation form-inline style-2 form-h-50">
+													<div class="form-group">
+														<input type="text" name="brPlaceStart" class="form-control" placeholder="From">
+														<i class="fas fa-plane"></i>
+													</div><!-- .form-group end -->
+													<div class="form-group">
+														<input type="text" name="brTimeStart" class="form-control datepicker-2-time-start"
+															   placeholder="2019/09/30">
+														<i class="far fa-calendar"></i>
+													</div><!-- .form-group end -->
+													<div class="form-group">
+														<input type="text" name="brPassengerNumber" class="form-control show-dropdown-passengers"
+															   placeholder="Passengers">
+														<i class="fas fa-user"></i>
+														<ul class="list-dropdown-passengers">
+															<li>
+																<ul class="list-persons-count">
+																	<li>
+																		<span>Adults:</span>
+																		<div class="counter-add-item">
+																			<a class="decrease-btn" href="javascript:;">-</a>
+																			<input type="text" value="1">
+																			<a class="increase-btn" href="javascript:;">+</a>
+																		</div><!-- .counter-add-item end -->
+																	</li>
+																	<li>
+																		<span>Childs:</span>
+																		<div class="counter-add-item">
+																			<a class="decrease-btn" href="javascript:;">-</a>
+																			<input type="text" value="0">
+																			<a class="increase-btn" href="javascript:;">+</a>
+																		</div><!-- .counter-add-item end -->
+																	</li>
+																</ul><!-- .list-persons-count end -->
+															</li>
+															<li>
+																<ul class="list-select-grade">
+																	<li>
+																		<label class="radio-container radio-default">
+																			<input type="radio" checked="checked" name="radio">
+																			<span class="checkmark"></span>
+																			Economy Class
+																		</label>
+																	</li>
+																	<li>
+																		<label class="radio-container radio-default">
+																			<input type="radio" checked="checked" name="radio">
+																			<span class="checkmark"></span>
+																			Business Class
+																		</label>
+																	</li>
+																	<li>
+																		<label class="radio-container radio-default">
+																			<input type="radio" checked="checked" name="radio">
+																			<span class="checkmark"></span>
+																			First Class
+																		</label>
+																	</li>
+																</ul><!-- .list-select-grade end -->
+															</li>
+															<li>
+																<ul class="list-reservation-options">
+																	<li>
+																		<label class="label-container checkbox-default">
+																			<span>
+																				Nonstop
+																			</span>
+																			<input type="checkbox">
+																			<span class="checkmark"></span>
+																		</label>
+																	</li>
+																	<li>
+																		<label class="label-container checkbox-default">
+																			<span>
+																				Refundable
+																			</span>
+																			<input type="checkbox">
+																			<span class="checkmark"></span>
+																		</label>
+																	</li>
+																</ul><!-- .list-reservation-options end -->
+															</li>
+															<li>
+																<a class="btn-reservation-passengers btn x-small colorful hover-dark"
+																   href="javascript:;">Done</a>
+															</li>
+														</ul><!-- .list-dropdown-passengers end -->
+													</div><!-- .form-group end -->
+													<div class="form-group">
+														<button type="submit" class="form-control icon" onclick="Wheretofly()"><i class="fas fa-search"></i></button>
+													</div><!-- .form-group end -->
+												</form><!-- .form-banner-reservation end -->
+											</li>
+											<li>
+												<form class="form-banner-reservation form-inline style-2 form-h-50">
+													<div class="form-group">
+														<input type="text" name="brPlaceStart" class="form-control" placeholder="From">
+														<i class="fas fa-plane"></i>
+													</div><!-- .form-group end -->
+													<div class="form-group">
+														<input type="text" name="brPlaceEnd" class="form-control" placeholder="To">
+														<i class="fas fa-plane"></i>
+													</div><!-- .form-group end -->
+													<div class="form-group">
+														<input type="text" name="brPassengerNumber" class="form-control show-dropdown-passengers"
+															   placeholder="Passengers">
+														<i class="fas fa-user"></i>
+														<ul class="list-dropdown-passengers">
+															<li>
+																<ul class="list-persons-count">
+																	<li>
+																		<span>Adults:</span>
+																		<div class="counter-add-item">
+																			<a class="decrease-btn" href="javascript:;">-</a>
+																			<input type="text" value="1">
+																			<a class="increase-btn" href="javascript:;">+</a>
+																		</div><!-- .counter-add-item end -->
+																	</li>
+																	<li>
+																		<span>Childs:</span>
+																		<div class="counter-add-item">
+																			<a class="decrease-btn" href="javascript:;">-</a>
+																			<input type="text" value="0">
+																			<a class="increase-btn" href="javascript:;">+</a>
+																		</div><!-- .counter-add-item end -->
+																	</li>
+																</ul><!-- .list-persons-count end -->
+															</li>
+															<li>
+																<ul class="list-select-grade">
+																	<li>
+																		<label class="radio-container radio-default">
+																			<input type="radio" checked="checked" name="radio">
+																			<span class="checkmark"></span>
+																			Economy Class
+																		</label>
+																	</li>
+																	<li>
+																		<label class="radio-container radio-default">
+																			<input type="radio" checked="checked" name="radio">
+																			<span class="checkmark"></span>
+																			Business Class
+																		</label>
+																	</li>
+																	<li>
+																		<label class="radio-container radio-default">
+																			<input type="radio" checked="checked" name="radio">
+																			<span class="checkmark"></span>
+																			First Class
+																		</label>
+																	</li>
+																</ul><!-- .list-select-grade end -->
+															</li>
+															<li>
+																<ul class="list-reservation-options">
+																	<li>
+																		<label class="label-container checkbox-default">
+																			<span>
+																				Nonstop
+																			</span>
+																			<input type="checkbox">
+																			<span class="checkmark"></span>
+																		</label>
+																	</li>
+																	<li>
+																		<label class="label-container checkbox-default">
+																			<span>
+																				Refundable
+																			</span>
+																			<input type="checkbox">
+																			<span class="checkmark"></span>
+																		</label>
+																	</li>
+																</ul><!-- .list-reservation-options end -->
+															</li>
+															<li>
+																<a class="btn-reservation-passengers btn x-small colorful hover-dark"
+																   href="javascript:;">Done</a>
+															</li>
+														</ul><!-- .list-dropdown-passengers end -->
+													</div><!-- .form-group end -->
+													<div class="form-group">
+														<button type="submit" class="form-control icon" onclick="Whentofly()"><i class="fas fa-search"></i></button>
+													</div><!-- .form-group end -->
+												</form><!-- .form-banner-reservation end -->
 											</li>
 										</ul><!-- .br-tabs-content end -->
 									</div><!-- .banner-reservation-tabs end -->
