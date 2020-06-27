@@ -33,6 +33,7 @@
 	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 	<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
+
 	<!-- Title
 	============================================= -->
 	<title>Tazkarty</title>
@@ -40,6 +41,7 @@
 </head>
 
 <body class="page-single with-sidebar page-search footer-dark">
+<div id="loadingDiv" style="display: none; "><div id="over" style=" position: absolute;top: 0;left: 0; width: 100%;height: 100%; background-color: #f5f5f5;opacity:0.5;z-index: 1000;"></div><div id="layout" style="position: absolute;top: 300px; left: 40%;width: 20%; height: 20%;  z-index: 1001;text-align:center;"><img src="images/files/loading.gif" /></div></div>'
 
 	<!-- Website Loading
 	============================================= -->
@@ -1317,10 +1319,20 @@
 	<script src='js/functions.js'></script>
 
 	<script>
+
+        function completeLoading() {
+            document.getElementById("loadingDiv").style.display="none";
+        }
+        //展示loading效果
+        function showLoading() {
+            document.getElementById("loadingDiv").style.display = "block";
+            console.log("showloading1234");
+        }
 		/**
 		 * 调用一次ajax请求，根据时间、地点获取单程航班信息
 		 * */
 		function getFlightOneWay(departureCityName,arrivalCityName,departureTime){
+            showLoading()
 			$.ajax({
 				type: "GET",
 				url: "../flights/getFlightsOneWayByPrice?departureCityName="	+departureCityName
@@ -1331,6 +1343,7 @@
 					var outStr = eval('('+data+')');
 					var flightstr="";
 					getResultsOneWay(outStr)
+                    completeLoading()
 				}
 			});
 		}
@@ -1351,17 +1364,19 @@
 						outStr1 = eval('('+data+')');
 					}
 				}),
-				$.ajax({
-					type: "GET",
-					url: "../flights/getFlightsOneWayByPrice?departureCityName="	+arrivalCityName
-							+"&arrivalCityName="	+ 	departureCityName
-							+"&departureTime="	+ 	arrivalTime,
-					contentType:"application/x-www-form-urlencoded;charset=UTF-8",
-					async:false, //变异步为同步
-					success: function(data){
-						outStr2 = eval('('+data+')');
-					}
-				})
+						$.ajax({
+							type: "GET",
+							url: "../flights/getFlightsOneWayByPrice?departureCityName="	+arrivalCityName
+									+"&arrivalCityName="	+ 	departureCityName
+									+"&departureTime="	+ 	arrivalTime,
+							contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+							async:false, //变异步为同步
+							success: function(data){
+								outStr2 = eval('('+data+')');
+							}
+						})
+
+
 			// ).done((outStr1,outStr2) => {return [outStr1,outStr2]})
 			return  [outStr1, outStr2]
 		}
@@ -1456,7 +1471,9 @@
 						+'</div>'
 						+'</div><!-- .block-content-2 end -->'
 			}
+
 			$("#true-content").html(results)
+
 		}
 		/**
 		 * 渲染往返模式返回结果
@@ -1474,8 +1491,8 @@
 				var diffMinutes1 = parseInt(lastingTime1%3600/60)
 				//在获得返程时的数据
 				for (var j=0; j<outStr2.length;j++) {
-					var departTime2 = new Date(outStr1[j].departure_time)
-					var arriveTime2 = new Date(outStr1[j].arrival_time)
+					var departTime2 = new Date(outStr2[j].departure_time)
+					var arriveTime2 = new Date(outStr2[j].arrival_time)
 					var lastingTime2 = (arriveTime2.getTime()-departTime2.getTime())/1000
 					var diffDays2 = parseInt(lastingTime2/86400)
 					var diffHours2 = parseInt(lastingTime2/3600)-24*diffDays2
@@ -1513,14 +1530,14 @@
 							+'<ul class="result-single">'
 							+'<li>'
 							+'<img src='+ "images/files/logo-companies/"+outStr2[j].flightNumber.substring(0,2)+".png"+' alt="">'
-							+outStr2[j].airlineName+outStr2[i].flightNumber
+							+outStr2[j].airlineName+outStr2[j].flightNumber
 							+'</li>'
 							+'<li>'
 							+outStr2[j].departure_airportname
 							+'<span class="date">'+departTime2.getHours()+":"+(departTime2.getMinutes()<10?'0'+departTime2.getMinutes():departTime2.getMinutes())+'</span>'
 							+'</li>'
 							+'<li>'
-							+(outStr2[i].stop_cityname=="无"?"":"<span style='text-align:center'>经停</span><span style='text-align:center'>"+outStr2[i].stop_cityname+"</span>")
+							+(outStr2[j].stop_cityname=="无"?"":"<span style='text-align:center'>经停</span><span style='text-align:center'>"+outStr2[j].stop_cityname+"</span>")
 							+'<span class="shape-distance"></span>'
 							+'</li>'
 							+'<li>'
@@ -1564,6 +1581,7 @@
 		 * 获取往返模式下的参数，获得返回结构，渲染
 		 */
 		function roundTrip(){
+			showLoading()
 			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
 			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
 			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
@@ -1580,6 +1598,7 @@
 			// console.log("<==========")
 			// console.log(outStr2)
 			getResultsRoundTrip(outStr1, outStr2)
+			completeLoading()
 		}
 
 		function multi() {
