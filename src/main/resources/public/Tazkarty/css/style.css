@@ -6184,8 +6184,8 @@ a.btn-social {
     position: relative;
     display: flex;
     align-items: center;
-    bottom: 25px;
-    width: 75px;
+    bottom: 40px;
+    width: 90px;
     height: 2px;
     background-color: #ddd; }
     .result-single .shape-distance::before, .result-single .shape-distance::after {
