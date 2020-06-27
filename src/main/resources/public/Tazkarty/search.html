@@ -1515,7 +1515,7 @@
 						+'</div><!-- .box-result end -->'
 						+'<div class="collapse" id=\"collapseExample'+i.toString()+'\"'+'>'
 						+'<div class="card card-body">'
-						+'where can I find the details'
+						+ getSegment(outStr[i].segment)
 						+'</div>'
 						+'</div>'
 						+'</div><!-- .block-content-2 end -->'
@@ -1665,6 +1665,7 @@
 		function getSegment(segment) {
 			var str = ""
 			for (var  i=0; i<segment.length; i++) {
+				var duration = new Date(segment[i].duration)
 				str += 	'<ul class="list-search-result">'
 						+'<li>'
 						+'<ul class="result-single">'
@@ -1673,44 +1674,22 @@
 						+segment[i].airlineName+segment[i].flightNumber
 						+'</li>'
 						+'<li>'
-						+segment[i].
-						+'<span class="date">22:30</span>'
+						+segment[i].departure_cityname
+						+'<span class="date">'+segment[i].departure_time+'</span>'
 						+'</li>'
 						+"<li>"
 						+'<span class="shape-distance"></span>'
 						+'</li>'
 						+'<li>'
-						+'Sharm El Sheik'
-						+'<span class="date">23:30</span>'
+						+ segment[i].arrival_cityname
+						+'<span class="date">'+segment[i].arrival_time+'</span>'
 						+'</li>'
 						+'<li>'
-						+'<span class="duration">03h 00m <span> | Direct</span></span>'
-						+'</li>'
-						+'</ul><!-- .result-single end -->'
-						+'</li>'
-						+'<li>'
-						+'<ul class="result-single">'
-						+'<li>'
-						+'<img src="images/files/logo-companies/img-1.png" alt="">'
-						+'EgyptAir'
-						+'</li>'
-						+'<li>'
-						+'Cairo'
-						+'<span class="date">22:30</span>'
-						+'</li>'
-						+'<li>'
-						+'<span class="shape-distance"></span>'
-						+'</li>'
-						+'<li>'
-						+'Sharm El Sheik'
-						+'<span class="date">23:30</span>'
-						+'</li>'
-						+'<li>'
-						+'<span class="duration">01h 00m <span> | Direct</span></span>'
+						+'<span class="duration">'+duration+'<span></span></span>'
 						+'</li>'
 						+'</ul><!-- .result-single end -->'
 			}
-
+			if (str == "") return "该行程为直飞"
 			return str
 		}
 
