@@ -64,7 +64,7 @@
             success:function (data) {
                 //这里该做什么？
                 //将数据中的城市名，价格提取
-                console.log(data);
+                // console.log(data);
                 var cityName=[];//存放城市名字
                 var price=[];//存放飞往城市的价格
                 var index=0;//用于指示所有城市中最低价格城市的索引
@@ -76,13 +76,13 @@
                         index=i;
                     }
                 }
-                /*   console.log(index);
-                   console.log(cityName);
-                   console.log(price);*/
+                  console.log(index);//显示最低价格城市索引
+                /*   console.log(cityName);
+                  console.log(price);*/
                 //根据城市名，获取坐标，并将价格放入对应的点--markPointData
                 for (var i=0;i<cityName.length;i++){
                     var flag=CompareName(cityName[i]);
-                    console.log(flag);
+                    // console.log(flag);
                     if (flag!=-1)
                     {
                         markPointData.push(
@@ -99,13 +99,13 @@
                     }
                     else{
 
-                        console.log("数据:"+i+"定位失败"+data[i]);
+                        console.log("数据:"+i+"定位失败"+data[i].arrival_cityname);
 
                     }
                 }
                 console.log("markPointData : "+markPointData);
                 var option={
-                    backgroundColor: {
+                    backgroundColor: {//背景颜色
                         type: 'linear',
                         x: 0,
                         y: 0,
@@ -113,9 +113,9 @@
                         y2: 1,
                         colorStops: [{
                             //背景渐变颜色，由于灰色感觉效果更好，所以没有渐变
-                            offset: 0, color: 'grey' // 0% 处的颜色
+                            offset: 0, color: 'grey' // 0% 处的颜色---最左边
                         }, {
-                            offset: 1, color: 'grey' // 100% 处的颜色
+                            offset: 1, color: 'grey' // 100% 处的颜色----最右边
                         }],
                         globalCoord: false // 缺省为 false
                     },
@@ -138,12 +138,11 @@
 
                         "formatter": function(params) {
                             //todo:返回省内低价航程城市的个数，此处返回省份名
-
                             return params.name //省级tooltip
 
                         },
 
-                        "backgroundColor": '#fff',
+                        "backgroundColor": '#fff',//应该是地图颜色
 
                         "borderWidth": '1px',
 
@@ -266,7 +265,6 @@
                             tooltip: { //标注点tooltip
 
                                 "formatter": function(params) {
-                                    //todo:修改函数,返回城市名和价格,待检测
                                     var price;
                                     var str="";
                                     for (var i=0;i<markPointData.length;i++){
@@ -303,16 +301,13 @@
                 //鼠标点击函数
                 //todo:如果要实现点击搜索，在这里进行
                 myChart.on('click', function (params) {
-                    var str="";
                     for (var i=0;i<data.length;i++) {
-                        if(data.arrival_cityname=params.name){
-                            str+="出发城市："+data.departure_cityname
-                                +"\n 到达城市："+data.arrival_cityname
-                                +"\n 出发机场："+data.departure_airportname
-                                +"\n 到达机场："+data.arrival_airpotname;
+                        if(data[i].arrival_cityname=params.name){
+                            //要获取某参数 eg:出发城市——data[i].departure_cityname
+                           //todo:实现页面间传参
                         }
                     }
-                    return str;
+
                 });
             },
             error:function () {
@@ -320,8 +315,19 @@
             }
         })
     }
+
     //这里是用来传参的
-    FromandWhen("北京","2020-07-05 21:50:00");
+
+    // FromandWhen("北京","2020-07-05");
+
+    //这里是接受来自其他html文件的参数  departureCityName,   departureTime
+    //url eg: http://localhost:8080/html/EchartsMap.html?departureCityName=北京&departureTime=2020-07-05
+    var str=window.location.href;//取地址参数部分
+    var url = str.split("?")[1];
+    var departureCityName = url.split("departureCityName=")[1].split("&")[0];
+    var departureTime = url.split("departureTime=")[1].split("&")[0];
+    FromandWhen(departureCityName,departureTime);
+
 </script>
 </body>
 </html>

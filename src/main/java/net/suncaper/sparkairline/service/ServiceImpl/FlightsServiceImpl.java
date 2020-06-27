@@ -269,8 +269,8 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
     public List<Map<String, Object>> flyToWhere(String departureTime, String departureCityName) {
         String sql="select * from flights_line where flid in("+
                 "select flid from flights_line where departure_cityname='"+departureCityName+
-                " 'and departure_time = '"+departureTime+
-                "' group by arrival_cityname,flid "+
+                " 'and departure_time like '"+departureTime+
+                "%' group by arrival_cityname,flid "+
                 " having min(price)"+
                 ") ";
         System.out.println("sql=" + sql);
