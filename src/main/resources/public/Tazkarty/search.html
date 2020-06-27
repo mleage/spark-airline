@@ -1688,6 +1688,16 @@
 			// ).done((outStr1,outStr2) => {return [outStr1,outStr2]})
 			//return  [outStr1, outStr2]
 		}
+		/*
+		* 查询where to fly */
+
+		function Wheretofly(){
+			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
+			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
+			//如果不对，可能是url，试下把EchartsMap拖到同一个文件夹里，删除前面的“。/html/”
+			window.open("./html/EchartsMap.html?departureCityName="+departureCityName+"&departureTime="+departDate)
+		}
+
 		/**
 		 * 在单程模式下的点击查询
 		 */
