@@ -1401,6 +1401,7 @@
 		 * */
 		function getFlightRoundWay(departureCityName,arrivalCityName,departureTime, arrivalTime) {
 			var outStr1, outStr2
+			showLoading()
 			// $.when(
 				$.ajax({
 					type: "GET",
@@ -1408,26 +1409,30 @@
 							+"&arrivalCityName="	+ 	arrivalCityName
 							+"&departureTime="	+ 	departureTime,
 					contentType:"application/x-www-form-urlencoded;charset=UTF-8",
-					async:false,  //变异步为同步
+					//async:false,  //变异步为同步
 					success: function(data){
 						outStr1 = eval('('+data+')');
-					}
-				}),
 						$.ajax({
 							type: "GET",
 							url: "../flights/getFlightsOneWayJointByPrice?departureCityName="	+arrivalCityName
 									+"&arrivalCityName="	+ 	departureCityName
 									+"&departureTime="	+ 	arrivalTime,
 							contentType:"application/x-www-form-urlencoded;charset=UTF-8",
-							async:false, //变异步为同步
+							//async:false, //变异步为同步
 							success: function(data){
 								outStr2 = eval('('+data+')');
+								getResultsRoundTrip(outStr1, outStr2)
+								completeLoading()
 							}
 						})
 
+					}
+				})
+
+
 
 			// ).done((outStr1,outStr2) => {return [outStr1,outStr2]})
-			return  [outStr1, outStr2]
+			//return  [outStr1, outStr2]
 		}
 		/**
 		 * 在单程模式下的点击查询
@@ -1436,7 +1441,8 @@
 			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
 			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
 			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
-
+			console.log(departureCityName)
+			console.log(arriveCityName)
 			getFlightOneWay(departureCityName,arriveCityName,departDate)
 		}
 		/**
@@ -1468,7 +1474,7 @@
 						+'<span class="date">'+departTime.getHours()+":"+(departTime.getMinutes()<10?'0'+departTime.getMinutes():departTime.getMinutes())+'</span>'
 						+'</li>'
 						+'<li>'
-						+(outStr[i].stop_cityname=="无"?"":"<span style='text-align:center'>经停</span><span style='text-align:center'>"+outStr[i].stop_cityname+"</span>")
+						+(outStr[i].stop_cityname=="无"?"":"<span style='text-align:center'>经停<br><br></span><span style='text-align:center'>"+outStr[i].stop_cityname+"</span>")
 						+'<span class="shape-distance"></span>'
 						+'</li>'
 						+'<li>'
@@ -1562,7 +1568,7 @@
 							+'<span class="date">'+departTime1.getHours()+":"+(departTime1.getMinutes()<10?'0'+departTime1.getMinutes():departTime1.getMinutes())+'</span>'
 							+'</li>'
 							+'<li>'
-							+(outStr1[i].stop_cityname=="无"?"":"<span style='text-align:center'>经停</span><span style='text-align:center'>"+outStr1[i].stop_cityname+"</span>")
+							+(outStr1[i].stop_cityname=="无"?"":"<span style='text-align:center'>经停<br><br></span><span style='text-align:center'>"+outStr1[i].stop_cityname+"</span>")
 							+'<span class="shape-distance"></span>'
 							+'</li>'
 							+'<li>'
@@ -1586,7 +1592,7 @@
 							+'<span class="date">'+departTime2.getHours()+":"+(departTime2.getMinutes()<10?'0'+departTime2.getMinutes():departTime2.getMinutes())+'</span>'
 							+'</li>'
 							+'<li>'
-							+(outStr2[j].stop_cityname=="无"?"":"<span style='text-align:center'>经停</span><span style='text-align:center'>"+outStr2[j].stop_cityname+"</span>")
+							+(outStr2[j].stop_cityname=="无"?"":"<span style='text-align:center'>经停<br><br></span><span style='text-align:center'>"+outStr2[j].stop_cityname+"</span>")
 							+'<span class="shape-distance"></span>'
 							+'</li>'
 							+'<li>'
@@ -1631,7 +1637,7 @@
 		 * 获取往返模式下的参数，获得返回结构，渲染
 		 */
 		function roundTrip(){
-			showLoading()
+			//showLoading()
 			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
 			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
 			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
@@ -1642,13 +1648,13 @@
 			// alert(returnDate)
 			// alert(arriveCityName)
 			// var outStr1, outStr2
-			var [outStr1,outStr2] = getFlightRoundWay(departureCityName,arriveCityName,departDate,returnDate)
+			getFlightRoundWay(departureCityName,arriveCityName,departDate,returnDate)
 			// console.log("==========>")
 			// console.log(outStr1)
 			// console.log("<==========")
 			// console.log(outStr2)
-			getResultsRoundTrip(outStr1, outStr2)
-			completeLoading()
+			//getResultsRoundTrip(outStr1, outStr2)
+			//completeLoading()
 		}
 
 		function multi() {

@@ -115,7 +115,7 @@ public class FlightsController {
         String departureCityName=request.getParameter("departureCityName");
         String arrivalCityName=request.getParameter("arrivalCityName");
         String departureTime=request.getParameter("departureTime");
-        List<Map<String, Object>> Flights=FlightsService.getFlightsOneWayJointByPrice("北京", "广州","2020-06-19");
+        List<Map<String, Object>> Flights=FlightsService.getFlightsOneWayJointByPrice(departureCityName, arrivalCityName,departureTime);
 
         String FlightsStr= JSON.toJSONString(Flights);
         return FlightsStr;
