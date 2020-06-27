@@ -1,4 +1,4 @@
-var cityCorrd=[
+var cityCoord=[
     { "name": "上海", "log": "121.48", "lat": "31.22" },
     { "name": "广州", "log": "113.23", "lat": "23.16" },
     { "name": "广州", "log": "113.23", "lat": "23.16" },

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Jia,Dian
@@ -258,19 +259,20 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
      */
     @Override
     public List<Map<String, Object>> flyToWhere(String departureTime, String departureCityName) {
-        String sql="select * from flights_line where flightnumber in("+
-                "select max(flightnumber) from flights_line where departure_cityname="+departureCityName+
-                "and departure_time = "+departureTime+
-                "group by arrival_cityname"+
-                "having min(price)"+
-                ")";
+        String sql="select * from flights_line where flid in("+
+                "select flid from flights_line where departure_cityname='"+departureCityName+
+                " 'and departure_time = '"+departureTime+
+                "' group by arrival_cityname,flid "+
+                " having min(price)"+
+                ") ";
         System.out.println("sql=" + sql);
         System.out.println("开始查询");
         List<Map<String, Object>> places = jdbcTemplate.queryForList(sql);
-      /*  System.out.println(places);
+        places=places.stream().distinct().collect(Collectors.toList());
+/*        System.out.println(places);*/
         for (int i = 0; i < places.size(); i++) {
             System.out.println(places.get(i));
-        }*/
+        }
         return places;
     }
 
