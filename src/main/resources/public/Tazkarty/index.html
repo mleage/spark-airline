@@ -713,6 +713,14 @@
 
 	}
 	// 选定单程时传递的参数
+	function Wheretofly(){
+		var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
+		var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
+		//如果不对，可能是url，试下把EchartsMap拖到同一个文件夹里，删除前面的“。/html/”
+		window.open("../html/EchartsMap.html?departureCityName="+departureCityName+"&departureTime="+departDate)
+		window.event.returnValue=false;
+	}
+
 	function oneWay() {
 		var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
 		var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
