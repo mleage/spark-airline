@@ -20,6 +20,8 @@ public interface FlightsService {
     List<Map<String, Object>> whenToFlightViewYear(String departureCityName, String arrivalCityName, String year);
     List<Map<String, Object>> whenToFlightViewMonth(String departureCityName, String arrivalCityName, String year, String month);
     List<Map<String, Object>> getFlightsOneWayJointByPrice(String departureCityName, String arrivalCityName, String departureTime);
+    List<Map<String, Object>> getFlightsOneWayByAirlineName(String departureCityName, String arrivalCityName, String departureTime, String airlineName);
+    List<Map<String, Object>> getFlightsOneWayByTimeInterval(String departureCityName, String arrivalCityName, String departureTime, int timeIntervalNum);
     //飞去哪,根据出发城市，出发时间，确定各城市最低价的航程
     List<Map<String, Object>> flyToWhere(String departureTime,String departureCityName);
     //机器学习预测未来一年各月最低价格功能

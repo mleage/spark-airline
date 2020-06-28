@@ -115,9 +115,48 @@ public class FlightsController {
         String departureCityName=request.getParameter("departureCityName");
         String arrivalCityName=request.getParameter("arrivalCityName");
         String departureTime=request.getParameter("departureTime");
-        List<Map<String, Object>> Flights=FlightsService.getFlightsOneWayJointByPrice("北京", "广州","2020-06-19");
+        List<Map<String, Object>> Flights=FlightsService.getFlightsOneWayJointByPrice(departureCityName, arrivalCityName,departureTime);
 
         String FlightsStr= JSON.toJSONString(Flights);
+        return FlightsStr;
+    }
+
+    /**
+     *
+     * @param request
+     * @return
+     * 输入出发地和目的地以及出发日期，航空公司，返回符合条件的航班列表
+     */
+    @RequestMapping("/getFlightsOneWayByAirlineName")
+    @ResponseBody
+    public String getFlightsOneWayByAirlineName(HttpServletRequest request){
+        String departureCityName=request.getParameter("departureCityName");
+        String arrivalCityName=request.getParameter("arrivalCityName");
+        String departureTime=request.getParameter("departureTime");
+        String airlineName=request.getParameter("airlineName");
+        List<Map<String, Object>> Flights=FlightsService.getFlightsOneWayByAirlineName(departureCityName, arrivalCityName,departureTime,airlineName);
+        String FlightsStr= JSON.toJSONString(Flights);
+        return FlightsStr;
+    }
+    /**
+     *
+     * @param request
+     * @return
+     * 输入出发地和目的地以及出发日期，时段，返回符合条件的航班列表
+     */
+    @RequestMapping("/getFlightsOneWayByTimeInterval")
+    @ResponseBody
+    public String getFlightsOneWayByTimeInterval(HttpServletRequest request){
+        String departureCityName=request.getParameter("departureCityName");
+        String arrivalCityName=request.getParameter("arrivalCityName");
+        String departureTime=request.getParameter("departureTime");
+        String timeInter=request.getParameter("timeInterval");
+        String FlightsStr="";
+        if(timeInter!=null) {
+            int timeInterval = Integer.parseInt(timeInter);
+            List<Map<String, Object>> Flights = FlightsService.getFlightsOneWayByTimeInterval(departureCityName, arrivalCityName, departureTime, timeInterval);
+            FlightsStr = JSON.toJSONString(Flights);
+        }
         return FlightsStr;
     }
     /**
