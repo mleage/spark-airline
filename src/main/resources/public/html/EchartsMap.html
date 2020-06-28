@@ -66,8 +66,17 @@
                 //将数据中的城市名，价格提取
                 // console.log(data);
                 var DepartCityName=data[0].departure_cityname;
-                var DepartDate=data[0].departure_time.toString();
-                DepartDate=DepartDate.substring(0,10);
+                var dt=data[0].departure_time.toString();
+                var da = new Date(parseInt(dt.replace("/Date(","").replace(")/","").split("+")[0]));
+                var year=da.getFullYear();
+                var month=da.getMonth()+1;
+                var day=da.getDate();
+                if (month<10)
+                    month="0"+month;
+                if (day<10)
+                    day="0"+day;
+                var DepartDate=year+"-"+ month+"-" +day;
+                console.log("日期====="+DepartDate);
                 var cityName = [];//存放城市名字
                 var price = [];//存放飞往城市的价格
                 var index = 0;//用于指示所有城市中最低价格城市的索引
