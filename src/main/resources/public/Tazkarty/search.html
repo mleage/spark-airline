@@ -1166,25 +1166,25 @@
 																</li>
 																<li>
 																	<label class="label-container checkbox-default">0:00-6:00
-																		<input type="radio" name="flytime">
+																		<input type="radio" name="flytime" onclick="GetFlightByTime(1)">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
 																<li>
 																	<label class="label-container checkbox-default">6:00-12:00
-																		<input type="radio" name="flytime">
+																		<input type="radio" name="flytime" onclick="GetFlightByTime(2)">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
 																<li>
 																	<label class="label-container checkbox-default">12:00-18:00
-																		<input type="radio" name="flytime">
+																		<input type="radio" name="flytime" onclick="GetFlightByTime(3)">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
 																<li>
 																	<label class="label-container checkbox-default">18:00-24:00
-																		<input type="radio" name="flytime">
+																		<input type="radio" name="flytime" onclick="GetFlightByTime(4)">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
@@ -2046,6 +2046,37 @@
             getFlightWhentofly(departureCityName,arriveCityName)
 			//getFlightOneWay(departureCityName,arriveCityName,'2020-07-01')
         }
+
+        function GetFlightByTime(flag){
+			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
+			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
+			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
+			console.log(departureCityName)
+			console.log(arriveCityName)
+			console.log(departDate)
+			getFlightResultByTime(departureCityName,arriveCityName,departDate,flag)
+		}
+
+		function getFlightResultByTime(departureCityName,arriveCityName,departDate,flag){
+			showLoading()
+			$.ajax({
+				type: "GET",
+				url: "../flights/getFlightsOneWayByTimeInterval?departureCityName="	+departureCityName
+						+"&arrivalCityName="	+ 	arriveCityName
+						+"&departureTime="	+ 	departDate
+						+"&timeInterval=" + flag,
+				contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+				success: function(data){
+					var outStr = eval('('+data+')');
+
+					console.log('<=====data=====>')
+					console.log('<=====data=====>')
+					var flightstr="";
+					getResultsOneWay(outStr)
+					completeLoading()
+				}
+			});
+		}
 
         function GetFlightsByFlightsName(AirlineName){
 			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
