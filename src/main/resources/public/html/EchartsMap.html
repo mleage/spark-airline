@@ -361,7 +361,11 @@
                 //todo:如果要实现点击搜索，在这里进行
                 myChart.on('click', function (params) {
                     var arrivalCiyName=params.name;
-                    var str="../Tazkarty/search.html?&type=2&dd="+encodeURI(DepartDate)
+                    // alert(DepartDate)
+                    var url=window.location.search
+                    var departureTime = url.split("departureTime=")[1].split("&")[0];
+                    alert(departureTime)
+                    var str="../Tazkarty/search.html?type=2&dd="+encodeURI(departureTime)
                         +"&dc="+encodeURI(DepartCityName)
                         +"&ac="+encodeURI(arrivalCiyName);
                     window.location.href=str;
@@ -373,7 +377,7 @@
                 });
             },
             error: function () {
-                alert("传参失败，我也想知道为什么阿！！！");
+                // alert("传参失败，我也想知道为什么阿！！！");
             }
         })
     }
