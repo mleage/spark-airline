@@ -721,6 +721,15 @@
 		window.event.returnValue=false;
 	}
 
+	function Whentofly(){
+		var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
+		var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
+
+		var str = "search.html?type=5&dc="+encodeURI(departureCityName)+"&ac="+encodeURI(arriveCityName)
+		window.location.href=str;
+		window.event.returnValue=false;
+	}
+
 	function oneWay() {
 		var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
 		var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()

@@ -682,8 +682,7 @@
 														</ul><!-- .list-dropdown-passengers end -->
 													</div><!-- .form-group end -->
 													<div class="form-group">
-														<button type="submit" class="form-control icon" onclick="Whentofly()"><i class="fas fa-search"></i></button>
-													</div><!-- .form-group end -->
+														<button type="button" class="form-control icon" onclick="Whentofly()"><i class="fas fa-search"></i></button>													</div><!-- .form-group end -->
 												</form><!-- .form-banner-reservation end -->
 											</li>
 										</ul><!-- .br-tabs-content end -->
@@ -1644,6 +1643,7 @@
 					console.log('<=====data=====>')
 					console.log(outStr)
 					console.log('<=====data=====>')
+					alert(outStr)
 					var flightstr="";
 					getResultsOneWay(outStr)
                     completeLoading()
@@ -1688,6 +1688,31 @@
 			// ).done((outStr1,outStr2) => {return [outStr1,outStr2]})
 			//return  [outStr1, outStr2]
 		}
+
+		function getFlightWhentofly(departureCityName,arriveCityName){
+            showLoading()
+            $.ajax({
+                type: "GET",
+                url: "../flights/whenToFlight?departureCityName="	+departureCityName
+                    +"&arrivalCityName="	+ 	arriveCityName,
+                contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+                success: function(data){
+
+					var outStr = eval('('+data+')');
+
+					//outStr = data
+                    console.log('<=====data=====>')
+                    console.log(outStr)
+                    console.log('<=====data=====>')
+                    var flightstr="";
+					//alert(outStr)
+                    getResultsWhentofly(outStr)
+					//getResultsOneWay(outStr)
+                    completeLoading()
+                }
+            });
+            // alert("Whentofly");
+        }
 		/*
 		* 查询where to fly */
 
@@ -1709,6 +1734,89 @@
 			console.log(departureCityName)
 			console.log(arriveCityName)
 			getFlightOneWay(departureCityName,arriveCityName,departDate)
+		}
+
+
+		function getResultsWhentofly(outStr){
+			var results = ""
+			for (var i=0;i<outStr.length;i++) {
+				console.log(i.toString())
+				var departTime = new Date(outStr[i].departure_time) //离开时间
+				var arriveTime = new Date(outStr[i].arrival_time) //达到时间
+				var lastingTime = (arriveTime.getTime()-departTime.getTime())/1000 //计算路程耗时
+				var diffDays = parseInt(lastingTime/86400)  //消耗天数
+				var diffHours = parseInt(lastingTime/3600)-24*diffDays //消耗小时数
+				var diffMinutes = parseInt(lastingTime%3600/60) //消耗分钟数
+				//var url= "images/files/logo-companies/"+"img-1+".png"
+
+				results += '<div class="block-content-2">'
+						+'<div class="box-result">'
+						+'<ul class="list-search-result">'
+						+'<li>'
+						+'<ul class="result-single">'
+						+'<li>'
+						+'<img src='+ "images/files/logo-companies/"+outStr[i].flightNumber.substring(0,2)+".png"+' alt="">'
+						+ outStr[i].airlineName+outStr[i].flightNumber
+						+'</li>'
+						+'<li>'
+						+ outStr[i].departure_airportname
+						+'<span class="date">'+departTime.toLocaleDateString()+' '+departTime.getHours()+":"+(departTime.getMinutes()<10?'0'+departTime.getMinutes():departTime.getMinutes())+'</span>'
+						+'</li>'
+						+'<li>'
+						+(outStr[i].stop_cityname=="无"?"":"<span style='text-align:center'>经停<br><br></span><span style='text-align:center'>"+outStr[i].stop_cityname+"</span>")
+						+'<span class="shape-distance"></span>'
+						+'</li>'
+						+'<li>'
+						+ outStr[i].arrival_airportname
+						+'<span class="date">'+arriveTime.toLocaleDateString()+' '+arriveTime.getHours()+":"+(arriveTime.getMinutes()<10?'0'+arriveTime.getMinutes():arriveTime.getMinutes())+'</span>'
+						+'</li>'
+						+'<li>'
+						+'<span class="duration"> <p> '+diffHours+'h'+diffMinutes+'m </p> <span>'+(outStr[i].stop_cityname=="无"?"Direct":"non-direct")+'</span></span>'
+						+'</li>'
+						+'</ul><!-- .result-single end -->'
+						+'</li>'
+						//以下为往返结果
+						// +'<li>'
+						// +'<ul class="result-single">'
+						// +'<li>'
+						// +'<img src="images/files/logo-companies/img-1.png" alt="">'
+						// +'EgyptAir'
+						// +'</li>'
+						// +'<li>'
+						// +'Cairo'
+						// +'<span class="date">22:30</span>'
+						// +'</li>'
+						// +'<li>'
+						// +'<span class="shape-distance"></span>'
+						// +'</li>'
+						// +'<li>'
+						// +'Sharm El Sheik'
+						// +'<span class="date">23:30</span>'
+						// +'</li>'
+						// +'<li>'
+						// +'<span class="duration">01h 00m <span> | Direct</span></span>'
+						// +'</li>'
+						// +'</ul><!-- .result-single end -->'
+						// +'</li>'
+						+'</ul><!-- .list-search-result end -->'
+						+'<div class="result-price">'
+						+'<div class="price">'
+						+'RMB <span class="value">'+outStr[i].price+'</span>'
+						+'<span class="description">Price for 1 Person(s)</span>'
+						+'</div><!-- .price end -->'
+						+'<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>'
+						+'<a class="btn btn-primary" data-toggle="collapse" data-target=\"#collapseExample'+i.toString()+'\"'+'>点击查看详情</a>'
+						+'</div><!-- .result-price end -->'
+						+'</div><!-- .box-result end -->'
+						+'<div class="collapse" id=\"collapseExample'+i.toString()+'\"'+'>'
+						// +'<div class="card card-body">'
+						// + getSegment(outStr[i].segment)
+						// +'</div>'
+						+'</div>'
+						+'</div><!-- .block-content-2 end -->'
+			}
+
+			$("#true-content").html(results)
 		}
 		/**
 		 * 将单程查询获得的数据渲染到页面上
@@ -1931,6 +2039,14 @@
 			alert(departDate)
 		}
 
+		function Whentofly(){
+            var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
+            var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
+			// alert(departureCityName)
+			// alert(arriveCityName)
+            getFlightWhentofly(departureCityName,arriveCityName)
+			//getFlightOneWay(departureCityName,arriveCityName,'2020-07-01')
+        }
 		/**
 		 * 如有经停城市，则分段具体展示航程
 		 */

@@ -27,6 +27,7 @@ public interface FlightsService {
     //机器学习预测未来一月各天最低价格模型训练功能
     List<Map<String, Object>> predictModelTraningMonth(String departureCityName, String arrivalCityName, String year, String month);
     //字符串转ascii码
+    List<Map<String, Object>> whenToFlight(String departureCityName, String arrivalCityName);
     List<Map<String, Object>> predictModelTraningYearDataWrite() throws IOException;
     void predictModelTraningYearDataTraining() throws IOException;
     String charToNum(String value);

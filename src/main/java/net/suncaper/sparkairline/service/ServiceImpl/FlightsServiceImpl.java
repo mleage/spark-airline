@@ -257,6 +257,28 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
         }
         return flights;
     }
+
+    @Override
+    public List<Map<String, Object>> whenToFlight(String departureCityName, String arrivalCityName) {
+//        String sql = "select day(departure_time) as day, min(price) price ,departure_time from flights_line where" +
+//                " departure_cityname='" + departureCityName + "' and " +
+//                "arrival_cityname='" + arrivalCityName +
+//                "' group by day(departure_time)"+
+//                " order by day(departure_time)";
+        String sql = "select flid,departure_cityname,arrival_cityname,airlineName,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price " +
+                "from flights_line a ," +
+                "(select date_format(departure_time ,'%Y-%m-%d' ) date,min(price) min_price from flights_line where departure_cityname='"+departureCityName+"'and arrival_cityname='"+arrivalCityName+"' GROUP BY date_format(departure_time ,'%Y-%m-%d' ))b" +
+                " where a.departure_cityname='"+departureCityName+"' and a.arrival_cityname='"+arrivalCityName+ "'and a.price = b.min_price and date_format(a.departure_time ,'%Y-%m-%d' )=b.date"+
+                " order by price";
+        System.out.println("sql=" + sql);
+        System.out.println("开始查询");
+        List<Map<String, Object>> flights = jdbcTemplate.queryForList(sql);
+        System.out.println(flights);
+        for (int i = 0; i < flights.size(); i++) {
+            System.out.println(flights.get(i));
+        }
+        return flights;
+    }
     /**
      *
      * @param departureCityName
