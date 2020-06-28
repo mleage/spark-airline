@@ -2059,14 +2059,53 @@
 		}
 
 		function multi() {
-			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
-			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
-			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
-			alert(departureCityName)
-			alert(arriveCityName)
-			alert(departDate)
+			var departureCityName0 = $("li.active").find('[name=\'brPlaceStart\']').eq(0).val()
+			var arriveCityName0 = $("li.active").find('[name=\'brPlaceEnd\']').eq(0).val()
+			var departDate0 = $("li.active").find('[name=\'brTimeStart\']').eq(0).val().replace(/\//g,'-')
+
+			var departureCityName1 = $("li.active").find('[name=\'brPlaceStart\']').eq(1).val()
+			var arriveCityName1 = $("li.active").find('[name=\'brPlaceEnd\']').eq(1).val()
+			var departDate1 = $("li.active").find('[name=\'brTimeStart\']').eq(1).val().replace(/\//g,'-')
+
+			alert(departureCityName0)
+			alert(arriveCityName0)
+			alert(departDate0)
+			alert(departureCityName1)
+			alert(arriveCityName1)
+			alert(departDate1)
+			getFlightMultiWay(departureCityName0,arriveCityName0,departDate0,departureCityName1,arriveCityName1,departDate1)
 		}
 
+		function getFlightMultiWay(departureCityName0,arriveCityName0,departDate0,departureCityName1,arriveCityName1,departDate1){
+			var outStr1, outStr2
+			showLoading()
+			// $.when(
+			$.ajax({
+				type: "GET",
+				url: "../flights/getFlightsOneWayJointByPrice?departureCityName="	+departureCityName0
+						+"&arrivalCityName="	+ 	arriveCityName0
+						+"&departureTime="	+ 	departDate0,
+				contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+				//async:false,  //变异步为同步
+				success: function(data){
+					outStr1 = eval('('+data+')');
+					$.ajax({
+						type: "GET",
+						url: "../flights/getFlightsOneWayJointByPrice?departureCityName="	+departureCityName1
+								+"&arrivalCityName="	+ 	arriveCityName1
+								+"&departureTime="	+ 	departDate1,
+						contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+						//async:false, //变异步为同步
+						success: function(data){
+							outStr2 = eval('('+data+')');
+							getResultsRoundTrip(outStr1, outStr2)
+							completeLoading()
+						}
+					})
+
+				}
+			})
+		}
 		function Whentofly(){
             var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
             var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
