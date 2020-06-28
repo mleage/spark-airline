@@ -178,6 +178,18 @@ public class FlightsController {
         String FlightsStr= JSON.toJSONString(Flights);
         return FlightsStr;
     }
+
+    @RequestMapping("/whenToFlight")
+    @ResponseBody
+    public String whenToFlight(HttpServletRequest request){
+        String departureCityName=request.getParameter("departureCityName");
+        String arrivalCityName=request.getParameter("arrivalCityName");
+        List<Map<String, Object>> Flights=FlightsService.whenToFlight(departureCityName, arrivalCityName);
+
+        String FlightsStr= JSON.toJSONString(Flights);
+       // System.out.println(FlightsStr);
+        return FlightsStr;
+    }
     /**
      *
      * @param request

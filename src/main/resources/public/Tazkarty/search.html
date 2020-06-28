@@ -186,6 +186,8 @@
 											<li class="active"><a href="javascript:;">Round Trip</a></li>
 											<li><a href="javascript:;">One Way</a></li>
 											<li><a href="javascript:;">Multiple Destinations</a></li>
+											<li><a href="javascript:;">where to fly</a></li>
+											<li><a href="javascript:;">when to fly</a></li>
 										</ul><!-- .br-tabs end -->
 										<ul class="br-tabs-content">
 											<li class="active">
@@ -497,6 +499,192 @@
 													</a>
 												</div><!-- .multiple-destinations end -->
 											</li>
+											<li>
+												<form class="form-banner-reservation form-inline style-2 form-h-50">
+													<div class="form-group">
+														<input type="text" name="brPlaceStart" class="form-control" placeholder="From">
+														<i class="fas fa-plane"></i>
+													</div><!-- .form-group end -->
+													<div class="form-group">
+														<input type="text" name="brTimeStart" class="form-control datepicker-2-time-start"
+															   placeholder="2019/09/30">
+														<i class="far fa-calendar"></i>
+													</div><!-- .form-group end -->
+													<div class="form-group">
+														<input type="text" name="brPassengerNumber" class="form-control show-dropdown-passengers"
+															   placeholder="Passengers">
+														<i class="fas fa-user"></i>
+														<ul class="list-dropdown-passengers">
+															<li>
+																<ul class="list-persons-count">
+																	<li>
+																		<span>Adults:</span>
+																		<div class="counter-add-item">
+																			<a class="decrease-btn" href="javascript:;">-</a>
+																			<input type="text" value="1">
+																			<a class="increase-btn" href="javascript:;">+</a>
+																		</div><!-- .counter-add-item end -->
+																	</li>
+																	<li>
+																		<span>Childs:</span>
+																		<div class="counter-add-item">
+																			<a class="decrease-btn" href="javascript:;">-</a>
+																			<input type="text" value="0">
+																			<a class="increase-btn" href="javascript:;">+</a>
+																		</div><!-- .counter-add-item end -->
+																	</li>
+																</ul><!-- .list-persons-count end -->
+															</li>
+															<li>
+																<ul class="list-select-grade">
+																	<li>
+																		<label class="radio-container radio-default">
+																			<input type="radio" checked="checked" name="radio">
+																			<span class="checkmark"></span>
+																			Economy Class
+																		</label>
+																	</li>
+																	<li>
+																		<label class="radio-container radio-default">
+																			<input type="radio" checked="checked" name="radio">
+																			<span class="checkmark"></span>
+																			Business Class
+																		</label>
+																	</li>
+																	<li>
+																		<label class="radio-container radio-default">
+																			<input type="radio" checked="checked" name="radio">
+																			<span class="checkmark"></span>
+																			First Class
+																		</label>
+																	</li>
+																</ul><!-- .list-select-grade end -->
+															</li>
+															<li>
+																<ul class="list-reservation-options">
+																	<li>
+																		<label class="label-container checkbox-default">
+																			<span>
+																				Nonstop
+																			</span>
+																			<input type="checkbox">
+																			<span class="checkmark"></span>
+																		</label>
+																	</li>
+																	<li>
+																		<label class="label-container checkbox-default">
+																			<span>
+																				Refundable
+																			</span>
+																			<input type="checkbox">
+																			<span class="checkmark"></span>
+																		</label>
+																	</li>
+																</ul><!-- .list-reservation-options end -->
+															</li>
+															<li>
+																<a class="btn-reservation-passengers btn x-small colorful hover-dark"
+																   href="javascript:;">Done</a>
+															</li>
+														</ul><!-- .list-dropdown-passengers end -->
+													</div><!-- .form-group end -->
+													<div class="form-group">
+														<button type="submit" class="form-control icon" onclick="Wheretofly()"><i class="fas fa-search"></i></button>
+													</div><!-- .form-group end -->
+												</form><!-- .form-banner-reservation end -->
+											</li>
+											<li>
+												<form class="form-banner-reservation form-inline style-2 form-h-50">
+													<div class="form-group">
+														<input type="text" name="brPlaceStart" class="form-control" placeholder="From">
+														<i class="fas fa-plane"></i>
+													</div><!-- .form-group end -->
+													<div class="form-group">
+														<input type="text" name="brPlaceEnd" class="form-control" placeholder="To">
+														<i class="fas fa-plane"></i>
+													</div><!-- .form-group end -->
+													<div class="form-group">
+														<input type="text" name="brPassengerNumber" class="form-control show-dropdown-passengers"
+															   placeholder="Passengers">
+														<i class="fas fa-user"></i>
+														<ul class="list-dropdown-passengers">
+															<li>
+																<ul class="list-persons-count">
+																	<li>
+																		<span>Adults:</span>
+																		<div class="counter-add-item">
+																			<a class="decrease-btn" href="javascript:;">-</a>
+																			<input type="text" value="1">
+																			<a class="increase-btn" href="javascript:;">+</a>
+																		</div><!-- .counter-add-item end -->
+																	</li>
+																	<li>
+																		<span>Childs:</span>
+																		<div class="counter-add-item">
+																			<a class="decrease-btn" href="javascript:;">-</a>
+																			<input type="text" value="0">
+																			<a class="increase-btn" href="javascript:;">+</a>
+																		</div><!-- .counter-add-item end -->
+																	</li>
+																</ul><!-- .list-persons-count end -->
+															</li>
+															<li>
+																<ul class="list-select-grade">
+																	<li>
+																		<label class="radio-container radio-default">
+																			<input type="radio" checked="checked" name="radio">
+																			<span class="checkmark"></span>
+																			Economy Class
+																		</label>
+																	</li>
+																	<li>
+																		<label class="radio-container radio-default">
+																			<input type="radio" checked="checked" name="radio">
+																			<span class="checkmark"></span>
+																			Business Class
+																		</label>
+																	</li>
+																	<li>
+																		<label class="radio-container radio-default">
+																			<input type="radio" checked="checked" name="radio">
+																			<span class="checkmark"></span>
+																			First Class
+																		</label>
+																	</li>
+																</ul><!-- .list-select-grade end -->
+															</li>
+															<li>
+																<ul class="list-reservation-options">
+																	<li>
+																		<label class="label-container checkbox-default">
+																			<span>
+																				Nonstop
+																			</span>
+																			<input type="checkbox">
+																			<span class="checkmark"></span>
+																		</label>
+																	</li>
+																	<li>
+																		<label class="label-container checkbox-default">
+																			<span>
+																				Refundable
+																			</span>
+																			<input type="checkbox">
+																			<span class="checkmark"></span>
+																		</label>
+																	</li>
+																</ul><!-- .list-reservation-options end -->
+															</li>
+															<li>
+																<a class="btn-reservation-passengers btn x-small colorful hover-dark"
+																   href="javascript:;">Done</a>
+															</li>
+														</ul><!-- .list-dropdown-passengers end -->
+													</div><!-- .form-group end -->
+													<div class="form-group">
+														<button type="button" class="form-control icon" onclick="Whentofly()"><i class="fas fa-search"></i></button>													</div><!-- .form-group end -->
+												</form><!-- .form-banner-reservation end -->
+											</li>
 										</ul><!-- .br-tabs-content end -->
 									</div><!-- .banner-reservation-tabs end -->
 
@@ -540,13 +728,10 @@
 																</li>
 																<li>
 																	<div class="list-sorter-single">
-																		<select class="options-select2">
-																			<option selected disabled hidden>Arrival</option>
-																			<option>Option 1</option>
-																			<option>Option 2</option>
-																			<option>Option 3</option>
-																			<option>Option 4</option>
-																			<option>Option 5</option>
+																		<select class="options-select2" onchange="if(this.selectedIndex==1) sortByTime(-1); else if(this.selectedIndex==2) sortByTime(1);">
+																			<option selected disabled hidden>起飞时间</option>
+																			<option value="-1">从晚到早</option>
+																			<option value=“1”>从早到晚</option>
 																		</select>
 																		<i class="fa fa-sort"></i>
 																	</div><!-- .list-sorter-single end -->
@@ -554,9 +739,9 @@
 																<li>
 																	<div class="list-sorter-single" id="select-duration">
 																		<select class="options-select2" onchange="if(this.selectedIndex==1) sortByDuration(-1); else if(this.selectedIndex==2) sortByDuration(1);">
-																			<option selected disabled hidden>Duration</option>
-																			<option value="-1">Descend</option>
-																			<option value="1">Ascend</option>
+																			<option selected disabled hidden>飞行时间</option>
+																			<option value="-1">降序</option>
+																			<option value="1">升序</option>
 																		</select>
 																		<i class="fa fa-sort"></i>
 																	</div><!-- .list-sorter-single end -->
@@ -564,9 +749,9 @@
 																<li>
 																	<div class="list-sorter-single" id="select-price">
 																		<select class="options-select2" onchange="if(this.selectedIndex==1) sortByPrice(-1); else if(this.selectedIndex==2) sortByPrice(1);">
-																			<option selected disabled hidden>Price</option>
-																			<option value="-1">Descend</option>
-																			<option value="1">Ascend</option>
+																			<option selected disabled hidden>价格</option>
+																			<option value="-1">从高到低</option>
+																			<option value="1">从低到高</option>
 																		</select>
 																		<i class="fa fa-sort"></i>
 																	</div><!-- .list-sorter-single end -->
@@ -869,39 +1054,33 @@
 											<div class="col-lg-4 col-md-12 col-lg-pull-8">
 										
 												<div class="sidebar style-1">
+<!--													<div class="box-widget">-->
+<!--														<h5 class="box-title">Price Range</h5>-->
+<!--														<div class="box-content">-->
+<!--															<div class="slider-dragable-range slider-range-price">-->
+<!--																<input type="text" class="price">-->
+<!--																<div class="slider-range" data-slider-min-value="0" data-slider-max-value="99" data-range-start-value="20" data-range-end-value="55" data-slider-value-sign="EGP "></div>-->
+<!--															</div>&lt;!&ndash; .slider-dragable-price end &ndash;&gt;															-->
+<!--														</div>&lt;!&ndash; .box-content end &ndash;&gt;-->
+<!--													</div>&lt;!&ndash; .box-widget end &ndash;&gt;-->
 													<div class="box-widget">
-														<h5 class="box-title">Price Range</h5>
-														<div class="box-content">
-															<div class="slider-dragable-range slider-range-price">
-																<input type="text" class="price">
-																<div class="slider-range" data-slider-min-value="0" data-slider-max-value="99" data-range-start-value="20" data-range-end-value="55" data-slider-value-sign="EGP "></div>
-															</div><!-- .slider-dragable-price end -->															
-														</div><!-- .box-content end -->
-													</div><!-- .box-widget end -->
-													<div class="box-widget">
-														<h5 class="box-title">Stops</h5>
+														<h5 class="box-title">是否经停</h5>
 														<div class="box-content">
 															<ul class="check-boxes-custom list-checkboxes">
 																<li>
-																	<label class="label-container checkbox-default">All
+																	<label class="label-container checkbox-default">全部
 																		<input type="checkbox">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
 																<li>
-																	<label class="label-container checkbox-default">Non Stop
+																	<label class="label-container checkbox-default">不经停
 																		<input type="checkbox">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
 																<li>
-																	<label class="label-container checkbox-default">1 Stop
-																		<input type="checkbox">
-																		<span class="checkmark"></span>
-																	</label>
-																</li>
-																<li>
-																	<label class="label-container checkbox-default">2 Stops
+																	<label class="label-container checkbox-default">经停一次
 																		<input type="checkbox">
 																		<span class="checkmark"></span>
 																	</label>
@@ -910,17 +1089,41 @@
 														</div><!-- .box-content end -->
 													</div><!-- .box-widget end -->
 													<div class="box-widget">
-														<h5 class="box-title">AirLine</h5>
+														<h5 class="box-title">航空公司</h5>
 														<div class="box-content">
 															<ul class="check-boxes-custom list-checkboxes">
 																<li>
-																	<label class="label-container checkbox-default">All
+																	<label class="label-container checkbox-default">全部
 																		<input type="checkbox">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
 																<li>
-																	<label class="label-container checkbox-default">Egypt Air
+																	<label class="label-container checkbox-default">东航
+																		<input type="checkbox">
+																		<span class="checkmark"></span>
+																	</label>
+																</li>
+																<li>
+																	<label class="label-container checkbox-default">国航
+																		<input type="checkbox">
+																		<span class="checkmark"></span>
+																	</label>
+																</li>
+																<li>
+																	<label class="label-container checkbox-default">南航
+																		<input type="checkbox">
+																		<span class="checkmark"></span>
+																	</label>
+																</li>
+																<li>
+																	<label class="label-container checkbox-default">川航
+																		<input type="checkbox">
+																		<span class="checkmark"></span>
+																	</label>
+																</li>
+																<li>
+																	<label class="label-container checkbox-default">海航
 																		<input type="checkbox">
 																		<span class="checkmark"></span>
 																	</label>
@@ -928,12 +1131,59 @@
 															</ul><!-- .check-boxes-custom end -->
 														</div><!-- .box-content end -->
 													</div><!-- .box-widget end -->
+<!--													<div class="box-widget">-->
+<!--														<h5 class="box-title">Airport</h5>-->
+<!--														<div class="box-content">-->
+<!--															<ul class="check-boxes-custom list-checkboxes">-->
+<!--																<li>-->
+<!--																	<label class="label-container checkbox-default">All-->
+<!--																		<input type="checkbox">-->
+<!--																		<span class="checkmark"></span>-->
+<!--																	</label>-->
+<!--																</li>-->
+<!--															</ul>&lt;!&ndash; .check-boxes-custom end &ndash;&gt;-->
+<!--														</div>&lt;!&ndash; .box-content end &ndash;&gt;-->
+<!--													</div>&lt;!&ndash; .box-widget end &ndash;&gt;-->
+<!--													<div class="box-widget">-->
+<!--														<h5 class="box-title">Departure</h5>-->
+<!--														<div class="box-content">-->
+<!--															<div class="slider-dragable-range slider-range-price">-->
+<!--																<input type="text" class="price">-->
+<!--																<div class="slider-range" data-slider-min-value="0" data-slider-max-value="99" data-range-start-value="0"-->
+<!--																	data-range-end-value="60" data-slider-value-sign="EGP "></div>-->
+<!--															</div>&lt;!&ndash; .slider-dragable-range end &ndash;&gt;-->
+<!--														</div>&lt;!&ndash; .box-content end &ndash;&gt;-->
+<!--													</div>&lt;!&ndash; .box-widget end &ndash;&gt;-->
 													<div class="box-widget">
-														<h5 class="box-title">Airport</h5>
+														<h5 class="box-title">起飞时间</h5>
 														<div class="box-content">
 															<ul class="check-boxes-custom list-checkboxes">
 																<li>
-																	<label class="label-container checkbox-default">All
+																	<label class="label-container checkbox-default">全部
+																		<input type="checkbox">
+																		<span class="checkmark"></span>
+																	</label>
+																</li>
+																<li>
+																	<label class="label-container checkbox-default">0:00-6:00
+																		<input type="checkbox">
+																		<span class="checkmark"></span>
+																	</label>
+																</li>
+																<li>
+																	<label class="label-container checkbox-default">6:00-12:00
+																		<input type="checkbox">
+																		<span class="checkmark"></span>
+																	</label>
+																</li>
+																<li>
+																	<label class="label-container checkbox-default">12:00-18:00
+																		<input type="checkbox">
+																		<span class="checkmark"></span>
+																	</label>
+																</li>
+																<li>
+																	<label class="label-container checkbox-default">18:00-24:00
 																		<input type="checkbox">
 																		<span class="checkmark"></span>
 																	</label>
@@ -941,41 +1191,21 @@
 															</ul><!-- .check-boxes-custom end -->
 														</div><!-- .box-content end -->
 													</div><!-- .box-widget end -->
-													<div class="box-widget">
-														<h5 class="box-title">Departure</h5>
-														<div class="box-content">
-															<div class="slider-dragable-range slider-range-price">
-																<input type="text" class="price">
-																<div class="slider-range" data-slider-min-value="0" data-slider-max-value="99" data-range-start-value="0"
-																	data-range-end-value="60" data-slider-value-sign="EGP "></div>
-															</div><!-- .slider-dragable-range end -->
-														</div><!-- .box-content end -->
-													</div><!-- .box-widget end -->
-													<div class="box-widget">
-														<h5 class="box-title">Return</h5>
-														<div class="box-content">
-															<div class="slider-dragable-range slider-range-price">
-																<input type="text" class="price">
-																<div class="slider-range" data-slider-min-value="0" data-slider-max-value="99" data-range-start-value="5"
-																	data-range-end-value="40" data-slider-value-sign="EGP "></div>
-															</div><!-- .slider-dragable-price end -->
-														</div><!-- .box-content end -->
-													</div><!-- .box-widget end -->
-													<div class="box-widget">
-														<h5 class="box-title">Duration</h5>
-														<div class="box-content">
-															<div class="slider-dragable-range slider-range-time">
-																<div class="time">
-																	<span class="slider-time-1">8:00 AM</span> - <span class="slider-time-2">3:00 PM</span>
-																</div><!-- .time end -->
-																<div class="sliders_step1">
-																	<div class="slider-range" data-time-start-minutes="480" data-time-end-minutes="900"></div>
-																</div>
-															</div><!-- .slider-range-time end -->
-														</div><!-- .box-content end -->
-													</div><!-- .box-widget end -->
+<!--													<div class="box-widget">-->
+<!--														<h5 class="box-title">Duration</h5>-->
+<!--														<div class="box-content">-->
+<!--															<div class="slider-dragable-range slider-range-time">-->
+<!--																<div class="time">-->
+<!--																	<span class="slider-time-1">8:00 AM</span> - <span class="slider-time-2">3:00 PM</span>-->
+<!--																</div>&lt;!&ndash; .time end &ndash;&gt;-->
+<!--																<div class="sliders_step1">-->
+<!--																	<div class="slider-range" data-time-start-minutes="480" data-time-end-minutes="900"></div>-->
+<!--																</div>-->
+<!--															</div>&lt;!&ndash; .slider-range-time end &ndash;&gt;-->
+<!--														</div>&lt;!&ndash; .box-content end &ndash;&gt;-->
+<!--													</div>&lt;!&ndash; .box-widget end &ndash;&gt;-->
 												</div><!-- .sidebar end -->
-										
+
 											</div><!-- .col-lg-4 end -->
 										</div><!-- .row end -->
 
@@ -1365,6 +1595,29 @@
 
 	<script>
 
+		window.onload=function() {
+			var url=window.location.search
+			arr = url.split('&')
+			type = arr[0].split('=')[1]
+			departureTime = arr[1].split('=')[1]
+			departureCityName = arr[2].split('=')[1]
+			arrivalCityName = arr[3].split('=')[1]
+			// alert(type)
+			// alert(departureTime)
+			// alert(arrivalCityName)
+			// alert(departureCityName)
+			if(type==1)
+			{
+				arrivalTime =  arr[4].split('=')[1]
+				getFlightRoundWay(departureCityName,arrivalCityName,departureTime, arrivalTime)
+			}
+			else if(type==2)
+			getFlightOneWay(departureCityName,arrivalCityName,departureTime)
+			else if(type==3)
+			{
+
+			}
+		}
         function completeLoading() {
             document.getElementById("loadingDiv").style.display="none";
         }
@@ -1390,6 +1643,7 @@
 					console.log('<=====data=====>')
 					console.log(outStr)
 					console.log('<=====data=====>')
+					alert(outStr)
 					var flightstr="";
 					getResultsOneWay(outStr)
                     completeLoading()
@@ -1401,6 +1655,7 @@
 		 * */
 		function getFlightRoundWay(departureCityName,arrivalCityName,departureTime, arrivalTime) {
 			var outStr1, outStr2
+			showLoading()
 			// $.when(
 				$.ajax({
 					type: "GET",
@@ -1408,27 +1663,67 @@
 							+"&arrivalCityName="	+ 	arrivalCityName
 							+"&departureTime="	+ 	departureTime,
 					contentType:"application/x-www-form-urlencoded;charset=UTF-8",
-					async:false,  //变异步为同步
+					//async:false,  //变异步为同步
 					success: function(data){
 						outStr1 = eval('('+data+')');
-					}
-				}),
 						$.ajax({
 							type: "GET",
 							url: "../flights/getFlightsOneWayJointByPrice?departureCityName="	+arrivalCityName
 									+"&arrivalCityName="	+ 	departureCityName
 									+"&departureTime="	+ 	arrivalTime,
 							contentType:"application/x-www-form-urlencoded;charset=UTF-8",
-							async:false, //变异步为同步
+							//async:false, //变异步为同步
 							success: function(data){
 								outStr2 = eval('('+data+')');
+								getResultsRoundTrip(outStr1, outStr2)
+								completeLoading()
 							}
 						})
 
+					}
+				})
+
+
 
 			// ).done((outStr1,outStr2) => {return [outStr1,outStr2]})
-			return  [outStr1, outStr2]
+			//return  [outStr1, outStr2]
 		}
+
+		function getFlightWhentofly(departureCityName,arriveCityName){
+            showLoading()
+            $.ajax({
+                type: "GET",
+                url: "../flights/whenToFlight?departureCityName="	+departureCityName
+                    +"&arrivalCityName="	+ 	arriveCityName,
+                contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+                success: function(data){
+
+					var outStr = eval('('+data+')');
+
+					//outStr = data
+                    console.log('<=====data=====>')
+                    console.log(outStr)
+                    console.log('<=====data=====>')
+                    var flightstr="";
+					//alert(outStr)
+                    getResultsWhentofly(outStr)
+					//getResultsOneWay(outStr)
+                    completeLoading()
+                }
+            });
+            // alert("Whentofly");
+        }
+		/*
+		* 查询where to fly */
+
+		function Wheretofly(){
+			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
+			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
+			//如果不对，可能是url，试下把EchartsMap拖到同一个文件夹里，删除前面的“。/html/”
+			window.open("../html/EchartsMap.html?departureCityName="+departureCityName+"&departureTime="+departDate)
+			window.event.returnValue=false;
+		}
+
 		/**
 		 * 在单程模式下的点击查询
 		 */
@@ -1436,8 +1731,92 @@
 			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
 			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
 			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
-
+			console.log(departureCityName)
+			console.log(arriveCityName)
 			getFlightOneWay(departureCityName,arriveCityName,departDate)
+		}
+
+
+		function getResultsWhentofly(outStr){
+			var results = ""
+			for (var i=0;i<outStr.length;i++) {
+				console.log(i.toString())
+				var departTime = new Date(outStr[i].departure_time) //离开时间
+				var arriveTime = new Date(outStr[i].arrival_time) //达到时间
+				var lastingTime = (arriveTime.getTime()-departTime.getTime())/1000 //计算路程耗时
+				var diffDays = parseInt(lastingTime/86400)  //消耗天数
+				var diffHours = parseInt(lastingTime/3600)-24*diffDays //消耗小时数
+				var diffMinutes = parseInt(lastingTime%3600/60) //消耗分钟数
+				//var url= "images/files/logo-companies/"+"img-1+".png"
+
+				results += '<div class="block-content-2">'
+						+'<div class="box-result">'
+						+'<ul class="list-search-result">'
+						+'<li>'
+						+'<ul class="result-single">'
+						+'<li>'
+						+'<img src='+ "images/files/logo-companies/"+outStr[i].flightNumber.substring(0,2)+".png"+' alt="">'
+						+ outStr[i].airlineName+outStr[i].flightNumber
+						+'</li>'
+						+'<li>'
+						+ outStr[i].departure_airportname
+						+'<span class="date">'+departTime.toLocaleDateString()+' '+departTime.getHours()+":"+(departTime.getMinutes()<10?'0'+departTime.getMinutes():departTime.getMinutes())+'</span>'
+						+'</li>'
+						+'<li>'
+						+(outStr[i].stop_cityname=="无"?"":"<span style='text-align:center'>经停<br><br></span><span style='text-align:center'>"+outStr[i].stop_cityname+"</span>")
+						+'<span class="shape-distance"></span>'
+						+'</li>'
+						+'<li>'
+						+ outStr[i].arrival_airportname
+						+'<span class="date">'+arriveTime.toLocaleDateString()+' '+arriveTime.getHours()+":"+(arriveTime.getMinutes()<10?'0'+arriveTime.getMinutes():arriveTime.getMinutes())+'</span>'
+						+'</li>'
+						+'<li>'
+						+'<span class="duration"> <p> '+diffHours+'h'+diffMinutes+'m </p> <span>'+(outStr[i].stop_cityname=="无"?"Direct":"non-direct")+'</span></span>'
+						+'</li>'
+						+'</ul><!-- .result-single end -->'
+						+'</li>'
+						//以下为往返结果
+						// +'<li>'
+						// +'<ul class="result-single">'
+						// +'<li>'
+						// +'<img src="images/files/logo-companies/img-1.png" alt="">'
+						// +'EgyptAir'
+						// +'</li>'
+						// +'<li>'
+						// +'Cairo'
+						// +'<span class="date">22:30</span>'
+						// +'</li>'
+						// +'<li>'
+						// +'<span class="shape-distance"></span>'
+						// +'</li>'
+						// +'<li>'
+						// +'Sharm El Sheik'
+						// +'<span class="date">23:30</span>'
+						// +'</li>'
+						// +'<li>'
+						// +'<span class="duration">01h 00m <span> | Direct</span></span>'
+						// +'</li>'
+						// +'</ul><!-- .result-single end -->'
+						// +'</li>'
+						+'</ul><!-- .list-search-result end -->'
+						+'<div class="result-price">'
+						+'<div class="price">'
+						+'RMB <span class="value">'+outStr[i].price+'</span>'
+						+'<span class="description">Price for 1 Person(s)</span>'
+						+'</div><!-- .price end -->'
+						+'<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>'
+						+'<a class="btn btn-primary" data-toggle="collapse" data-target=\"#collapseExample'+i.toString()+'\"'+'>点击查看详情</a>'
+						+'</div><!-- .result-price end -->'
+						+'</div><!-- .box-result end -->'
+						+'<div class="collapse" id=\"collapseExample'+i.toString()+'\"'+'>'
+						// +'<div class="card card-body">'
+						// + getSegment(outStr[i].segment)
+						// +'</div>'
+						+'</div>'
+						+'</div><!-- .block-content-2 end -->'
+			}
+
+			$("#true-content").html(results)
 		}
 		/**
 		 * 将单程查询获得的数据渲染到页面上
@@ -1468,7 +1847,7 @@
 						+'<span class="date">'+departTime.getHours()+":"+(departTime.getMinutes()<10?'0'+departTime.getMinutes():departTime.getMinutes())+'</span>'
 						+'</li>'
 						+'<li>'
-						+(outStr[i].stop_cityname=="无"?"":"<span style='text-align:center'>经停</span><span style='text-align:center'>"+outStr[i].stop_cityname+"</span>")
+						+(outStr[i].stop_cityname=="无"?"":"<span style='text-align:center'>经停<br><br></span><span style='text-align:center'>"+outStr[i].stop_cityname+"</span>")
 						+'<span class="shape-distance"></span>'
 						+'</li>'
 						+'<li>'
@@ -1562,7 +1941,7 @@
 							+'<span class="date">'+departTime1.getHours()+":"+(departTime1.getMinutes()<10?'0'+departTime1.getMinutes():departTime1.getMinutes())+'</span>'
 							+'</li>'
 							+'<li>'
-							+(outStr1[i].stop_cityname=="无"?"":"<span style='text-align:center'>经停</span><span style='text-align:center'>"+outStr1[i].stop_cityname+"</span>")
+							+(outStr1[i].stop_cityname=="无"?"":"<span style='text-align:center'>经停<br><br></span><span style='text-align:center'>"+outStr1[i].stop_cityname+"</span>")
 							+'<span class="shape-distance"></span>'
 							+'</li>'
 							+'<li>'
@@ -1586,7 +1965,7 @@
 							+'<span class="date">'+departTime2.getHours()+":"+(departTime2.getMinutes()<10?'0'+departTime2.getMinutes():departTime2.getMinutes())+'</span>'
 							+'</li>'
 							+'<li>'
-							+(outStr2[j].stop_cityname=="无"?"":"<span style='text-align:center'>经停</span><span style='text-align:center'>"+outStr2[j].stop_cityname+"</span>")
+							+(outStr2[j].stop_cityname=="无"?"":"<span style='text-align:center'>经停<br><br></span><span style='text-align:center'>"+outStr2[j].stop_cityname+"</span>")
 							+'<span class="shape-distance"></span>'
 							+'</li>'
 							+'<li>'
@@ -1611,8 +1990,8 @@
 							+'</div><!-- .box-result end -->'
 							+'<div class="collapse" id=\"collapseExample'+(parseInt(outStr1[i].flid)+parseInt(outStr2[j].flid))+'\"'+'>'
 							+'<div class="card card-body">'
-							+ getSegment(outStr1[i])
-							+ getSegment(outStr2[j])
+							+ getSegment(outStr1[i].segment)
+							+ getSegment(outStr2[j].segment)
 							+'</div>'
 							+'</div>'
 							+'</div><!-- .block-content-2 end -->'
@@ -1631,7 +2010,7 @@
 		 * 获取往返模式下的参数，获得返回结构，渲染
 		 */
 		function roundTrip(){
-			showLoading()
+			//showLoading()
 			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
 			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
 			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
@@ -1642,13 +2021,13 @@
 			// alert(returnDate)
 			// alert(arriveCityName)
 			// var outStr1, outStr2
-			var [outStr1,outStr2] = getFlightRoundWay(departureCityName,arriveCityName,departDate,returnDate)
+			getFlightRoundWay(departureCityName,arriveCityName,departDate,returnDate)
 			// console.log("==========>")
 			// console.log(outStr1)
 			// console.log("<==========")
 			// console.log(outStr2)
-			getResultsRoundTrip(outStr1, outStr2)
-			completeLoading()
+			//getResultsRoundTrip(outStr1, outStr2)
+			//completeLoading()
 		}
 
 		function multi() {
@@ -1660,6 +2039,14 @@
 			alert(departDate)
 		}
 
+		function Whentofly(){
+            var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
+            var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
+			// alert(departureCityName)
+			// alert(arriveCityName)
+            getFlightWhentofly(departureCityName,arriveCityName)
+			//getFlightOneWay(departureCityName,arriveCityName,'2020-07-01')
+        }
 		/**
 		 * 如有经停城市，则分段具体展示航程
 		 */
@@ -1667,6 +2054,8 @@
 			var str = ""
 			for (var  i=0; i<segment.length; i++) {
 				var duration = new Date(segment[i].duration)
+				var departTime = new Date(segment[i].departure_time)
+				var arriveTime = new Date(segment[i].arrival_time)
 				str += 	'<ul class="list-search-result">'
 						+'<li>'
 						+'<ul class="result-single">'
@@ -1676,21 +2065,26 @@
 						+'</li>'
 						+'<li>'
 						+segment[i].departure_cityname
-						+'<span class="date">'+segment[i].departure_time+'</span>'
+						+'<span class="date">'+departTime+'</span>'
 						+'</li>'
 						+"<li>"
 						+'<span class="shape-distance"></span>'
 						+'</li>'
 						+'<li>'
 						+ segment[i].arrival_cityname
-						+'<span class="date">'+segment[i].arrival_time+'</span>'
+						+'<span class="date">'+arriveTime+'</span>'
 						+'</li>'
 						+'<li>'
-						+'<span class="duration">'+duration+'<span></span></span>'
+						+'<span class="duration">'+duration.getHours()+'H'+duration.getMinutes()+'min'+'<span></span></span>'
 						+'</li>'
-						+'</ul><!-- .result-single end -->'
+						+'</ul>'
+						+'<br>'
+						'<!-- .result-single end -->'
 			}
-			if (str == "") return "该行程为直飞"
+			if (str == "") return '<li>'+"该行程为直飞"+'</li>'
+			str = 	'<li>'
+					+str
+					+'</li>'
 			return str
 		}
 
@@ -1796,6 +2190,60 @@
 				domList.sort(function(a,b){
 					var elOne = $(a).find('p').html();
 					var elTwo = $(b).find('p').html();
+					if (elOne > elTwo) return -1;
+					if (elOne < elTwo) return 1;
+					return 0
+				});
+				$('#true-content').append(domList)
+				console.log(domList)
+			}
+
+		}
+
+		function sortByTime(flag){
+			alert("time Sort")
+			//flag=1时升序排序
+			if (flag == 1) {
+				alert("Duration-Ascend")
+				var domList = $('#true-content .block-content-2').get();
+				domList.sort(function(a,b){
+					var elOne = $(a).find('.date').html();
+					var elTwo = $(b).find('.date').html();
+					if(elOne[1]==':')
+					{
+						elOne = '0'+elOne;
+					}
+					if(elTwo[1]==':')
+					{
+						elTwo = '0'+elTwo;
+					}
+					if (elOne > elTwo) return 1;
+					if (elOne < elTwo) return -1;
+					// console.log("=======>")
+					// console.log("elOne="+elOne)
+					// // console.log("elTwo="+elTwo)
+					// // console.log(elOne>elTwo)
+					// console.log("<=======")
+					return 0
+				});
+				$('#true-content').append(domList)
+				console.log(domList)
+			}
+			//flag为-1时，做降序排列
+			else if(flag == -1) {
+				alert("Duration-Descend")
+				var domList = $('#true-content .block-content-2').get();
+				domList.sort(function(a,b){
+					var elOne = $(a).find('.date').html();
+					var elTwo = $(b).find('.date').html();
+					if(elOne[1]==':')
+					{
+						elOne = '0'+elOne;
+					}
+					if(elTwo[1]==':')
+					{
+						elTwo = '0'+elTwo;
+					}
 					if (elOne > elTwo) return -1;
 					if (elOne < elTwo) return 1;
 					return 0
