@@ -29,7 +29,8 @@
 	<!-- 新 Bootstrap 核心 CSS 文件 -->
 	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
 	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-	<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<!--	<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>-->
+	<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
 	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 	<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
@@ -1075,13 +1076,13 @@
 																</li>
 																<li>
 																	<label class="label-container checkbox-default">不经停
-																		<input type="radio" name="Isstop">
+																		<input type="radio" name="Isstop" onclick="GetFlightByStop(1)">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
 																<li>
-																	<label class="label-container checkbox-default">经停一次
-																		<input type="radio" name="Isstop">
+																	<label class="label-container checkbox-default">经停
+																		<input type="radio" name="Isstop" onclick="GetFlightByStop(0)">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
@@ -1723,6 +1724,34 @@
 			window.event.returnValue=false;
 		}
 
+		function GetFlightByStop(stop){
+			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
+			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
+			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
+			GetFlightResultBystop(departureCityName,arriveCityName,departDate,stop)
+		}
+
+		function GetFlightResultBystop(departureCityName,arriveCityName,departDate,stop){
+			showLoading()
+			$.ajax({
+				type: "GET",
+				url: "../flights/getFlightsOneWayBystop?departureCityName="	+departureCityName
+						+"&arrivalCityName="	+ 	arriveCityName
+						+"&departureTime="	+ 	departDate
+						+"&Stopflag=" + stop,
+				contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+				success: function(data){
+					var outStr = eval('('+data+')');
+
+					console.log('<=====data=====>')
+					console.log('<=====data=====>')
+					var flightstr="";
+					getResultsOneWay(outStr)
+					completeLoading()
+				}
+			});
+
+		}
 		/**
 		 * 在单程模式下的点击查询
 		 */
@@ -2194,7 +2223,7 @@
 			//flag为1时，做升序排列
 			// alert("Begin Sort!")
 			if (flag == 1) {
-				alert("Ascend")
+				// alert("Ascend")
 				var domList = $('#true-content .block-content-2').get();
 				domList.sort(function(a,b){
 					var elOne = $(a).find('.price .value').html();
@@ -2208,7 +2237,7 @@
 			}
 			//flag为-1时，做降序排列
 			else if(flag == -1) {
-				alert("Descend")
+				// alert("Descend")
 				var domList = $('#true-content .block-content-2').get();
 				domList.sort(function(a,b){
 					var elOne = $(a).find('.price .value').html();
@@ -2227,10 +2256,10 @@
 		 * 实现时常排序
 		 */
 		function sortByDuration(flag) {
-			alert("Duration Sort")
+			// alert("Duration Sort")
 			//flag=1时升序排序
 			if (flag == 1) {
-				alert("Duration-Ascend")
+				// alert("Duration-Ascend")
 				var domList = $('#true-content .block-content-2').get();
 				domList.sort(function(a,b){
 					var elOne = $(a).find('p').html();
@@ -2249,7 +2278,7 @@
 			}
 			//flag为-1时，做降序排列
 			else if(flag == -1) {
-				alert("Duration-Descend")
+				// alert("Duration-Descend")
 				var domList = $('#true-content .block-content-2').get();
 				domList.sort(function(a,b){
 					var elOne = $(a).find('p').html();
@@ -2265,10 +2294,10 @@
 		}
 
 		function sortByTime(flag){
-			alert("time Sort")
+			// alert("time Sort")
 			//flag=1时升序排序
 			if (flag == 1) {
-				alert("Duration-Ascend")
+				// alert("Duration-Ascend")
 				var domList = $('#true-content .block-content-2').get();
 				domList.sort(function(a,b){
 					var elOne = $(a).find('.date').html();
@@ -2295,7 +2324,7 @@
 			}
 			//flag为-1时，做降序排列
 			else if(flag == -1) {
-				alert("Duration-Descend")
+				// alert("Duration-Descend")
 				var domList = $('#true-content .block-content-2').get();
 				domList.sort(function(a,b){
 					var elOne = $(a).find('.date').html();

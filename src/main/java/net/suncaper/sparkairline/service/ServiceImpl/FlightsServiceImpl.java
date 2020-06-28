@@ -104,6 +104,86 @@ public class FlightsServiceImpl implements FlightsService,Serializable {
         }
         return flights;
     }
+
+
+    public List<Map<String, Object>> getFlightsOneWayBystop(String departureCityName, String arrivalCityName,String departureTime,int stopflag){
+        String sql1 = "select airlineName,departure_cityname,arrival_cityname,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from flights_line where" +
+                " departure_cityname='" + departureCityName + "' and " +
+                "arrival_cityname='" + arrivalCityName +"'and "+
+                "departure_time like '" + departureTime +"%'and "+
+                "stop_cityname='无'" +
+                " order by price";
+
+        String sql0 = "select airlineName,departure_cityname,arrival_cityname,departure_airportname,flightNumber,departure_time,departure_terminal,arrival_airportname,arrival_terminal,arrival_time,stop_cityname,price from flights_line where" +
+                " departure_cityname='" + departureCityName + "' and " +
+                "arrival_cityname='" + arrivalCityName +"'and "+
+                "departure_time like'" + departureTime +"%'and "+
+                "stop_cityname<>'无'" +
+                " order by price";
+        System.out.println(sql0);
+        System.out.println('*'*100);
+        System.out.println(sql1);
+        List<Map<String, Object>> flightsline=new ArrayList<>();
+        switch (stopflag){
+            case 0: flightsline = jdbcTemplate.queryForList(sql0);break;
+            case 1: flightsline = jdbcTemplate.queryForList(sql1);break;
+        }
+        System.out.println(flightsline);
+        String segment1="select departure_cityname,arrival_cityname,airlineName,flightNumber,departure_time,arrival_time from flights_segment where" +
+                " departure_cityname='"+departureCityName+
+                "' and departure_time like '"+departureTime+
+                "%' order by departure_time";
+        String segment2="select departure_cityname,arrival_cityname,airlineName,flightNumber,departure_time,arrival_time from flights_segment where" +
+                " arrival_cityname='"+arrivalCityName+
+                "' order by departure_time";
+        List<Map<String, Object>> flights_segment1 = jdbcTemplate.queryForList(segment1);
+        List<Map<String, Object>> flights_segment2 = jdbcTemplate.queryForList(segment2);
+        for(Map<String, Object> f:flightsline) {
+            String sql_flights_segment = "select fsid,flid,departure_cityname,arrival_cityname,airlineName,flightNumber,departure_time,arrival_time,duration,craft_type_kind_display_name,craft_type_name from flights_segment where" +
+                    " flid=" + f.get("flid") +
+                    " order by departure_time";
+            System.out.println("sql=" + sql_flights_segment);
+            System.out.println("开始查询");
+            List<Map<String, Object>> flightsegment = jdbcTemplate.queryForList(sql_flights_segment);
+            if (!flightsegment.isEmpty()) {
+                f.put("segment", flightsegment);
+                System.out.println("航段已加入");
+            } else {
+                System.out.println("无航段可用，进行智能拼接");
+                List<Map<String, Object>> resultList = new ArrayList<>();
+                for (Map<String, Object> seg1 : flightsline) {
+                    for (Map<String, Object> seg2 : flightsline) {
+                        if (seg1.get("arrival_cityname").toString().equals(seg2.get("departure_cityname").toString())
+                                && seg1.get("arrival_time").toString().compareTo(seg2.get("departure_time").toString()) < 0) {
+                            resultList.add(seg1);
+                            resultList.add(seg2);
+                            flights_segment1.remove(seg1);
+                            flights_segment2.remove(seg2);
+                            if (!resultList.isEmpty()) {
+                                f.put("segment", resultList);
+                                System.out.println("航段已加入");
+                            } else {
+                                f.put("segment","");
+                                System.out.println("未能查询到结果");
+                            }
+                        }else{
+                            f.put("segment", "");
+                        }
+                    }
+                }
+                if(!f.containsKey("segment")){
+                    System.out.println("添加segment字段");
+                    f.put("segment", "");
+                }
+
+            }
+        }
+
+
+        return flightsline;
+
+
+    }
     /**
      *
      * @param departureCityName

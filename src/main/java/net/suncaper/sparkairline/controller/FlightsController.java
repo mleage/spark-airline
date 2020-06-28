@@ -83,6 +83,8 @@ public class FlightsController {
         String FlightsStr = JSON.toJSONString(Flights);
         return FlightsStr;
     }
+
+
     /**
      *
      * @param request
@@ -102,6 +104,7 @@ public class FlightsController {
         String FlightsStr= JSON.toJSONString(Flights);
         return FlightsStr;
     }
+
 
     /**
      *
@@ -156,6 +159,22 @@ public class FlightsController {
         if(timeInter!=null) {
             int timeInterval = Integer.parseInt(timeInter);
             List<Map<String, Object>> Flights = FlightsService.getFlightsOneWayByTimeInterval(departureCityName, arrivalCityName, departureTime, timeInterval);
+            FlightsStr = JSON.toJSONString(Flights);
+        }
+        return FlightsStr;
+    }
+
+    @RequestMapping("/getFlightsOneWayBystop")
+    @ResponseBody
+    public String getFlightsOneWayBystop(HttpServletRequest request){
+        String departureCityName=request.getParameter("departureCityName");
+        String arrivalCityName=request.getParameter("arrivalCityName");
+        String departureTime=request.getParameter("departureTime");
+        String stopflag=request.getParameter("Stopflag");
+        String FlightsStr="";
+        if(stopflag!=null) {
+            int Stopflag = Integer.parseInt(stopflag);
+            List<Map<String, Object>> Flights = FlightsService.getFlightsOneWayBystop(departureCityName, arrivalCityName, departureTime, Stopflag);
             FlightsStr = JSON.toJSONString(Flights);
         }
         return FlightsStr;
