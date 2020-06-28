@@ -134,6 +134,7 @@ public class FlightsController {
         String arrivalCityName=request.getParameter("arrivalCityName");
         String departureTime=request.getParameter("departureTime");
         String airlineName=request.getParameter("airlineName");
+        System.out.println(airlineName);
         List<Map<String, Object>> Flights=FlightsService.getFlightsOneWayByAirlineName(departureCityName, arrivalCityName,departureTime,airlineName);
         String FlightsStr= JSON.toJSONString(Flights);
         return FlightsStr;

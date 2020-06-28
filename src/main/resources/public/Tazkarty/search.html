@@ -1069,19 +1069,19 @@
 															<ul class="check-boxes-custom list-checkboxes">
 																<li>
 																	<label class="label-container checkbox-default">全部
-																		<input type="checkbox">
+																		<input type="radio" name="Isstop" onclick="oneWay()">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
 																<li>
 																	<label class="label-container checkbox-default">不经停
-																		<input type="checkbox">
+																		<input type="radio" name="Isstop">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
 																<li>
 																	<label class="label-container checkbox-default">经停一次
-																		<input type="checkbox">
+																		<input type="radio" name="Isstop">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
@@ -1094,37 +1094,37 @@
 															<ul class="check-boxes-custom list-checkboxes">
 																<li>
 																	<label class="label-container checkbox-default">全部
-																		<input type="checkbox">
+																		<input type="radio" name="airlinename" onclick="oneWay()">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
 																<li>
 																	<label class="label-container checkbox-default">东航
-																		<input type="checkbox">
+																		<input type="radio" name="airlinename" onclick="GetFlightsByFlightsName('东航')">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
 																<li>
 																	<label class="label-container checkbox-default">国航
-																		<input type="checkbox">
+																		<input type="radio" name="airlinename"onclick="GetFlightsByFlightsName('国航')">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
 																<li>
 																	<label class="label-container checkbox-default">南航
-																		<input type="checkbox">
+																		<input type="radio" name="airlinename" onclick="GetFlightsByFlightsName('南航')">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
 																<li>
 																	<label class="label-container checkbox-default">川航
-																		<input type="checkbox">
+																		<input type="radio" name="airlinename" onclick="GetFlightsByFlightsName('川航')">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
 																<li>
 																	<label class="label-container checkbox-default">海航
-																		<input type="checkbox">
+																		<input type="radio" name="airlinename" onclick="GetFlightsByFlightsName('海航')">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
@@ -1160,31 +1160,31 @@
 															<ul class="check-boxes-custom list-checkboxes">
 																<li>
 																	<label class="label-container checkbox-default">全部
-																		<input type="checkbox">
+																		<input type="radio" name="flytime" onclick="oneWay()">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
 																<li>
 																	<label class="label-container checkbox-default">0:00-6:00
-																		<input type="checkbox">
+																		<input type="radio" name="flytime">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
 																<li>
 																	<label class="label-container checkbox-default">6:00-12:00
-																		<input type="checkbox">
+																		<input type="radio" name="flytime">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
 																<li>
 																	<label class="label-container checkbox-default">12:00-18:00
-																		<input type="checkbox">
+																		<input type="radio" name="flytime">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
 																<li>
 																	<label class="label-container checkbox-default">18:00-24:00
-																		<input type="checkbox">
+																		<input type="radio" name="flytime">
 																		<span class="checkmark"></span>
 																	</label>
 																</li>
@@ -1643,7 +1643,6 @@
 					console.log('<=====data=====>')
 					console.log(outStr)
 					console.log('<=====data=====>')
-					alert(outStr)
 					var flightstr="";
 					getResultsOneWay(outStr)
                     completeLoading()
@@ -2047,6 +2046,40 @@
             getFlightWhentofly(departureCityName,arriveCityName)
 			//getFlightOneWay(departureCityName,arriveCityName,'2020-07-01')
         }
+
+        function GetFlightsByFlightsName(AirlineName){
+			var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
+			var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
+			var departDate = $("li.active").find('[name=\'brTimeStart\']').val().replace(/\//g,'-')
+			console.log(departureCityName)
+			console.log(arriveCityName)
+			console.log(departDate)
+			console.log(AirlineName)
+			getFlightResultByFlightsName(departureCityName,arriveCityName,departDate,AirlineName)
+		}
+
+
+		function getFlightResultByFlightsName(departureCityName,arriveCityName,departDate,AirlineName){
+			showLoading()
+			$.ajax({
+				type: "GET",
+				url: "../flights/getFlightsOneWayByAirlineName?departureCityName="	+departureCityName
+						+"&arrivalCityName="	+ 	arriveCityName
+						+"&departureTime="	+ 	departDate
+						+"&airlineName=" + AirlineName,
+				contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+				success: function(data){
+					var outStr = eval('('+data+')');
+
+					console.log('<=====data=====>')
+					console.log(outStr)
+					console.log('<=====data=====>')
+					var flightstr="";
+					getResultsOneWay(outStr)
+					completeLoading()
+				}
+			});
+		}
 		/**
 		 * 如有经停城市，则分段具体展示航程
 		 */
