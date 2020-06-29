@@ -27,23 +27,27 @@
 <!--<script src="./js/jquery-ui.js" ></script>
 <script src="./js/jquery.min.js"></script>-->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="js/echarts.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
 <script src="js/china.js"></script>
 <script src="js/CityPoint.js"></script>
 
 <script>
     var myChart = echarts.init(document.getElementById('main'));
-    var markPointData=[];//用于在地图上标注点
-    var Cname=[];//用与存放城市名字
-    var Clog=[];//用于存放城市longitude
-    var Clat=[];//用于存放城市latitude
-    var count=0;
-    for(var i=0;i<cityCoord.length;i++){
-        Cname.push(cityCoord[i].name);
-        Clat.push(cityCoord[i].lat);
-        Clog.push(cityCoord[i].log);
+    //用于获取citypouint.js数据
+    {
+        var markPointData=[];//用于在地图上标注点
+        var Cname=[];//用与存放城市名字
+        var Clog=[];//用于存放城市longitude
+        var Clat=[];//用于存放城市latitude
+        var count=0;
+        for(var i=0;i<cityCoord.length;i++){
+            Cname.push(cityCoord[i].name);
+            Clat.push(cityCoord[i].lat);
+            Clog.push(cityCoord[i].log);
 
+        }
     }
+
     function CompareName(cityname) {
         var result=-1;
         for(var i=0;i<Cname.length;i++){
@@ -53,6 +57,17 @@
             }
         }
         return result;
+    }
+    function ConverData(Markdata) {
+        //data格式：name:xxx=====coord:[]=======price:xxx
+        var res=[];
+        for(var i=0;i<Markdata.length;i++){
+            res.push({
+                name:Markdata[i].name,
+                value:Markdata[i].coord.concat(Markdata[i].price)
+            })
+        }
+        return res;
     }
     function FromandWhen(departureCityName,departureTime) {
         $.ajax({
@@ -66,31 +81,22 @@
                 //将数据中的城市名，价格提取
                 // console.log(data);
                 var DepartCityName=data[0].departure_cityname;
-                var dt=data[0].departure_time.toString();
-                var da = new Date(parseInt(dt.replace("/Date(","").replace(")/","").split("+")[0]));
-                var year=da.getFullYear();
-                var month=da.getMonth()+1;
-                var day=da.getDate();
-                if (month<10)
-                    month="0"+month;
-                if (day<10)
-                    day="0"+day;
-                var DepartDate=year+"-"+ month+"-" +day;
-                console.log("日期====="+DepartDate);
                 var cityName = [];//存放城市名字
                 var price = [];//存放飞往城市的价格
-                var index = 0;//用于指示所有城市中最低价格城市的索引
+                var min_index = 0;//用于指示所有城市中最低价格城市的索引
+                var max_index=0;
                 for (var i = 0; i < data.length; i++) {
                     cityName.push(data[i].arrival_cityname);
                     price.push(data[i].price);
-                    if (price[index] >= data[i].price) {
+                    if (price[min_index] >= data[i].price) {
                         //比较最低价
-                        index = i;
+                        min_index = i;
+                    }if(price[max_index]<=data[i].price){
+                        max_index=i;
                     }
                 }
-                console.log(index);//显示最低价格城市索引
-                /*   console.log(cityName);
-                  console.log(price);*/
+                console.log(min_index+"最低价"+price[min_index]);//显示最低价格城市索引
+                console.log(max_index+"最高价"+price[max_index]);//显示最高价格城市索引
                 //根据城市名，获取坐标，并将价格放入对应的点--markPointData
                 for (var i = 0; i < cityName.length; i++) {
                     var flag = CompareName(cityName[i]);
@@ -99,12 +105,11 @@
                         markPointData.push(
                             {
                                 //城市名
-                                "name": cityName[i],
+                                name: cityName[i],
                                 //坐标
-                                "coord": [Clog[flag], Clat[flag]],
+                                coord: [Clog[flag], Clat[flag]],
                                 //价格
-                                "num": price[i],
-
+                                num: price[i]
                             }
                         )
                     } else {
@@ -113,29 +118,54 @@
 
                     }
                 }
-                //存放出发城市
+
+                //出发城市坐标
+                var departData=[];
                 {
-                    var flag = CompareName(DepartCityName);
-                    if (flag != -1) {
-                        markPointData.push(
-                            {
-                                //城市名
-                                "name": DepartCityName,
-                                //坐标
-                                "coord": [Clog[flag], Clat[flag]],
-                                //价格
-                                "num": 0,
 
-                            }
-                        )
-                    } else {
-
-                        console.log("出发城市======"+departureCityName+"======定位失败！\n");
-
+                    for(var i=0;i<Cname.length;i++){
+                        if(Cname[i]==DepartCityName){
+                            var loc=[Clog[i],Clat[i]];
+                            departData.push({
+                                name:Cname[i],
+                                value:loc.concat(0)
+                            })
+                        }
                     }
                 }
 
-                // console.log("markPointData : " + markPointData);
+
+                //飞机模型
+                var planePath = 'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z';
+                var LineData=[];
+                for(var i =0;i<markPointData.length;i++){
+                    if(markPointData[i].name!=DepartCityName){
+                        var flag=CompareName(markPointData[i].name);
+                        var toCorrd=[Clog[flag],Clat[flag]];
+                        flag=CompareName(DepartCityName);
+                        var fromCorrd=[Clog[flag],Clat[flag]];
+                        LineData.push({
+                            fromName:DepartCityName,
+                            toName:markPointData[i].name,
+                            coords:[fromCorrd,toCorrd]
+                        });
+                    }
+                }
+                //价格最便宜航线
+                var min_data=[];
+                {   var flag=CompareName(DepartCityName);
+                    var fromCorrd=[Clog[flag],Clat[flag]];
+                    flag=CompareName(cityName[min_index]);
+                    var toCorrd=[Clog[flag],Clat[flag]];
+                    min_data.push({
+                        fromName:DepartCityName,
+                        toName:cityName[min_index],
+                        coords:[fromCorrd,toCorrd]
+                    });
+
+                    console.log("最便宜城市航线");
+                    console.log(min_data);
+                }
                 var option = {
                     backgroundColor: {//背景颜色
                         type: 'linear',
@@ -145,244 +175,254 @@
                         y2: 1,
                         colorStops: [{
                             //背景渐变颜色，由于灰色感觉效果更好，所以没有渐变
-                            offset: 0, color: 'grey' // 0% 处的颜色---最左边
+                            offset: 0, color: '#0f378f' // 0% 处的颜色---最左边
                         }, {
-                            offset: 1, color: 'grey' // 100% 处的颜色----最右边
+                            offset: 1, color: '#00091a' // 100% 处的颜色----最右边
                         }],
                         globalCoord: false // 缺省为 false
                     },
-                    title: {
+                    title:  {
                         top: 20,
-                        text: '去哪呀',
+                        text: '去 哪 呀',
                         subtext: '',
                         x: 'center',
                         textStyle: {
-                            color: 'black'
+                            color: 'white',
+                            fontSize:25
                         }
                     },
-                    "tooltip": { //提示框组件。
+                    geo: {
+                        map: 'china',
+                        show: true,
+                        roam: true,//开启缩放和平移
+                        label: {
+                            normal: {
+                                show: false
+                            },
+                            emphasis: {
+                                show: true,
+                                color:'white',
+                                formatter:function (params) {
+                                    return params.name //省级tooltip
 
-                        "trigger": 'item', //触发类型 散点图
-
-                        "enterable": true, //鼠标是否可进入提示框
-
-                        "transitionDuration": 1, //提示框移动动画过渡时间
-
-                        "formatter": function (params) {
-                            //todo:返回省内低价航程城市的个数，此处返回省份名
-                            return params.name //省级tooltip
-
+                                }
+                            }
                         },
-
-                        "backgroundColor": '#fff',//应该是地图颜色
-
-                        "borderWidth": '1px',
-
-                        "borderRadius": '1',
-
-                        "borderColor": 'rgba(255,150,128,1)',
-
-                        "textStyle": {
-
-                            "color": 'rgba(255,0,0,1)'
-
-                        },
-
-                        "padding": 20
+                        itemStyle: {
+                            normal: {
+                                areaColor: '#323c48',
+                                borderColor: '#111'
+                            },
+                            emphasis: {
+                                areaColor: '#2a333d'
+                            }
+                        }
 
                     },
-                    "series": [{
-                        "type": "map",
-                        "mapType": "china",
+                    tooltip:{
+                        trigger: 'item',
+                        enterable: true, //鼠标是否可进入提示框
+                        transitionDuration: 1, //提示框移动动画过渡时间
+                        backgroundColor: '#fff',//提示框颜色
 
-                        "label": {
+                        borderWidth: '1px',
 
-                            "normal": {
+                        borderRadius: '1',
 
-                                "show": true,
+                        borderColor: 'rgba(255,150,128,1)',
 
-                            },
+                        textStyle: {
 
-                            "emphasis": {
+                            color: 'rgba(255,0,0,1)'
 
+                        },
+
+                        padding: 10
+
+                    },
+
+                    series: [
+                        {
+                            name:"markLine",
+                            type:'lines',
+                            zlevels:1,
+                            effect: {
                                 show: true,
-
-                            }
-
-                        },
-
-                        "itemStyle": {
-
-                            "normal": {
-
-                                "backgroundColor": 'rgba(255,150,128,1)'
-
+                                period: 6,
+                                trailLength: 0.7,
+                                color: '#ff110c',
+                                symbol: planePath,
+                                symbolSize: 20
                             },
-
-                            "emphasis": {
-
-                                "backgroundColor": 'rgba(255,150,128,1)'
-
-                            }
-
-                        },
-                        //此处可加载地图数据，地图或省份级别数据
-                        /*   data:
-                           ,*/
-                        "zoom": 1.2, //当前视角的缩放比例。
-                        roam: true, //是否开启平游或缩放
-                        scaleLimit: { //滚轮缩放的极限控制
-
-                            min: 1,
-
-                            max: 20
-
-                        },
-                        "selectedMode": false,
-                        "layoutCenter": ['50%', '53%'],
-                        "layoutSize": "102%",
-                        "label": { //图形上的文本标签，可用于说明图形的一些数据信息，比如值，名称等
-
-                            "normal": {
-                                //关闭显示省份文本标签，选中时，才显示
-                                "show": false,
-
-                                "textStyle": {
-
-                                    "color": "#000", //正常状态的样式
-
-                                    "fontSize": "12"
-
+                            lineStyle: {
+                                normal: {
+                                    color:'#c83d2e',
+                                    width: 0,
+                                    curveness: 0.2
                                 }
-
                             },
-
-                            "emphasis": {
-
-                                "show": true,
-
-                                "textStyle": {
-
-                                    "color": "#ff3631", //被选中的样式
-
-                                    "fontSize": "12"
-
-                                }
-
-                            }
-
+                            data:LineData
                         },
-                        "markPoint":
-                            { //图表标注。
-                                //标注样式
-                                //星型
-                                // "symbol": 'path://M512 39.384615l169.353846 295.384615 342.646154 63.015385-240.246154 248.123077L827.076923 984.615385l-315.076923-145.723077L196.923077 984.615385l43.323077-334.769231L0 401.723077l342.646154-63.015385L512 39.384615',
-                                //点型
-                                // type: 'scatter',
-                                type: function () {
-                                    for (var i=0;i<markPointData.length;i++){
-                                        if(markPointData[i]==DepartCityName){
-                                            console.log("出发城市可定位");
-                                            return 'path://M512 39.384615l169.353846 295.384615 342.646154 63.015385-240.246154 248.123077L827.076923 984.615385l-315.076923-145.723077L196.923077 984.615385l43.323077-334.769231L0 401.723077l342.646154-63.015385L512 39.384615';
+                        {
+                            name: "Arrow",
+                            type: 'lines',
+                            zlevel: 2,
+                            symbol: ['none', 'arrow'],
+                            symbolSize: 10,
+                            effect: {
+                                show: true,
+                                period: 6,
+                                trailLength: 0,
+                                symbol: planePath,
+                                symbolSize: 15
+                            },
+                            lineStyle: {
+                                color:'#c8941c',
+                                width: 1,
+                                opacity: 0.6,
+                                curveness: 0.2
+                            },
+                            data: LineData
+                        },
+                        {
+                            name: "markPoint",
+                            //星型
+                            // "symbol": 'path://M512 39.384615l169.353846 295.384615 342.646154 63.015385-240.246154 248.123077L827.076923 984.615385l-315.076923-145.723077L196.923077 984.615385l43.323077-334.769231L0 401.723077l342.646154-63.015385L512 39.384615',
+                            //点型
+                            type: 'effectScatter',
+                            coordinateSystem: 'geo',
+                            zlevel:2,
+                            //图形大小
+                            symbolsize: function (val) {
+                                return val[2]/10;
+                            },
+                            //标注内容设置
+                            label: {
+                                "normal": {
+                                    "formatter": function (params) {
+                                        return params.name;
+                                    },
+                                    position: 'bottom',
+                                    "show": true,
+                                    color: "white"
 
-                                        }
-                                        else if(i==index){
-                                            console.log(markPointData[i]);
-                                        }
-                                        else
-                                            return 'scatter';
-                                    }
                                 },
-                                "symbolSize": 80, //图形大小
-                                // "symbolSize": 14, //图形大小
-                                //标注内容设置
-                                "label": {
 
-                                    "normal": {
-                                        "formatter": function (params) {
-                                            var price;
-                                            var str = "";
-                                            if (params.name==DepartCityName){
-                                               str=str+"城市："+DepartCityName+"\n这是您所在的城市";
-                                            }
-                                            else{
-                                                for (var i = 0; i < markPointData.length; i++) {
-                                                    if (markPointData[i].name == params.name) {
-                                                        price = markPointData[i].num;
-                                                        str += "城市：" + markPointData[i].name + "\n价格：" + price;
-                                                    }
-
+                                "emphasis": {
+                                    "formatter": function (params) {
+                                        var price;
+                                        var str = "";
+                                        if (params.name==DepartCityName){
+                                            str=str+"城市："+DepartCityName+"\n这是您所在的城市";
+                                        }
+                                        else{
+                                            for (var i = 0; i < markPointData.length; i++) {
+                                                if (markPointData[i].name == params.name) {
+                                                    price = markPointData[i].num;
+                                                    str += "城市：" + markPointData[i].name + "\n价格：" + price;
                                                 }
+
                                             }
-                                            return str;
-                                        },
-                                        position: 'inside',
-                                        "show": true,
-                                        color: "red"
-
-                                    },
-
-                                    "emphasis": {
-
-                                        show: true,
-
-
-                                    }
-
-                                },
-                                //
-                                tooltip: { //标注点tooltip
-
-                                    "formatter": function () {
-                                        var str = " \n点击图标查看详细信息";
+                                        }
                                         return str;
-                                    }
-                                },
-
-                                "itemStyle": {
-
-                                    "normal": {
-
-                                        "color": '#1dd8a3'
-                                      /*  color:function (markPointData,index) {
-                                            for(var i=0;i<markPointData.length;i++){
-                                                if(i==index)
-                                                    return '#14bed8'
-                                                else
-                                                    return '#1dd8a3';
-                                            }
-                                        }*/
-
                                     },
-                                    emphasis:{
-                                        "color": '#57d835'
-                                    }
+                                    position:'inside',
+                                    fontSize:25,
+                                    color:'rgb(164,255,221)',
+                                    show: true,
+                                }
 
-
+                            },
+                            //
+                            tooltip: { //标注点tooltip
+                                "formatter": function () {
+                                    var str = " \n点击图标查看详细信息";
+                                    return str;
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: '#D8BC37'
                                 },
-                                "data": markPointData
+                                emphasis:{
+                                    color: '#d8701b'
+                                }
+                            },
+                            rippleEffect: {
+                                brushType: 'stroke'
+                            },
+                            data: ConverData(markPointData)
 
-                            }
-                    }]
+                        },
+                        {
+                            name:"departCity",
+                            type:'scatter',
+                            symbol: 'path://M512 39.384615l169.353846 295.384615 342.646154 63.015385-240.246154 248.123077L827.076923 984.615385l-315.076923-145.723077L196.923077 984.615385l43.323077-334.769231L0 401.723077l342.646154-63.015385L512 39.384615',
+                            symbolSize:30,
+                            coordinateSystem: 'geo',
+                            zlevel:2,
+                            label:{
+                                normal:{
+                                    show:false
+                                },
+                                emphasis:{
+                                    show:true,
+                                    formatter:function (params) {
+                                        return "这是您选择出发的城市\n"+params.name;
+                                    }
+                                }
+                            },
+                            itemstyle:{
+                                normal:{
+                                    color:'red'
+
+                                }
+                            },
+                            data: departData
+
+                        },
+                        {
+                            name:"飞往价格最低的城市",
+                            type:"lines",
+                            zlevels:1,
+                            effect: {
+                                show: true,
+                                period: 6,
+                                trailLength: 0.7,
+                                color: '#17fffa',
+                                symbol: planePath,
+                                symbolSize: 20
+                            },
+                            lineStyle: {
+                                normal: {
+                                    color:'#187cc8',
+                                    width: 0,
+                                    curveness: 0.2
+                                }
+                            },
+                            tooltip:{
+                                formatter:function () {
+                                    return "这班航程价格最便宜"
+                                }
+                            },
+                            data:min_data
+                        },
+
+
+                    ]
                 }
                 myChart.setOption(option);
                 //鼠标点击函数
                 //todo:如果要实现点击搜索，在这里进行
                 myChart.on('click', function (params) {
                     var arrivalCiyName=params.name;
-                    // alert(DepartDate)
                     var url=window.location.search
                     var departureTime = url.split("departureTime=")[1].split("&")[0];
-                    alert(departureTime)
                     var str="../Tazkarty/search.html?type=2&dd="+encodeURI(departureTime)
                         +"&dc="+encodeURI(DepartCityName)
                         +"&ac="+encodeURI(arrivalCiyName);
                     window.location.href=str;
                     window.event.returnValue=false;
-                            //要获取某参数 eg:出发城市——data[i].departure_cityname
-
-
-
                 });
             },
             error: function () {
