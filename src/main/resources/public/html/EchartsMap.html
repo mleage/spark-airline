@@ -80,11 +80,14 @@
                 //这里该做什么？
                 //将数据中的城市名，价格提取
                 // console.log(data);
-                var DepartCityName=data[0].departure_cityname;
+
+
                 var cityName = [];//存放城市名字
                 var price = [];//存放飞往城市的价格
                 var min_index = 0;//用于指示所有城市中最低价格城市的索引
                 var max_index=0;
+                var DepartCityName=data[0].departure_cityname;
+                console.log(DepartCityName);
                 for (var i = 0; i < data.length; i++) {
                     cityName.push(data[i].arrival_cityname);
                     price.push(data[i].price);
