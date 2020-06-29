@@ -1603,10 +1603,10 @@
 			departureTime = arr[1].split('=')[1]
 			departureCityName = arr[2].split('=')[1]
 			arrivalCityName = arr[3].split('=')[1]
-			alert(type)
-			alert(departureTime)
-			alert(arrivalCityName)
-			alert(departureCityName)
+			// alert(type)
+			// alert(departureTime)
+			// alert(arrivalCityName)
+			// alert(departureCityName)
 			if(type==1)
 			{
 				arrivalTime =  arr[4].split('=')[1]
@@ -2034,6 +2034,141 @@
 			$("#true-content").html(results)
 			// console.log(results)
 		}
+
+		function getMutiTrip(outStr1, outStr2,outStr3){
+            var results = ""
+            //先获得离开时的数据
+            var minlength = Math.min(outStr1.length,outStr2.length,outStr3.length)
+            for (var i=0;i<minlength;i++) {
+                console.log(i.toString())
+                var departTime1 = new Date(outStr1[i].departure_time)
+                var arriveTime1 = new Date(outStr1[i].arrival_time)
+                var lastingTime1 = (arriveTime1.getTime()-departTime1.getTime())/1000
+                var diffDays1 = parseInt(lastingTime1/86400)
+                var diffHours1 = parseInt(lastingTime1/3600)-24*diffDays1
+                var diffMinutes1 = parseInt(lastingTime1%3600/60)
+                //在获得返程时的数据
+                var departTime2 = new Date(outStr2[i].departure_time)
+                var arriveTime2 = new Date(outStr2[i].arrival_time)
+                var lastingTime2 = (arriveTime2.getTime()-departTime2.getTime())/1000
+                var diffDays2 = parseInt(lastingTime2/86400)
+                var diffHours2 = parseInt(lastingTime2/3600)-24*diffDays2
+                var diffMinutes2 = parseInt(lastingTime2%3600/60)
+
+                var departTime3 = new Date(outStr3[i].departure_time)
+                var arriveTime3 = new Date(outStr3[i].arrival_time)
+                var lastingTime3 = (arriveTime3.getTime()-departTime3.getTime())/1000
+                var diffDays3 = parseInt(lastingTime3/86400)
+                var diffHours3 = parseInt(lastingTime3/3600)-24*diffDays2
+                var diffMinutes3 = parseInt(lastingTime3%3600/60)
+                    //需确认返程离开时间要晚于出发达到时间才能拼接
+                    if (departTime2.getTime() < arriveTime1.getTime()) continue
+                    results += '<div class="block-content-2">'
+                        +'<div class="box-result">'
+                        +'<ul class="list-search-result">'
+                        +'<li>'
+                        +'<ul class="result-single">'
+                        +'<li>'
+                        +'<img src='+ "images/files/logo-companies/"+outStr1[i].flightNumber.substring(0,2)+".png"+' alt="">'
+                        + outStr1[i].airlineName+outStr1[i].flightNumber
+                        +'</li>'
+                        +'<li>'
+                        + outStr1[i].departure_airportname
+                        +'<span class="date">'+departTime1.getHours()+":"+(departTime1.getMinutes()<10?'0'+departTime1.getMinutes():departTime1.getMinutes())+'</span>'
+                        +'</li>'
+                        +'<li>'
+                        +(outStr1[i].stop_cityname=="无"?"":"<span style='text-align:center'>经停<br><br></span><span style='text-align:center'>"+outStr1[i].stop_cityname+"</span>")
+                        +'<span class="shape-distance"></span>'
+                        +'</li>'
+                        +'<li>'
+                        + outStr1[i].arrival_airportname
+                        +'<span class="date">'+arriveTime1.getHours()+":"+(arriveTime1.getMinutes()<10?'0'+arriveTime1.getMinutes():arriveTime1.getMinutes())+'</span>'
+                        +'</li>'
+                        +'<li>'
+                        +'<span class="duration">'+diffHours1+'h'+diffMinutes1+'m <span>'+(outStr1[i].stop_cityname=="无"?"Direct":"non-direct")+'</span></span>'
+                        +'</li>'
+                        +'</ul><!-- .result-single end -->'
+                        +'</li>'
+                        //以下为往返结果
+                        +'<li>'
+                        +'<ul class="result-single">'
+                        +'<li>'
+                        +'<img src='+ "images/files/logo-companies/"+outStr2[i].flightNumber.substring(0,2)+".png"+' alt="">'
+                        +outStr2[i].airlineName+outStr2[i].flightNumber
+                        +'</li>'
+                        +'<li>'
+                        +outStr2[i].departure_airportname
+                        +'<span class="date">'+departTime2.getHours()+":"+(departTime2.getMinutes()<10?'0'+departTime2.getMinutes():departTime2.getMinutes())+'</span>'
+                        +'</li>'
+                        +'<li>'
+                        +(outStr2[i].stop_cityname=="无"?"":"<span style='text-align:center'>经停<br><br></span><span style='text-align:center'>"+outStr2[i].stop_cityname+"</span>")
+                        +'<span class="shape-distance"></span>'
+                        +'</li>'
+                        +'<li>'
+                        +outStr2[i].arrival_airportname
+                        +'<span class="date">'+arriveTime2.getHours()+":"+(arriveTime2.getMinutes()<10?'0'+arriveTime2.getMinutes():arriveTime2.getMinutes())+'</span>'
+                        +'</li>'
+                        +'<li>'
+                        +'<span class="duration">'+diffHours2+'h'+diffMinutes2+'m <span>'+(outStr2[i].stop_cityname=="无"?"Direct":"non-direct")+'</span></span>'
+                        +'</li>'
+                        +'</ul><!-- .result-single end -->'
+                        +'</li>'
+                        //第三程
+                        +'<li>'
+                        +'<ul class="result-single">'
+                        +'<li>'
+                        +'<img src='+ "images/files/logo-companies/"+outStr3[i].flightNumber.substring(0,2)+".png"+' alt="">'
+                        +outStr3[i].airlineName+outStr3[i].flightNumber
+                        +'</li>'
+                        +'<li>'
+                        +outStr3[i].departure_airportname
+                        +'<span class="date">'+departTime3.getHours()+":"+(departTime3.getMinutes()<10?'0'+departTime3.getMinutes():departTime3.getMinutes())+'</span>'
+                        +'</li>'
+                        +'<li>'
+                        +(outStr3[i].stop_cityname=="无"?"":"<span style='text-align:center'>经停<br><br></span><span style='text-align:center'>"+outStr3[i].stop_cityname+"</span>")
+                        +'<span class="shape-distance"></span>'
+                        +'</li>'
+                        +'<li>'
+                        +outStr3[i].arrival_airportname
+                        +'<span class="date">'+arriveTime3.getHours()+":"+(arriveTime3.getMinutes()<10?'0'+arriveTime3.getMinutes():arriveTime3.getMinutes())+'</span>'
+                        +'</li>'
+                        +'<li>'
+                        +'<span class="duration">'+diffHours3+'h'+diffMinutes3+'m <span>'+(outStr3[i].stop_cityname=="无"?"Direct":"non-direct")+'</span></span>'
+                        +'</li>'
+                        +'</ul><!-- .result-single end -->'
+                        +'</li>'
+                        +'</ul><!-- .list-search-result end -->'
+                        +'<div class="result-price">'
+                        +'<div class="price">'
+                        +'RMB <span class="value">'+(parseInt(outStr1[i].price)+parseInt(outStr2[i].price)+parseInt(outStr3[i].price))+'</span>'
+                        +'<span class="description">Price for 1 Person(s)</span>'
+                        +'<span>Total Time:<p>'+(parseInt(diffHours1)+parseInt(diffHours2)+parseInt(diffHours3))+'h  '+(parseInt(diffMinutes1)+parseInt(diffMinutes2)+parseInt(diffMinutes3))+'m'+'</p></span>'
+                        +'</div><!-- .price end -->'
+                        +'<a class="btn small colorful-transparent hover-colorful" href="javascript:;">Book Now</a>'
+                        +'<a class="btn btn-primary" data-toggle="collapse" data-target=\"#collapseExample'+(parseInt(outStr1[i].flid)+parseInt(outStr2[i].flid)+parseInt(outStr3[i].flid))+'\"'+'>点击查看详情</a>'
+                        +'</div><!-- .result-price end -->'
+                        +'</div><!-- .box-result end -->'
+                        +'<div class="collapse" id=\"collapseExample'+(parseInt(outStr1[i].flid)+parseInt(outStr2[i].flid)+parseInt(outStr3[i].flid))+'\"'+'>'
+                        +'<div class="card card-body">'
+                        + getSegment(outStr1[i].segment)
+                        + getSegment(outStr2[i].segment)
+                        + getSegment(outStr3[i].segment)
+                        +'</div>'
+                        +'</div>'
+                        +'</div><!-- .block-content-2 end -->'
+                    // console.log("=============>")
+                    // console.log(outStr1[i].price)
+                    // console.log(outStr2[j].price)
+                    // console.log(parseInt(outStr1[i].price) + parseInt(outStr2[j].price))
+                    // console.log("<=============")
+
+
+            }
+            $("#true-content").html(results)
+            // console.log(results)
+        }
+
+
 		/**
 		 * 获取往返模式下的参数，获得返回结构，渲染
 		 */
@@ -2067,13 +2202,25 @@
 			var arriveCityName1 = $("li.active").find('[name=\'brPlaceEnd\']').eq(1).val()
 			var departDate1 = $("li.active").find('[name=\'brTimeStart\']').eq(1).val().replace(/\//g,'-')
 
-			alert(departureCityName0)
-			alert(arriveCityName0)
-			alert(departDate0)
-			alert(departureCityName1)
-			alert(arriveCityName1)
-			alert(departDate1)
-			getFlightMultiWay(departureCityName0,arriveCityName0,departDate0,departureCityName1,arriveCityName1,departDate1)
+            var departureCityName2 = $("li.active").find('[name=\'brPlaceStart\']').eq(2).val()
+            if(typeof(departureCityName2)=="undefined") {
+                getFlightMultiWay(departureCityName0,arriveCityName0,departDate0,departureCityName1,arriveCityName1,departDate1)
+            }
+            else{
+                var arriveCityName2 = $("li.active").find('[name=\'brPlaceEnd\']').eq(2).val()
+                var departDate2 = $("li.active").find('[name=\'brTimeStart\']').eq(2).val().replace(/\//g,'-')
+                getFlightMultiWay_3(departureCityName0,arriveCityName0,departDate0,departureCityName1,arriveCityName1,departDate1,departureCityName2,arriveCityName2,departDate2)
+
+            }
+            // alert(departureCityName0)
+			// alert(arriveCityName0)
+			// alert(departDate0)
+			// alert(departureCityName1)
+			// alert(arriveCityName1)
+			// alert(departDate1)
+
+
+			// getFlightMultiWay(departureCityName0,arriveCityName0,departDate0,departureCityName1,arriveCityName1,departDate1)
 		}
 
 		function getFlightMultiWay(departureCityName0,arriveCityName0,departDate0,departureCityName1,arriveCityName1,departDate1){
@@ -2106,6 +2253,49 @@
 				}
 			})
 		}
+
+        function getFlightMultiWay_3(departureCityName0,arriveCityName0,departDate0,departureCityName1,arriveCityName1,departDate1,departureCityName2,arriveCityName2,departDate2){
+            var outStr1, outStr2,outStr3
+            showLoading()
+            // $.when(
+            $.ajax({
+                type: "GET",
+                url: "../flights/getFlightsOneWayJointByPrice?departureCityName="	+departureCityName0
+                    +"&arrivalCityName="	+ 	arriveCityName0
+                    +"&departureTime="	+ 	departDate0,
+                contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+                //async:false,  //变异步为同步
+                success: function(data){
+                    outStr1 = eval('('+data+')');
+                    $.ajax({
+                        type: "GET",
+                        url: "../flights/getFlightsOneWayJointByPrice?departureCityName="	+departureCityName1
+                            +"&arrivalCityName="	+ 	arriveCityName1
+                            +"&departureTime="	+ 	departDate1,
+                        contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+                        //async:false, //变异步为同步
+                        success: function(data){
+                            outStr2 = eval('('+data+')');
+                            $.ajax({
+                                type: "GET",
+                                url: "../flights/getFlightsOneWayJointByPrice?departureCityName="	+departureCityName2
+                                    +"&arrivalCityName="	+ 	arriveCityName2
+                                    +"&departureTime="	+ 	departDate2,
+                                contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+                                //async:false, //变异步为同步
+                                success: function(data){
+                                    outStr3 = eval('('+data+')');
+                                    getMutiTrip(outStr1, outStr2,outStr3)
+                                    completeLoading()
+                                }
+                            })
+                        }
+                    })
+
+                }
+            })
+        }
+
 		function Whentofly(){
             var departureCityName = $("li.active").find('[name=\'brPlaceStart\']').val()
             var arriveCityName = $("li.active").find('[name=\'brPlaceEnd\']').val()
@@ -2197,15 +2387,17 @@
 						+'</li>'
 						+'<li>'
 						+segment[i].departure_cityname
-						+'<span class="date">'+departTime+'</span>'
+						+'<span class="date">'+departTime.getHours()+":"+(departTime.getMinutes()<10?'0'+departTime.getMinutes():departTime.getMinutes())+'</span>'
 						+'</li>'
 						+"<li>"
 						+'<span class="shape-distance"></span>'
 						+'</li>'
 						+'<li>'
 						+ segment[i].arrival_cityname
-						+'<span class="date">'+arriveTime+'</span>'
+						+'<span class="date">'+arriveTime.getHours()+":"+(arriveTime.getMinutes()<10?'0'+arriveTime.getMinutes():arriveTime.getMinutes())+'</span>'
 						+'</li>'
+                        +'<li>'
+                        +'</li>'
 						+'<li>'
 						+'<span class="duration">'+duration.getHours()+'H'+duration.getMinutes()+'min'+'<span></span></span>'
 						+'</li>'
